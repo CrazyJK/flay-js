@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "servestart": "pm2-dev start ./bin/www",
-    "servestop": "pm2-dev stop ./bin/www",
+    "pm2-dev": "pm2-dev start ./bin/www",
     "nodemon": "nodemon app.js",
     "start": "node ./bin/www"
   },
