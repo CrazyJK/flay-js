@@ -6,6 +6,8 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var filesRouter = require('./routes/listfile');
+var flayRouter = require('./routes/flay');
 
 // ref. http://expressjs.com/en/4x/api.html
 var app = express();
@@ -20,7 +22,6 @@ var app = express();
 		request의 라이프 타임 동안에만 유효하다.
 		html/view 클라이언트 사이드로 변수들을 보낼 수 있으며, 그 변수들은 오로지 거기서만 사용할 수 있다.
 */
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -47,6 +48,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/file', filesRouter);
+app.use('/flay', flayRouter);
 
 app.get('/middleware', function (req, res) {
   var responseText = 'Hello World!';
@@ -55,71 +58,63 @@ app.get('/middleware', function (req, res) {
 });
 
 // add my controller
-app.get("/new-entry", function (req, res) {
-	res.render("new-entry");
+app.get('/new-entry', function (req, res) {
+  res.render('new-entry');
 });
 
-app.post("/new-entry", function (req, res) {
-	if (!req.body.title || !req.body.body) {
-		res.status(400).send("Entries must have a title and a body.");
-		return;
-	}
-	entries.push({
-		title: req.body.title,
-		body: req.body.body,
-		published: new Date()
-	});
-	res.redirect("/");
+app.post('/new-entry', function (req, res) {
+  if (!req.body.title || !req.body.body) {
+    res.status(400).send('Entries must have a title and a body.');
+    return;
+  }
+  entries.push({
+    title: req.body.title,
+    body: req.body.body,
+    published: new Date(),
+  });
+  res.redirect('/');
 });
 
 // path variables
 app.get('/topic/:id/:mode', function (req, res) {
-	// 라우터 경로의 변경 /:id/:mode 를 통해 path 방식 url 값을 가져올 수 있다.
-	var topic = [
-		'javascript is...',
-		'nodejs is...',
-		'express is...'
-	];
-	var li = `
+  // 라우터 경로의 변경 /:id/:mode 를 통해 path 방식 url 값을 가져올 수 있다.
+  var topic = ['javascript is...', 'nodejs is...', 'express is...'];
+  var li = `
 		<li><a href="/topic/0">js</a></li>
 		<li><a href="/topic/1">nodejs</a></li>
 		<li><a href="/topic/2">express</a></li>
-		`
-	res.send(li + '<br>' + topic[req.params.id] + req.params.mode);
-	//path 방식을 사용하는 url의 경우 params를 통해서 값을 가져올 수 있음
+		`;
+  res.send(li + '<br>' + topic[req.params.id] + req.params.mode);
+  //path 방식을 사용하는 url의 경우 params를 통해서 값을 가져올 수 있음
 });
 
 // query
-app.get('/topic', function(req, res){
-	var topic = [
-		'javascript is...',
-		'nodejs is...',
-		'express is...'
-	];
-	var li = `
+app.get('/topic', function (req, res) {
+  var topic = ['javascript is...', 'nodejs is...', 'express is...'];
+  var li = `
 	<li><a href="/topic?id=0">js</a></li>
 	<li><a href="/topic?id=1">nodejs</a></li>
 	<li><a href="/topic?id=2">express</a></li>
-	`
+	`;
   // 선택한 링크에 따라서 다른 정보를 출력하는 동적인 애플리케이션의 기본골격
-	res.send(li + '<br>' + topic[req.query.id]);
+  res.send(li + '<br>' + topic[req.query.id]);
 });
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-	console.log('wrong url', req.url);
-	next(createError(404));
+  console.log('wrong url', req.url);
+  next(createError(404));
 });
 
 // error handler
 app.use(function (err, req, res, next) {
-	// set locals, only providing error in development
-	res.locals.message = err.message;
-	res.locals.error = req.app.get('env') === 'development' ? err : {};
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-	// render the error page
-	res.status(err.status || 500);
-	res.render('error');
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
 });
 
 module.exports = app;
