@@ -1,5 +1,8 @@
 {
 	"prettier.singleQuote": true,
 	"html.format.wrapLineLength": 0,
-	"editor.tabSize": 2
+	"editor.tabSize": 2,
+	"editor.formatOnSave": true,
+	"prettier.htmlWhitespaceSensitivity": "strict",
+	"prettier.printWidth": 160
 }
