@@ -1,8 +1,27 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+header {
+	position: sticky;
+	top: 0;
+	z-index: 1020;
+	background-color: #fff;
+	padding: 1rem;
 }
 
-a {
-  color: #00B7FF;
+main {
+	padding-bottom: 4rem;
+}
+
+footer {
+	background: #f4f4f4;
+	text-align: center;
+	padding: 1rem;
+	overflow: auto;
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+footer > p {
+	margin: 0;
+	padding: 0;
 }
