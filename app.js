@@ -5,8 +5,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const favicon = require('serve-favicon');
 
-const indexRouter = require('./routes/index');
-const flayRouter = require('./routes/flay');
+const indexRouter = require('./routes/indexRouter');
+const flayRouter = require('./routes/flayRouter');
 
 const myLogger = function (req, res, next) {
 	console.log('myLogger', 'LOGGED');

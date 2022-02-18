@@ -1,27 +1,53 @@
 header {
-	position: sticky;
-	top: 0;
-	z-index: 1020;
-	background-color: #fff;
-	padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    background-color: #fff;
+    padding: 1rem;
 }
 
 main {
-	padding-bottom: 4rem;
+    padding-bottom: 4rem;
+}
+
+ol#flayList li {
+    font-family: D2Coding;
+    display: flex;
+    gap: 1rem;
+}
+ol#flayList > li > a {
+    flex: 0 0 150px;
+    text-align: right;
+}
+ol#flayList > li > span.path {
+    flex: 0 0 auto;
+}
+ol#flayList > li > span.name {
+    flex: 0 0 500px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+ol#flayList > li > span.size {
+    flex: 0 0 100px;
+    text-align: right;
+}
+ol#flayList > li > span.time {
+    flex: 0 0 auto;
 }
 
 footer {
-	background: #f4f4f4;
-	text-align: center;
-	padding: 1rem;
-	overflow: auto;
-	position: fixed;
-	left: 0;
-	right: 0;
-	bottom: 0;
+    background: #f4f4f4;
+    text-align: center;
+    padding: 1rem;
+    overflow: auto;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 footer > p {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
