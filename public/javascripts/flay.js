@@ -1,20 +1,23 @@
-// fetch('/flay/list')
-// 	.then((res) => res.json())
-// 	.then((list) => {
-// 		console.log('list', list.length);
-// 		renderList(list);
-// 	});
+/**
+ * flay.js
+ */
 
-function renderList(list) {
-	list.forEach((item) => {
-		$('#flayList').append(`<li>${item}</li>`);
-	});
-}
-
+// list display
 $.ajax({
-	url: '/flay/list',
-	success: (list) => {
-		console.log('list', list.length);
-		renderList(list);
-	},
+    url: '/flay/list',
+    success: (list) => {
+        let totalBytes = 0;
+        list.forEach((item) => {
+            $('#flayList').append(`<li>
+				<a href="#">${item.ino}</a>
+				<span class="name">${item.name}</span>
+				<span class="size">${item.size}</span>
+				<span class="time">${new Date(item.mtime).toISOString().slice(0, 19).replace(/T/g, ' ')}</span>
+				<span class="path">${item.path}</span>
+			</li>`);
+            totalBytes += item.size;
+        });
+        $('#totalCount').html(list.length);
+        $('#totalBytes').html(totalBytes + ' bytes');
+    },
 });

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const flayService = require('../flayground/js/flayService');
+const flayService = require('../flayground/service/flayService');
 
 router.get('/', (req, res, next) => {
 	res.render('flay', { title: 'Flay' });
