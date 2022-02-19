@@ -6,7 +6,8 @@ const logger = require('morgan');
 const favicon = require('serve-favicon');
 
 const indexRouter = require('./routes/indexRouter');
-const flayRouter = require('./routes/flayRouter');
+const flayViewRouter = require('./routes/flayViewRouter');
+const flayApiRouter = require('./routes/flayApiRouter');
 
 const myLogger = function (req, res, next) {
 	console.log('myLogger', 'LOGGED');
@@ -35,7 +36,8 @@ app.use(myLogger);
 app.use(requestTime);
 
 app.use('/', indexRouter);
-app.use('/flay', flayRouter);
+app.use('/flay', flayViewRouter);
+app.use('/api', flayApiRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -2,8 +2,11 @@ const path = require('path');
 const flaySource = require('../source/flaySource');
 
 module.exports = {
-	list: () => {
-		return flaySource.list();
+	listFiles: () => {
+		return flaySource.listFiles();
+	},
+	getMap: () => {
+		return flaySource.getMap();
 	},
 	get: (id) => {
 		return flaySource.list()[id];

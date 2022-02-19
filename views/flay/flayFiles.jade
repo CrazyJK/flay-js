@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+    .container-fluid
+        h1 Files
+            span#totalCount.badge.text-black
+            span#totalBytes.badge.text-black
+        ol#fileList.list-group
+
+    script(defer, src = '/javascripts/flay/flayFiles.js')
