@@ -1,5 +1,101 @@
 extends ../layout
 
 block content
-    .container-fluid
-        h1 Home
+	nav.flay-navbar
+		ul
+			li
+				input(type='search', id='searchKeyword', placeholder='Search...')
+			li
+				label
+					input(type='checkbox', id='movie', checked='true').sr-only
+					span
+						i.fa.fa-film
+				label
+					input(type='checkbox', id='subtitles').sr-only
+					span
+						i.fa.fa-closed-captioning
+			li
+				label
+					input(type='checkbox', id='favorite', checked='true').sr-only
+					span
+						i.fa.fa-heart
+				label
+					input(type='checkbox', id='nofavorite', checked='true').sr-only
+					span
+						i.fa.fa-heart-o
+			li
+				label
+					input(type='checkbox', id='rank0', name='rank', value='0', checked='true').sr-only
+					span
+						i.fa.fa-circle
+				label
+					input(type='checkbox', id='rank1', name='rank', value='1').sr-only
+					span
+						i.fa.fa-star
+				label
+					input(type='checkbox', id='rank2', name='rank', value='2').sr-only
+					span
+						i.fa.fa-star
+				label
+					input(type='checkbox', id='rank3', name='rank', value='3').sr-only
+					span
+						i.fa.fa-star
+				label
+					input(type='checkbox', id='rank4', name='rank', value='4').sr-only
+					span
+						i.fa.fa-star
+				label
+					input(type='checkbox', id='rank5', name='rank', value='5').sr-only
+					span
+						i.fa.fa-star
+	.container-flay
+		.flay
+			.flay-info
+				label.flay-studio
+				label.flay-opus
+				label.flay-release
+				.flay-info-rank
+					label
+						input(type='radio', id='flay-rank-1', name='flay-rank', value='-1').sr-only
+						span
+							i.fa.fa-thumbs-down
+					label
+						input(type='radio', id='flay-rank0', name='flay-rank', value='0').sr-only
+						span
+							i.fa.fa-circle
+					label
+						input(type='radio', id='flay-rank1', name='flay-rank', value='1').sr-only
+						span
+							i.fa.fa-star
+					label
+						input(type='radio', id='flay-rank2', name='flay-rank', value='2').sr-only
+						span
+							i.fa.fa-star
+					label
+						input(type='radio', id='flay-rank3', name='flay-rank', value='3').sr-only
+						span
+							i.fa.fa-star
+					label
+						input(type='radio', id='flay-rank4', name='flay-rank', value='4').sr-only
+						span
+							i.fa.fa-star
+					label
+						input(type='radio', id='flay-rank5', name='flay-rank', value='5').sr-only
+						span
+							i.fa.fa-star
+				label.flay-title
+			.flay-cover
+			.flay-info.flay-info-actress
+				.flay-actress
+					label.flay-actress-favorite
+						input(type='checkbox', name='flay-actress-favorite-input').sr-only
+						span
+							i.fa.fa-heart
+					label.flay-actress-name
+					label.flay-actress-localName
+					label.flay-actress-bitth
+					label.flay-actress-body
+					label.flay-actress-height
+					label.flay-actress-debut
+
+	script(defer, src = '/javascripts/flay/flayHome.js')

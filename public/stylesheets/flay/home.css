@@ -1,0 +1,78 @@
+@charset "UTF-8";
+
+.flay-navbar {
+	padding: 0.5rem 1rem;
+	background-color: white;
+}
+
+.flay-navbar:hover {
+	background-color: aliceblue;
+}
+
+.flay-navbar ul {
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+	gap: 2rem;
+	margin: 0;
+	border: 0;
+	padding: 0;
+	list-style: none;
+	font-size: 2rem;
+}
+
+.flay-navbar input[type='search'] {
+	background-color: transparent;
+	border: 0;
+	padding: 0 0.25rem;
+	width: 10rem;
+}
+
+label input.sr-only:checked ~ span {
+	color: orange;
+}
+
+label:hover input.sr-only ~ span {
+	cursor: pointer;
+}
+
+.container-flay {
+	display: flex;
+	justify-content: center;
+}
+
+.container-flay .flay .flay-cover {
+	background: transparent no-repeat center;
+	background-size: contain;
+	margin: 1rem 0;
+	width: 800px;
+	aspect-ratio: 800 / 538;
+	transition: background 0.2s ease-out;
+}
+
+.container-flay .flay .flay-info {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.container-flay .flay .flay-info label {
+	background-color: rgba(0, 0, 0, 0.75);
+	border-radius: 0.5rem;
+	color: white;
+	margin: 0.5rem;
+	border: 0;
+	padding: 0.25rem 0.5rem;
+	font-weight: 700;
+	font-size: 1.25rem;
+	text-align: center;
+	text-shadow: 1px 1px 1px #000, 0 0 4px #000;
+}
+
+.container-flay .flay .flay-info.flay-info-actress .flay-actress {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+.container-flay .flay .flay-info.flay-info-actress .flay-actress label {
+	font-size: 1rem;
+}

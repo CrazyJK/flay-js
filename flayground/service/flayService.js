@@ -1,4 +1,3 @@
-const path = require('path');
 const flaySource = require('../source/flaySource');
 
 module.exports = {
@@ -8,7 +7,10 @@ module.exports = {
 	getMap: () => {
 		return flaySource.getMap();
 	},
-	get: (id) => {
-		return flaySource.list()[id];
+	list: () => {
+		return flaySource.list();
+	},
+	get: (opus) => {
+		return flaySource.getMap().get(opus);
 	},
 };

@@ -9,7 +9,7 @@
   },
   "nodemonConfig": {
     "ignore": [
-      "public/javascripts/*.js"
+      "**/public/**"
     ]
   },
   "dependencies": {

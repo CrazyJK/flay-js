@@ -8,7 +8,6 @@ const File = require('./domain/File');
 
 module.exports = {
 	listFiles: function (dirPath, arrayOfFiles) {
-		console.log('reading... ', dirPath);
 		files = fs.readdirSync(dirPath);
 
 		arrayOfFiles = arrayOfFiles || [];
