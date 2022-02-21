@@ -10,6 +10,14 @@ const rowData = fs.readFileSync(actressJsonPath, 'utf8');
 const actressList = JSON.parse(rowData);
 console.log('actressService', 'read data', actressList.length);
 
+function writeJson() {
+	const data = JSON.stringify(actressList, null, 2);
+	fs.writeFile(actressJsonPath, data, (err) => {
+		if (err) throw err;
+		console.log('actressService', 'writed', actressJsonPath);
+	});
+}
+
 module.exports = {
 	list: () => {
 		return actressList;
@@ -31,5 +39,21 @@ module.exports = {
 			favorite: false,
 			coverSize: 0,
 		};
+	},
+	save: (actress) => {
+		let found = false;
+		for (let i = 0; i < actressList.length; i++) {
+			if (actressList[i].name === actress.name) {
+				actressList[i] = actress;
+				found = true;
+				console.log('actressService', 'found actress', actressList[i]);
+				break;
+			}
+		}
+		if (!found) {
+			actressList.push(actress);
+			console.log('actressService', 'new actress', actress);
+		}
+		writeJson();
 	},
 };

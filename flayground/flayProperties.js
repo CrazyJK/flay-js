@@ -11,4 +11,5 @@ instancePath.push(flayProperties.get('flay.cover-path'));
 module.exports = {
 	INSTANCE_PATH: instancePath.map((path) => path.trim()),
 	INFO_PATH: flayProperties.get('flay.info-path'),
+	PLAYER: flayProperties.get('flay.player-app').trim(),
 };

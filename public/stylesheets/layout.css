@@ -1,20 +1,25 @@
 @charset "UTF-8";
 
 @import url(/stylesheets/@/scrollbar.css);
+@import url(/stylesheets/@/theme.color-set.css);
 
 header {
 	position: sticky;
 	top: 0;
 	z-index: 1020;
-	background-color: #fff;
+	background-color: var(--color-bg);
+	color: var(--color-text);
 }
 
 main {
+	background-color: var(--color-bg);
+	color: var(--color-text);
 	padding-bottom: 4rem;
 }
 
 footer {
-	background: #f4f4f4;
+	background-color: var(--color-bg);
+	color: var(--color-text);
 	text-align: center;
 	margin: 0.5rem 1rem;
 	overflow: auto;
@@ -29,6 +34,7 @@ footer > p {
 	padding: 0;
 }
 
-:focus-visible {
-	outline: none;
+.offcanvas {
+	width: 200px;
+	background-color: var(--color-bg);
 }

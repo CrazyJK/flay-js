@@ -1,5 +1,5 @@
 doctype html
-html(lang="en")
+html(lang='en', data-theme='light')
     head
         title #{title} Express Website
         meta(charset='utf-8')
@@ -13,18 +13,30 @@ html(lang="en")
         script(defer, src='https://kit.fontawesome.com/673bdd6a2d.js', crossorigin='anonymous')
         script(defer, src='/javascripts/layout.js')
         script(defer, src='/javascripts/flay/flay.common.js')
+        script(defer, src='/javascripts/flay/flay.api.js')
     body
         header
-            nav.navbar.navbar-expand-lg.navbar-light.bg-light.p-0
+            nav.navbar.navbar-expand-lg.p-0
                 .container-fluid
                     a.navbar-brand(href='/') Flayground
                     button.navbar-toggler(type='button', data-bs-toggle='collapse', data-bs-target='#navbarNavAltMarkup', aria-controls='navbarNavAltMarkup' aria-expanded='false' aria-label='Toggle navigation')
                         span.navbar-toggler-icon
                     #navbarNavAltMarkup.collapse.navbar-collapse
+                        .navbar-nav.me-auto
+                            a.nav-link(href='/flay/home') Home
+                            a.nav-link(href='/flay/file') Files
+                            a.nav-link(href='/flay/list') List
                         .navbar-nav
-                            a.nav-link(href="/flay/home") Home
-                            a.nav-link(href="/flay/file") Files
-                            a.nav-link(href="/flay/list") List
+                            a.btn.btn-primary.mx-2(data-bs-toggle='offcanvas' href='#offcanvasSide' role='button' aria-controls='offcanvasSide')
+                            .form-check.form-switch
+                                input.form-check-input(type='checkbox', id='themeToggler', checked='true')
+                                label.form-check-label(for='themeToggler') Dark
+            .offcanvas.offcanvas-start(tabindex='1', id='offcanvasSide', aria-labelledby='offcanvasSideLabel')
+                .offcanvas-header
+                    h5.offcanvas-title(id='offcanvasSideLabel') Flayground
+                    button.btn-close.text-reset(type='button', data-bs-dismiss='offcanvas', aria-label='Close')
+                .offcanvas-body
+                    div blur blur
         main
             block content
         footer

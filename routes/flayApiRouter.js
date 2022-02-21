@@ -9,6 +9,7 @@ const router = express.Router();
 const flayService = require('../flayground/service/flayService');
 const videoService = require('../flayground/service/videoService');
 const actressService = require('../flayground/service/actressService');
+const tagService = require('../flayground/service/tagService');
 
 /* ---- file ---- */
 
@@ -35,6 +36,11 @@ router.get('/flay/:opus', function (req, res, next) {
 	res.json(flay);
 });
 
+router.post('/flay/:opus/play', function (req, res, next) {
+	flayService.play(req.params.opus);
+	res.status(204).send();
+});
+
 /* ---- video ---- */
 
 router.get('/video', function (req, res, next) {
@@ -47,6 +53,11 @@ router.get('/video/:opus', function (req, res, next) {
 	res.json(video);
 });
 
+router.post('/video', function (req, res, next) {
+	videoService.save(req.body);
+	res.status(204).send();
+});
+
 /* ---- cover ---- */
 
 router.get('/cover/:opus', function (req, res, next) {
@@ -54,11 +65,38 @@ router.get('/cover/:opus', function (req, res, next) {
 	res.sendFile(path.resolve(flay.files.cover.path, flay.files.cover.name));
 });
 
-/* ---- cover ---- */
+/* ---- actress ---- */
+
+router.get('/actress', function (req, res, next) {
+	const list = actressService.list();
+	res.json(list);
+});
 
 router.get('/actress/:name', function (req, res, next) {
 	const actress = actressService.get(req.params.name);
 	res.json(actress);
+});
+
+router.post('/actress', function (req, res, next) {
+	actressService.save(req.body);
+	res.status(204).send();
+});
+
+/* ---- tag ---- */
+
+router.get('/tag', function (req, res, next) {
+	const list = tagService.list();
+	res.json(list);
+});
+
+router.get('/tag/:id', function (req, res, next) {
+	const tag = tagService.get(req.params.id);
+	res.json(tag);
+});
+
+router.post('/tag', function (req, res, next) {
+	tagService.save(req.body);
+	res.status(204).send();
 });
 
 module.exports = router;
