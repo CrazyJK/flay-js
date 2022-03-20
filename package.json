@@ -9,7 +9,8 @@
   },
   "nodemonConfig": {
     "ignore": [
-      "**/public/**"
+      "public/**",
+      "views/**"
     ]
   },
   "dependencies": {
@@ -19,7 +20,10 @@
     "http-errors": "~1.6.3",
     "jade": "^1.11.0",
     "morgan": "~1.9.1",
+    "nodemon": "^2.0.15",
     "properties-reader": "^2.2.0",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "to": "^0.2.9",
+    "update": "^0.7.4"
   }
 }

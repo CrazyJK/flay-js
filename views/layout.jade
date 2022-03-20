@@ -1,5 +1,5 @@
 doctype html
-html(lang='en', data-theme='light')
+html(lang='en', data-theme='dark')
     head
         title #{title} Express Website
         meta(charset='utf-8')
@@ -18,7 +18,8 @@ html(lang='en', data-theme='light')
         header
             nav.navbar.navbar-expand-lg.p-0
                 .container-fluid
-                    a.navbar-brand(href='/') Flayground
+                    a.navbar-brand(href='/')
+                        img(src='/images/flayground.svg', height="40px")
                     button.navbar-toggler(type='button', data-bs-toggle='collapse', data-bs-target='#navbarNavAltMarkup', aria-controls='navbarNavAltMarkup' aria-expanded='false' aria-label='Toggle navigation')
                         span.navbar-toggler-icon
                     #navbarNavAltMarkup.collapse.navbar-collapse
@@ -27,16 +28,25 @@ html(lang='en', data-theme='light')
                             a.nav-link(href='/flay/file') Files
                             a.nav-link(href='/flay/list') List
                         .navbar-nav
-                            a.btn.btn-primary.mx-2(data-bs-toggle='offcanvas' href='#offcanvasSide' role='button' aria-controls='offcanvasSide')
+                            a.btn.btn-secondary.mx-2(data-bs-toggle='offcanvas' href='#offcanvasSide' role='button' aria-controls='offcanvasSide')
+                                i.fas.fa-arrow-left
+            .offcanvas.offcanvas-end(tabindex='1', id='offcanvasSide', aria-labelledby='offcanvasSideLabel')
+                .offcanvas-header
+                    h5.offcanvas-title(id='offcanvasSideLabel')
+                        img(src='/images/flayground.svg', height="40px")
+                    button.btn-close.text-reset(type='button', data-bs-dismiss='offcanvas', aria-label='Close')
+                .offcanvas-body
+                    ul.nav.flex-column
+                        li.nav-item
+                            a.nav-link(href='/flay/home') Home
+                        li.nav-item
+                            a.nav-link(href='/flay/file') Files
+                        li.nav-item
+                            a.nav-link(href='/flay/list') List
+                        li.nav-item
                             .form-check.form-switch
                                 input.form-check-input(type='checkbox', id='themeToggler', checked='true')
                                 label.form-check-label(for='themeToggler') Dark
-            .offcanvas.offcanvas-start(tabindex='1', id='offcanvasSide', aria-labelledby='offcanvasSideLabel')
-                .offcanvas-header
-                    h5.offcanvas-title(id='offcanvasSideLabel') Flayground
-                    button.btn-close.text-reset(type='button', data-bs-dismiss='offcanvas', aria-label='Close')
-                .offcanvas-body
-                    div blur blur
         main
             block content
         footer

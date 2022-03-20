@@ -3,6 +3,11 @@
 @import url(/stylesheets/@/scrollbar.css);
 @import url(/stylesheets/@/theme.color-set.css);
 
+body {
+	background: #3c3c3c url(/images/flayground1.svg) no-repeat center / 600px;
+	min-height: 100vh;
+}
+
 header {
 	position: sticky;
 	top: 0;
