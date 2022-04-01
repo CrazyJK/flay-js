@@ -2,14 +2,15 @@
  * @requestMapping(/api)
  */
 
-const path = require('path');
-const express = require('express');
-const router = express.Router();
+import { Router } from 'express';
+import path from 'path';
 
-const flayService = require('../flayground/service/flayService');
-const videoService = require('../flayground/service/videoService');
-const actressService = require('../flayground/service/actressService');
-const tagService = require('../flayground/service/tagService');
+import flayService from '../flayground/service/flayService.js';
+import videoService from '../flayground/service/videoService.js';
+import actressService from '../flayground/service/actressService.js';
+import tagService from '../flayground/service/tagService.js';
+
+const router = Router();
 
 /* ---- file ---- */
 
@@ -99,4 +100,4 @@ router.post('/tag', function (req, res, next) {
 	res.status(204).send();
 });
 
-module.exports = router;
+export default router;

@@ -1,24 +1,24 @@
-const path = require('path');
-const fs = require('fs');
+import { resolve } from 'path';
+import { readFileSync, writeFile } from 'fs';
 
-const flayProperties = require('../flayProperties');
+import { INFO_PATH } from '../flayProperties.js';
 
-const tagJsonPath = path.resolve(flayProperties.INFO_PATH, 'tag.json');
+const tagJsonPath = resolve(INFO_PATH, 'tag.json');
 
 console.log('tagService', 'reading', tagJsonPath);
-const rowData = fs.readFileSync(tagJsonPath, 'utf8');
+const rowData = readFileSync(tagJsonPath, 'utf8');
 const tagList = JSON.parse(rowData);
 console.log('tagService', 'read data', tagList.length);
 
 function writeJson() {
 	const data = JSON.stringify(tagList, null, 2);
-	fs.writeFile(tagJsonPath, data, (err) => {
+	writeFile(tagJsonPath, data, (err) => {
 		if (err) throw err;
 		console.log('tagService', 'writed', tagJsonPath);
 	});
 }
 
-module.exports = {
+export default {
 	list: () => {
 		return tagList;
 	},

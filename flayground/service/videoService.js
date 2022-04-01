@@ -1,24 +1,24 @@
-const path = require('path');
-const fs = require('fs');
+import path from 'path';
+import { readFileSync, writeFile } from 'fs';
 
-const flayProperties = require('../flayProperties');
+import { INFO_PATH } from '../flayProperties.js';
 
-const videoJsonPath = path.resolve(flayProperties.INFO_PATH, 'video.json');
+const videoJsonPath = path.resolve(INFO_PATH, 'video.json');
 
 console.log('videoService', 'reading', videoJsonPath);
-const rowData = fs.readFileSync(videoJsonPath, 'utf8');
+const rowData = readFileSync(videoJsonPath, 'utf8');
 const videoList = JSON.parse(rowData);
 console.log('videoService', 'read data', videoList.length);
 
 function writeJson() {
 	const data = JSON.stringify(videoList, null, 2);
-	fs.writeFile(videoJsonPath, data, (err) => {
+	writeFile(videoJsonPath, data, (err) => {
 		if (err) throw err;
 		console.log('videoService', 'writed', videoJsonPath);
 	});
 }
 
-module.exports = {
+export default {
 	list: () => {
 		return videoList;
 	},

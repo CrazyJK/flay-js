@@ -1,19 +1,19 @@
-const path = require('path');
-const process = require('child_process');
+import { resolve } from 'path';
+import { spawn } from 'child_process';
 
-const flaySource = require('../source/flaySource');
-const videoService = require('./videoService');
-const flayProperties = require('../flayProperties');
+import flaySource from '../source/flaySource.js';
+import videoService from './videoService.js';
+import { PLAYER } from '../flayProperties.js';
 
-module.exports = {
+export default {
 	listFiles: () => {
 		return flaySource.listFiles();
 	},
-	getMap: () => {
-		return flaySource.getMap();
-	},
 	list: () => {
 		return flaySource.list();
+	},
+	getMap: () => {
+		return flaySource.getMap();
 	},
 	get: (opus) => {
 		return flaySource.getMap().get(opus);
@@ -21,10 +21,10 @@ module.exports = {
 	play: (opus) => {
 		const flay = flaySource.getMap().get(opus);
 		const file = flay.files.movie[0];
-		const moviePath = path.resolve(file.path, file.name);
+		const moviePath = resolve(file.path, file.name);
 		// call external command
-		console.log('flayService', 'play', flayProperties.PLAYER, moviePath);
-		const player = process.spawn(flayProperties.PLAYER, [moviePath]);
+		console.log('flayService', 'play', PLAYER, moviePath);
+		const player = spawn(PLAYER, [moviePath]);
 		player.on('exist', (code) => {
 			console.log('flayService', 'player exited', code);
 		});

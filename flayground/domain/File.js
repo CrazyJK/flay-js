@@ -1,16 +1,16 @@
-const path = require('path');
-const fs = require('fs');
+import { dirname, basename, extname } from 'path';
+import { statSync } from 'fs';
 
-module.exports = class File {
+export default class File {
 	constructor(filepath) {
-		const stats = fs.statSync(filepath);
+		const stats = statSync(filepath);
 
 		this.ino = stats.ino;
-		this.path = path.dirname(filepath);
-		this.name = path.basename(filepath);
-		this.ext = path.extname(filepath).toLowerCase();
+		this.path = dirname(filepath);
+		this.name = basename(filepath);
+		this.ext = extname(filepath).toLowerCase();
 		this.size = stats.size;
 		this.mtime = stats.mtimeMs;
 		this.birth = stats.birthtimeMs;
 	}
-};
+}

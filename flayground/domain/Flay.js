@@ -1,4 +1,4 @@
-module.exports = class Flay {
+export default class Flay {
 	constructor(studio, opus, title, actressArray, release) {
 		this.studio = studio;
 		this.opus = opus;
@@ -44,4 +44,4 @@ module.exports = class Flay {
 	setFavorite(bool) {
 		this.favorite = bool;
 	}
-};
+}

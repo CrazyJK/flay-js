@@ -1,27 +1,29 @@
 /**
  * Flay File Utilities
  */
-const path = require('path');
-const fs = require('fs');
+import { resolve } from 'path';
+import { readdirSync, statSync } from 'fs';
 
-const File = require('./domain/File');
+import File from './domain/File.js';
 
-module.exports = {
-	listFiles: function (dirPath, arrayOfFiles) {
-		files = fs.readdirSync(dirPath);
+function listFiles(dirPath, arrayOfFiles) {
+	const files = readdirSync(dirPath);
 
-		arrayOfFiles = arrayOfFiles || [];
+	arrayOfFiles = arrayOfFiles || [];
 
-		files.forEach((file) => {
-			const filepath = path.resolve(dirPath, file);
+	files.forEach((file) => {
+		const filepath = resolve(dirPath, file);
 
-			if (fs.statSync(filepath).isDirectory()) {
-				arrayOfFiles = this.listFiles(filepath, arrayOfFiles);
-			} else {
-				arrayOfFiles.push(new File(filepath));
-			}
-		});
+		if (statSync(filepath).isDirectory()) {
+			arrayOfFiles = this.listFiles(filepath, arrayOfFiles);
+		} else {
+			arrayOfFiles.push(new File(filepath));
+		}
+	});
 
-		return arrayOfFiles;
-	},
+	return arrayOfFiles;
+}
+
+export default {
+	listFiles: listFiles,
 };

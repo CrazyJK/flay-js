@@ -1,13 +1,10 @@
-const path = require('path');
-const fs = require('fs');
+import Flay from '../domain/Flay.js';
+import FileUtils from '../FileUtils.js';
+import videoService from '../service/videoService.js';
+import actressService from '../service/actressService.js';
+import { INSTANCE_PATH } from '../flayProperties.js';
 
-const Flay = require('../domain/Flay');
-const FileUtils = require('../FileUtils');
-const flayProperties = require('../flayProperties');
-const videoService = require('../service/videoService');
-const actressService = require('../service/actressService');
-
-const instanceFolderList = flayProperties.INSTANCE_PATH;
+const instanceFolderList = INSTANCE_PATH;
 
 let foundFileList = new Array();
 let flayMap = new Map();
@@ -58,8 +55,7 @@ function load() {
 
 load();
 
-module.exports = {
-	load: load,
+export default {
 	listFiles: () => {
 		return foundFileList;
 	},

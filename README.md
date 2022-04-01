@@ -46,3 +46,8 @@ directory
     html/view 클라이언트 사이드로 변수들을 보낼 수 있으며, 그 변수들은 오로지 거기서만 사용할 수 있다.
 
 ref. http://expressjs.com/en/4x/api.html
+
+
+    "morgan": "~1.9.1",
+    "to": "^0.2.9",
+    "update": "^0.7.4"

@@ -2,8 +2,8 @@
  * @requestMapping(/flay)
  */
 
-const express = require('express');
-const router = express.Router();
+import { Router } from 'express';
+const router = Router();
 
 // VIEW
 router.get('/home', (req, res, next) => {
@@ -18,4 +18,4 @@ router.get('/list', (req, res, next) => {
 	res.render('flay/flayList', { title: 'Flay list' });
 });
 
-module.exports = router;
+export default router;

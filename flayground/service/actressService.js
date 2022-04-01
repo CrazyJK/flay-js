@@ -1,24 +1,24 @@
-const path = require('path');
-const fs = require('fs');
+import { resolve } from 'path';
+import { readFileSync, writeFile } from 'fs';
 
-const flayProperties = require('../flayProperties');
+import { INFO_PATH } from '../flayProperties.js';
 
-const actressJsonPath = path.resolve(flayProperties.INFO_PATH, 'actress.json');
+const actressJsonPath = resolve(INFO_PATH, 'actress.json');
 
 console.log('actressService', 'reading', actressJsonPath);
-const rowData = fs.readFileSync(actressJsonPath, 'utf8');
+const rowData = readFileSync(actressJsonPath, 'utf8');
 const actressList = JSON.parse(rowData);
 console.log('actressService', 'read data', actressList.length);
 
 function writeJson() {
 	const data = JSON.stringify(actressList, null, 2);
-	fs.writeFile(actressJsonPath, data, (err) => {
+	writeFile(actressJsonPath, data, (err) => {
 		if (err) throw err;
 		console.log('actressService', 'writed', actressJsonPath);
 	});
 }
 
-module.exports = {
+export default {
 	list: () => {
 		return actressList;
 	},
