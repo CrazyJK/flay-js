@@ -20,6 +20,8 @@
 	--shadow-gray-light: 0px 10px 50px rgb(0 0 0 / 10%);
 	--shadow-gray-dark: 0px 10px 50px rgb(255 255 255 / 10%);
 	--shadow-gray: var(--shadow-gray-light);
+	/* header height */
+	--header-height: 0rem;
 }
 
 body.dark {
@@ -84,9 +86,10 @@ header {
 	position: fixed;
 	top: 0;
 	left: 0;
-	width: 100vw;
-	height: 5.6rem;
-	padding: 0rem 2rem;
+	width: 3rem;
+	/* height: var(--header-height); */
+	height: 2rem;
+	padding: 0.5rem 0;
 }
 header button {
 	background: none;
@@ -160,15 +163,18 @@ header nav a.selected {
 aside {
 	position: fixed;
 	left: 0;
-	top: 5.6rem;
+	top: var(--header-height);
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
 	width: 200px;
-	height: calc(100vh - 5.6rem);
+	height: calc(100vh - var(--header-height));
 	border-right: 1px solid var(--gray-2);
 	transform: translateX(-100%);
 	transition: transform 300ms;
+}
+body.show-aside aside {
+	padding-top: 2rem;
 }
 aside .aside-container {
 	flex: 1 0 0;
@@ -350,9 +356,9 @@ aside svg polyline {
 main {
 	position: absolute;
 	left: var(--sidebar-width);
-	top: 5.6rem;
+	top: var(--header-height);
 	width: calc(100vw - var(--sidebar-width));
-	min-height: calc(100vh - 5.6rem);
+	min-height: calc(100vh - var(--header-height));
 	display: grid;
 	grid-gap: 0;
 	grid-template-columns: 1fr clamp(300px, calc(100vw - var(--sidebar-width)), 800px) 1fr;
@@ -363,7 +369,7 @@ main div.body {
 	grid-column: 2;
 	padding: 0;
 	max-width: 100%;
-	min-height: 100vh;
+	min-height: calc(100vh - var(--header-height));
 }
 main div.body img {
 	display: block;
@@ -416,9 +422,10 @@ main div.links {
 	flex-flow: row wrap;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 1081px) {
 	body {
 		--sidebar-width: 200px;
+		--header-height: 0rem;
 	}
 	body aside {
 		transform: translateX(0) !important;

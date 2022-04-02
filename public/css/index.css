@@ -117,6 +117,7 @@ ol#fileList > li > span.path {
 	border: 0;
 	padding: 0 0.25rem;
 	font-size: 1.75rem;
+	text-align: center;
 	width: 12rem;
 }
 
@@ -135,6 +136,9 @@ ol#fileList > li > span.path {
 	align-items: center;
 	justify-content: center;
 }
+.container-flay .flay .flay-info:last-child {
+	margin-bottom: 3rem;
+}
 .container-flay .flay .flay-info.horizontal div {
 	min-height: 3rem;
 }
@@ -144,7 +148,7 @@ ol#fileList > li > span.path {
 	background-color: var(--gray-2);
 	border-radius: 0.25rem;
 	padding: 0.5rem;
-	width: 800px;
+	width: 100%;
 }
 .container-flay .flay .flay-cover {
 	aspect-ratio: 800 / 538;
@@ -167,6 +171,27 @@ ol#fileList > li > span.path {
 	text-align: center;
 }
 
+/* 코멘트 */
+.container-flay .flay .flay-info .flay-info-comment {
+	text-align: center;
+	width: 100%;
+}
+.container-flay .flay .flay-info .flay-info-comment .flay-comment {
+	min-height: 2rem;
+}
+.container-flay .flay .flay-info .flay-info-comment .flay-comment.comment-empty {
+	color: var(--gray-3);
+}
+.container-flay .flay .flay-info .flay-info-comment .flay-comment-input {
+	background-color: transparent;
+	border: 1px solid var(--gray-2);
+	margin: 0;
+	height: 2rem;
+	font-size: 1rem;
+	text-align: center;
+	width: 80%;
+}
+
 /* 타이틀 */
 .container-flay .flay .flay-info .flay-info-title {
 	width: 100%;
@@ -179,6 +204,12 @@ ol#fileList > li > span.path {
 	white-space: nowrap;
 	overflow: hidden;
 	max-width: fit-content;
+	font-size: 1.5rem;
+}
+
+/* 재생 버튼 */
+.container-flay .flay .flay-info .flay-info-extra .flay-movie {
+	cursor: pointer;
 }
 
 /* 자막 유무 */
@@ -194,21 +225,11 @@ ol#fileList > li > span.path {
 	margin: 0.25rem 0;
 }
 
-/* 커멘트 */
-.container-flay .flay .flay-info .flay-info-comment .flay-comment.comment-empty {
-	color: var(--gray-3);
-}
-.container-flay .flay .flay-info .flay-info-comment .flay-comment-input {
-	background-color: transparent;
-	border: 1px solid var(--gray-2);
-	margin: 0.25rem;
-	height: 38px;
-}
-
 /* 배우 */
 .container-flay .flay .flay-info .flay-info-actress {
 	margin-top: 1rem;
 	min-height: 2.75rem;
+	min-width: 90%;
 }
 .container-flay .flay .flay-info .flay-info-actress .flay-actress {
 	display: flex;
@@ -217,6 +238,32 @@ ol#fileList > li > span.path {
 }
 .container-flay .flay .flay-info .flay-info-actress .flay-actress label {
 	font-size: 1rem;
+	margin: 0;
+}
+.container-flay .flay .flay-info .flay-info-actress .flay-actress .flay-actress-favorite {
+	flex-grow: 0;
+}
+.container-flay .flay .flay-info .flay-info-actress .flay-actress .flay-actress-name {
+	flex: 1 0 auto;
+	text-align: left;
+}
+.container-flay .flay .flay-info .flay-info-actress .flay-actress .flay-actress-localName {
+	flex-grow: 0;
+}
+.container-flay .flay .flay-info .flay-info-actress .flay-actress .flay-actress-age {
+	flex-grow: 0;
+}
+.container-flay .flay .flay-info .flay-info-actress .flay-actress .flay-actress-birth {
+	flex-grow: 0;
+}
+.container-flay .flay .flay-info .flay-info-actress .flay-actress .flay-actress-body {
+	flex-grow: 0;
+}
+.container-flay .flay .flay-info .flay-info-actress .flay-actress .flay-actress-height {
+	flex-grow: 0;
+}
+.container-flay .flay .flay-info .flay-info-actress .flay-actress .flay-actress-debut {
+	flex-grow: 0;
 }
 
 /* 태그 */
@@ -246,6 +293,7 @@ ol#fileList > li > span.path {
 	justify-content: center;
 }
 .pagination .page-item {
+	background-color: var(--col-bg);
 	border: 1px solid var(--gray-2);
 	padding: 0.25rem;
 }
@@ -270,5 +318,20 @@ ol#fileList > li > span.path {
 @media screen and (max-height: 1440px) {
 	.container-flay .flay .flay-info.horizontal {
 		flex-direction: row;
+	}
+}
+
+@media screen and (max-width: 800px) {
+	.flay-navbar ul {
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 0.25rem;
+	}
+	.container-flay .flay .flay-info.horizontal {
+		flex-direction: column;
+	}
+	.container-flay .flay .flay-info .flay-info-actress .flay-actress {
+		flex-direction: column;
 	}
 }

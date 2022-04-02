@@ -171,11 +171,16 @@ function showFlay() {
 							<span><i class="fa fa-heart${actress.favorite ? '' : '-o'}"></i></span>
 						</label>
 						<label class="flay-actress-name"     >${actress.name}</label>
-						<label class="flay-actress-localName">${actress.localName}</label>
-						<label class="flay-actress-birth"    >${actress.birth}</label>
-						<label class="flay-actress-body"     >${actress.body}</label>
-						<label class="flay-actress-height"   >${actress.height}</label>
-						<label class="flay-actress-debut"    >${actress.debut}</label>
+						<label class="flay-actress-localName">${actress.localName || ''}</label>
+						<label class="flay-actress-age"      >${(function (year) {
+							if (year === 0) return '';
+							const age = new Date().getFullYear() - year + 1;
+							return age + '<small>y</small>';
+						})(Number((actress.birth || '').substring(0, 4)))}</label>
+						<label class="flay-actress-birth"    >${(actress.birth || '').replace(/年|月|日/g, (match, offset, string) => '<small>' + match + '</small>')}</label>
+						<label class="flay-actress-body"     >${(actress.body || '').replace(/ - /g, (match) => '<small>' + match.trim() + '</small>')}</label>
+						<label class="flay-actress-height"   >${actress.height || ''}</label>
+						<label class="flay-actress-debut"    >${actress.debut || ''}</label>
 					</div>`)
 					.data('actress', actress)
 					.appendTo($('.container-flay .flay .flay-info-actress'));
@@ -246,10 +251,11 @@ function addEventListener() {
 	// comment change
 	$('.container-flay .flay .flay-comment').on('click', () => {
 		$('.container-flay .flay .flay-comment').hide();
-		$('.container-flay .flay .flay-comment-input').show().focus();
+		$('.container-flay .flay .flay-comment-input').val($('.container-flay .flay .flay-comment').text()).show().focus();
 	});
 	// comment save
 	$('.container-flay .flay .flay-comment-input').on('keyup', (e) => {
+		e.stopPropagation();
 		if (e.keyCode === 13) {
 			let commentText = $('.container-flay .flay .flay-comment-input').val().trim();
 			if (!String.isBlank(commentText)) {
