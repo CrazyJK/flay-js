@@ -55,7 +55,11 @@ router.get('/video/:opus', function (req, res, next) {
 });
 
 router.post('/video', function (req, res, next) {
-	videoService.save(req.body);
+	const video = videoService.save(req.body);
+	// assamble flay
+	const flay = flayService.get(video.opus);
+	flay.video = video;
+
 	res.status(204).send();
 });
 

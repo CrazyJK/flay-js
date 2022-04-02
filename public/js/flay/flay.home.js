@@ -212,7 +212,7 @@ function showFlay() {
 		.toggle(currentFlay.video.play > 0);
 	// tag toggle
 	$('.flay-info-tag input:checkbox').prop('checked', false);
-	console.log('tag length', currentFlay.video.tags.length);
+	console.log('tag length', currentFlay.video.tags.length, currentFlay);
 	for (const tag of currentFlay.video.tags) {
 		$('.flay-info-tag .flay-tag #tag' + tag.id).prop('checked', true);
 	}
@@ -302,6 +302,12 @@ function addEventListener() {
 	$(document).on('wheel keyup', (e) => {
 		e.stopPropagation();
 		const eventCode = e.keyCode || e.originalEvent.wheelDelta;
+		console.log('flay.home wheel keyup', eventCode, e.target, e.type);
+
+		if (e.type === 'wheel' && $(e.target).parents('.body').length === 0) {
+			return;
+		}
+
 		switch (eventCode) {
 			case 32: // space -> random
 				goPage(Random.getInteger(0, filteredFlayList.length - 1));

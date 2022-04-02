@@ -30,7 +30,7 @@ const Layout = {
 };
 
 $(document).ready(() => {
-	Layout.setStylesheet();
-	Layout.setActiveMenu();
-	Layout.setThemeToggle();
+	// Layout.setStylesheet();
+	// Layout.setActiveMenu();
+	// Layout.setThemeToggle();
 });

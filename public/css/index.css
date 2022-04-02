@@ -1,0 +1,274 @@
+@charset "UTF-8";
+
+:focus-visible {
+	outline: none;
+}
+
+.fixed-bottom {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.progress {
+	display: flex;
+}
+.progress-bar {
+	display: flex;
+	transition: width 0.6s ease;
+}
+
+/* 라디오, 체크박스 */
+label input.sr-only:checked ~ span,
+label input.sr-only:checked ~ span > * {
+	color: var(--col-check-active);
+}
+
+label:hover input.sr-only ~ span,
+label:hover input.sr-only ~ span > * {
+	cursor: pointer;
+	color: var(--col-check-hover);
+}
+
+/* ---- Flay List ---- */
+ol#flayList li {
+	font-family: D2Coding;
+	display: flex;
+	align-items: baseline;
+	gap: 1rem;
+}
+ol#flayList > li:first-child {
+	font-weight: 700;
+	border-bottom: 1px solid #eee;
+	margin-bottom: 0.5rem;
+}
+ol#flayList > li > .studio {
+	flex: 0 0 100px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+ol#flayList > li > .opus {
+	flex: 0 0 100px;
+}
+ol#flayList > li > .title {
+	flex: 1 1 auto;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+ol#flayList > li > .actress {
+	flex: 0 0 150px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+ol#flayList > li > .release {
+	flex: 0 0 100px;
+}
+
+/* ---- File List ---- */
+ol#fileList li {
+	font-family: D2Coding;
+	display: flex;
+	gap: 1rem;
+}
+ol#fileList > li > span.name {
+	flex: 1 1 auto;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+ol#fileList > li > span.size {
+	flex: 0 0 50px;
+	text-align: right;
+}
+ol#fileList > li > span.time {
+	flex: 0 0 100px;
+}
+ol#fileList > li > span.path {
+	flex: 0 0 auto;
+}
+
+/* ---- flay home ---- */
+.flay-navbar {
+	padding: 0;
+}
+.flay-navbar ul {
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+	gap: 2rem;
+	margin: 0;
+	border: 0;
+	padding: 0;
+	list-style: none;
+	font-size: 1.5rem;
+	transition: 0.4s;
+}
+.flay-navbar ul:hover {
+	box-shadow: var(--shadow-gray);
+}
+
+/* 검색어 */
+.flay-navbar input[type='search'] {
+	background-color: transparent;
+	border: 0;
+	padding: 0 0.25rem;
+	font-size: 1.75rem;
+	width: 12rem;
+}
+
+.container-flay {
+	display: flex;
+	justify-content: center;
+}
+.container-flay .flay {
+	margin-top: 1rem;
+	width: 100%;
+}
+
+.container-flay .flay .flay-info {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.container-flay .flay .flay-info.horizontal div {
+	min-height: 3rem;
+}
+
+/* 커버 */
+.container-flay .flay .flay-info-cover {
+	background-color: var(--gray-2);
+	border-radius: 0.25rem;
+	padding: 0.5rem;
+	width: 800px;
+}
+.container-flay .flay .flay-cover {
+	aspect-ratio: 800 / 538;
+	background: var(--gray-2) no-repeat center;
+	background-size: contain;
+	border-radius: 0.25rem;
+	margin: 0;
+	padding: 0;
+	transition: background 0.2s ease-out;
+}
+
+/* 라벨 공통 */
+.container-flay .flay .flay-info label {
+	border-radius: 0.5rem;
+	margin: 0.25rem;
+	border: 0;
+	padding: 0.25rem 0.5rem;
+	font-weight: 700;
+	font-size: 1.25rem;
+	text-align: center;
+}
+
+/* 타이틀 */
+.container-flay .flay .flay-info .flay-info-title {
+	width: 100%;
+}
+.container-flay .flay .flay-info .flay-info-title .flay-title {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	max-width: fit-content;
+}
+
+/* 자막 유무 */
+.container-flay .flay .flay-info .flay-info-extra .flay-subtitles.subtitles-empty {
+	color: var(--gray-3);
+}
+
+/* 랭크 */
+.container-flay .flay .flay-info .flay-info-rank .flay-rank {
+	display: flex;
+}
+.container-flay .flay .flay-info .flay-info-rank .flay-rank label {
+	margin: 0.25rem 0;
+}
+
+/* 커멘트 */
+.container-flay .flay .flay-info .flay-info-comment .flay-comment.comment-empty {
+	color: var(--gray-3);
+}
+.container-flay .flay .flay-info .flay-info-comment .flay-comment-input {
+	background-color: transparent;
+	border: 1px solid var(--gray-2);
+	margin: 0.25rem;
+	height: 38px;
+}
+
+/* 배우 */
+.container-flay .flay .flay-info .flay-info-actress {
+	margin-top: 1rem;
+	min-height: 2.75rem;
+}
+.container-flay .flay .flay-info .flay-info-actress .flay-actress {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+.container-flay .flay .flay-info .flay-info-actress .flay-actress label {
+	font-size: 1rem;
+}
+
+/* 태그 */
+.container-flay .flay .flay-info .flay-info-tag {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 0.25rem;
+}
+.container-flay .flay .flay-info .flay-info-tag .flay-tag {
+	border-radius: 0.25rem;
+	font-size: 0.875rem;
+	margin: 0.25rem;
+	padding: 0 0.25rem;
+	transition: box-shadow 0.2s;
+}
+.container-flay .flay .flay-info .flay-info-tag .flay-tag:hover {
+	box-shadow: 2px 3px 8px 0px var(--color-box-shadow);
+}
+
+/* 페이지네이션 */
+.pagination {
+	display: flex;
+	list-style: none;
+	margin: 0;
+	padding: 0.5rem;
+	justify-content: center;
+}
+.pagination .page-item {
+	border: 1px solid var(--gray-2);
+	padding: 0.25rem;
+}
+.pagination .page-item .page-link {
+	display: block;
+	color: var(--col-fg);
+	min-width: 2.5rem;
+	font-size: 0.875rem;
+	text-align: center;
+	text-decoration: none;
+}
+.pagination .page-item.active .page-link {
+	color: rgb(var(--col-blue-rgb));
+}
+
+/* 페이지 바 */
+.page-bar {
+	background-color: rgba(var(--col-blue-rgb), 50);
+}
+
+/* 낮은 높이에서 수평으로 배열 */
+@media screen and (max-height: 1440px) {
+	.container-flay .flay .flay-info.horizontal {
+		flex-direction: row;
+	}
+}

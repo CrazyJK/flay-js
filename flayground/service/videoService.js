@@ -10,7 +10,7 @@ const rowData = readFileSync(videoJsonPath, 'utf8');
 const videoList = JSON.parse(rowData);
 console.log('videoService', 'read data', videoList.length);
 
-function writeJson() {
+async function writeJson() {
 	const data = JSON.stringify(videoList, null, 2);
 	writeFile(videoJsonPath, data, (err) => {
 		if (err) throw err;
@@ -54,5 +54,6 @@ export default {
 			console.log('videoService', 'new video', video);
 		}
 		writeJson();
+		return video;
 	},
 };
