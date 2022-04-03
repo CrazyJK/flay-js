@@ -4,59 +4,30 @@
 
 const API = {
 	Flay: {
-		play: (flay) => {
-			console.log('API.Flay.play start', flay.opus);
-			$.ajax({
-				url: '/api/flay/' + flay.opus + '/play',
-				method: 'POST',
-				success: () => {
-					console.log('API.Flay.play end');
-				},
+		play: (flay, callback) => {
+			axios.post('/api/flay/' + flay.opus + '/play').then((response) => {
+				if (callback) callback(response, flay);
 			});
 		},
 	},
 	Video: {
-		save: (video) => {
-			console.log('API.Video.save start', JSON.stringify(video));
-			$.ajax({
-				url: '/api/video',
-				method: 'POST',
-				contentType: 'application/json; charset=utf-8',
-				dataType: 'json',
-				data: JSON.stringify(video),
-				success: () => {
-					console.log('API.Video.save end');
-				},
+		save: (video, callback) => {
+			axios.post('/api/video', video).then((response) => {
+				if (callback) callback(response, video);
 			});
 		},
 	},
 	Actress: {
-		save: (actress) => {
-			console.log('API.Actress.save start', JSON.stringify(actress));
-			$.ajax({
-				url: '/api/actress',
-				method: 'POST',
-				contentType: 'application/json; charset=utf-8',
-				dataType: 'json',
-				data: JSON.stringify(actress),
-				success: () => {
-					console.log('API.Actress.save end');
-				},
+		save: (actress, callback) => {
+			axios.post('/api/actress', actress).then((response) => {
+				if (callback) callback(response, actress);
 			});
 		},
 	},
 	Tag: {
-		save: (tag) => {
-			console.log('API.Tag.save start', JSON.stringify(tag));
-			$.ajax({
-				url: '/api/tag',
-				method: 'POST',
-				contentType: 'application/json; charset=utf-8',
-				dataType: 'json',
-				data: JSON.stringify(tag),
-				success: () => {
-					console.log('API.Tag.save end');
-				},
+		save: (tag, callback) => {
+			axios.post('/api/tag', tag).then(() => {
+				if (callback) callback(response, tag);
 			});
 		},
 	},

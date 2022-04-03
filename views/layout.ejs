@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href="/css/layout.css" />
 		<link rel="stylesheet" href="/css/index.css" />
 		<script defer src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 		<script defer src="https://kit.fontawesome.com/673bdd6a2d.js" crossorigin="anonymous"></script>
 		<script defer src="/js/layout.js"></script>
 		<script defer src="/js/flay/flay.common.js"></script>
@@ -36,7 +37,7 @@
 		<aside>
 			<div>
 				<a href="/" id="logo">
-					<img src="/img/flayground_light.svg" />
+					<img src="/img/flayground-light.svg" />
 				</a>
 			</div>
 			<div class="aside-container">
@@ -74,7 +75,7 @@
 			<div class="body"><%- body %></div>
 		</main>
 		<footer></footer>
-		<script>
+		<script defer>
 			document.querySelector('#hamburger').addEventListener('click', () => {
 				document.body.classList.toggle('show-aside');
 			});
@@ -86,14 +87,14 @@
 				document.body.classList.toggle('dark');
 				document.querySelector('button.theme').classList.toggle('dark');
 
-				document.querySelector('#logo img').src = '/img/flayground_' + (isDarkThemeActive ? 'light' : 'dark') + '.svg';
+				document.querySelector('#logo img').src = '/img/flayground-' + (isDarkThemeActive ? 'light' : 'dark') + '.svg';
 			});
 
 			window.onload = () => {
 				if (isDarkThemeActive) {
 					document.querySelector('button.theme').classList.toggle('dark');
 				}
-				document.querySelector('#logo img').src = '/img/flayground_' + (isDarkThemeActive ? 'light' : 'dark') + '.svg';
+				document.querySelector('#logo img').src = '/img/flayground-' + (isDarkThemeActive ? 'light' : 'dark') + '.svg';
 			};
 		</script>
 		<%- script %>

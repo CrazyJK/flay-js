@@ -1,5 +1,6 @@
 import { resolve } from 'path';
 import { spawn } from 'child_process';
+import createError from 'http-errors';
 
 import flaySource from '../source/flaySource.js';
 import videoService from './videoService.js';
@@ -16,7 +17,13 @@ export default {
 		return flaySource.getMap();
 	},
 	get: (opus) => {
-		return flaySource.getMap().get(opus);
+		const flay = flaySource.getMap().get(opus);
+		if (flay) {
+			return flay;
+		} else {
+			throw createError(404, 'flay notfound: ' + opus);
+		}
+		// return flaySource.getMap().get(opus) || Error('notfound');
 	},
 	play: (opus) => {
 		const flay = flaySource.getMap().get(opus);

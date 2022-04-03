@@ -363,7 +363,10 @@ main {
 	grid-gap: 0;
 	grid-template-columns: 1fr clamp(300px, calc(100vw - var(--sidebar-width)), 800px) 1fr;
 	font-size: 1rem;
-	background: transparent url(/img/flayground1.svg) no-repeat bottom right / 200px;
+	background: transparent url('/img/flayground-circle-dark.svg') no-repeat bottom right / 10rem;
+}
+body.dark main {
+	background-image: url('/img/flayground-circle-light.svg');
 }
 main div.body {
 	grid-column: 2;

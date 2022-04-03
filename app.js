@@ -15,8 +15,6 @@ const __dirname = resolve();
 const port = process.env.PORT || 4000;
 const app = express();
 
-// app.locals.pretty = true;
-
 // view engine setup
 // ### ejs & layouts
 app.set('views', join(__dirname, 'views'));
@@ -24,12 +22,6 @@ app.set('view engine', 'ejs');
 app.set('layout', 'layout');
 app.set('layout extractScripts', true);
 app.use(expressLayouts);
-// ### jade
-// app.set('views', join(__dirname, 'views_jade'));
-// app.set('view engine', 'jade');
-// ### pug
-// app.set('views', join(__dirname, 'views_pug'));
-// app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(json());
@@ -48,15 +40,30 @@ app.use((req, res, next) => {
 });
 // error handler
 app.use((err, req, res, next) => {
-	// set locals, only providing error in development
-	res.locals.message = err.message;
-	res.locals.error = req.app.get('env') === 'development' ? err : {};
+	// console.log(req.headers);
+	const resErr = {
+		isXhr: req.headers['x-requested-with'] === 'XMLHttpRequest' || req.headers.accept.indexOf('json') > -1,
+		status: err.status || 500,
+		message: err.message || 'unknown error',
+		stack: err.stack,
+	};
 
-	if (err.status !== 404) console.log('error', res.locals);
+	if (req.app.get('env') !== 'development') {
+		resErr.stack = null;
+	}
 
-	// render the error page
-	res.status(err.status || 500);
-	res.render('error');
+	if (resErr.status !== 404) {
+		console.log('error', resErr);
+	}
+
+	if (resErr.isXhr) {
+		res.status(resErr.status).json(resErr);
+	} else {
+		// set locals, only providing error in development
+		res.locals.message = resErr.message;
+		res.locals.error = resErr;
+		res.status(resErr.status).render('error');
+	}
 });
 
 // app.set('port', port);
@@ -65,6 +72,7 @@ const server = createServer(app);
 server
 	.listen(port)
 	.on('error', (error) => {
+		console.error('server error', error);
 		if (error.syscall !== 'listen') {
 			throw error;
 		}

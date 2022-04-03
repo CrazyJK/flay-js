@@ -2,11 +2,11 @@
  * flayMap.js
  */
 
-// map display
-$.ajax({
-	url: '/api/flay/list',
-	success: (flayList) => {
-		console.log(flayList);
+axios
+	.get('/api/flay/list')
+	.then((response) => {
+		// 성공 핸들링
+		const flayList = response.data;
 		let count = 0;
 		$.each(flayList, (index, flay) => {
 			$('#flayList').append(`<li>
@@ -19,5 +19,10 @@ $.ajax({
 			count++;
 		});
 		$('#totalCount').html(count);
-	},
-});
+	})
+	.catch((error) => {
+		// 에러 핸들링
+	})
+	.then(() => {
+		// 항상 실행되는 영역
+	});
