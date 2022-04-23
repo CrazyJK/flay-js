@@ -10,6 +10,8 @@ let filteredOpus = [];
 let currentOpusIndex = 0;
 let currentFlay;
 
+let isLoading = false;
+
 Promise.all([axios.get('/api/flay/list'), axios.get('/api/actress'), axios.get('/api/tag')]).then((results) => {
 	flayMap = results[0].data.reduce((map, flay) => {
 		map.set(flay.opus, flay);
@@ -57,11 +59,14 @@ function filterFlay() {
 	const subtitles = $('#subtitles').prop('checked');
 	const favorite = $('#favorite').prop('checked');
 	const nofavorite = $('#nofavorite').prop('checked');
+	// const ranks = $('input[name="rank"]:checked')
+	// 	.serialize()
+	// 	.replace(/rank=/gi, '')
+	// 	.split('&')
+	// 	.map((r) => Number(r));
 	const ranks = $('input[name="rank"]:checked')
-		.serialize()
-		.replace(/rank=/gi, '')
-		.split('&')
-		.map((r) => Number(r));
+		.serializeArray()
+		.map((r) => Number(r.value));
 	const sort = $('input[name="sort"]:checked').val();
 
 	LocalStorageItem.set('flay.home.cond.movie', movie);
@@ -74,7 +79,7 @@ function filterFlay() {
 	filteredOpus = [];
 	[...flayMap.values()].forEach((flay) => {
 		// rank
-		if (ranks.indexOf(flay.video.rank) < 0) {
+		if (!ranks.includes(flay.video.rank)) {
 			return false;
 		}
 		// movie
@@ -124,7 +129,12 @@ function filterFlay() {
 	});
 
 	// go random page
-	goPage(Random.getInteger(0, filteredOpus.length - 1));
+	if (filteredOpus.length > 0) {
+		goPage(Random.getInteger(0, filteredOpus.length - 1));
+	}
+	$('.container-flay, .fixed-bottom').css({
+		opacity: filteredOpus.length > 0 ? 1 : 0,
+	});
 }
 
 function goPage(selectedIndex) {
@@ -134,11 +144,13 @@ function goPage(selectedIndex) {
 	currentOpusIndex = selectedIndex;
 	currentFlay = flayMap.get(filteredOpus[currentOpusIndex]);
 
+	isLoading = true;
+
 	// render pagination
 	renderPagination();
 
 	// show current flay
-	showFlay();
+	showCover();
 	showActress();
 }
 
@@ -177,19 +189,40 @@ function renderPagination() {
 		.css('width', pagePercent + '%');
 }
 
+function showCover() {
+	currentFlay = flayMap.get(filteredOpus[currentOpusIndex]);
+	console.log('showCover', currentFlay.opus);
+
+	axios({
+		method: 'get',
+		url: '/api/cover/' + currentFlay.opus,
+		responseType: 'blob',
+	}).then(function (response) {
+		const coverObjectURL = URL.createObjectURL(response.data);
+
+		$('.container-flay .flay .flay-cover').css({
+			backgroundImage: 'url(' + coverObjectURL + ')',
+		});
+
+		getDominatedColors(coverObjectURL).then((colors) => {
+			$('.container-flay .flay .flay-info-cover').css({
+				boxShadow: `inset 0 0 1rem 0.5rem rgba(${colors[0].rgba[0]}, ${colors[0].rgba[1]}, ${colors[0].rgba[2]}, ${colors[0].rgba[3]})`,
+			});
+			$('.container-flay .flay .flay-cover').css({
+				boxShadow: `inset 0 0 4rem 2rem rgba(${colors[1].rgba[0]}, ${colors[1].rgba[1]}, ${colors[1].rgba[2]}, ${colors[1].rgba[3]})`,
+			});
+
+			showFlay();
+
+			isLoading = false;
+		});
+	});
+}
+
 function showFlay() {
 	currentFlay = flayMap.get(filteredOpus[currentOpusIndex]);
 	console.log('showFlay', currentFlay.opus);
 
-	// getDominatedColors('/api/cover/' + currentFlay.opus).then((colors) => {
-	// 	$('.container-flay .flay .flay-info-cover').css({
-	// 		boxShadow: `inset 0 0 1rem rgba(${colors[0].rgba[0]}, ${colors[0].rgba[1]}, ${colors[0].rgba[2]}, ${colors[0].rgba[3]})`,
-	// 	});
-	// });
-
-	$('.container-flay .flay .flay-cover').css({
-		backgroundImage: 'url(/api/cover/' + currentFlay.opus + ')',
-	});
 	$('.container-flay .flay .flay-studio  ').html(currentFlay.studio);
 	$('.container-flay .flay .flay-opus    ').html(currentFlay.opus);
 	$('.container-flay .flay .flay-release ').html(currentFlay.release);
@@ -357,7 +390,7 @@ function addEventListener() {
 					description: newTag.tagDesc,
 				};
 				API.Tag.save(tag, (response) => {
-					currentFlay.video.tags.push(tag);
+					currentFlay.video.tags.push(response.data);
 					API.Video.save(currentFlay.video);
 				});
 			}
@@ -368,7 +401,10 @@ function addEventListener() {
 	$(document).on('wheel keyup', (e) => {
 		e.stopPropagation();
 
-		console.debug('pagination event e.target', e.target);
+		if (isLoading) {
+			return;
+		}
+
 		if (e.type === 'wheel' && $(e.target).parents('main').length === 0) {
 			return;
 		}

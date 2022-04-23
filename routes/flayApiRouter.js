@@ -104,7 +104,7 @@ router.get('/tag/:id', function (req, res, next) {
 router.post('/tag', function (req, res, next) {
 	const tag = tagService.save(req.body);
 	process.emit('update tag', tag);
-	res.status(204).send();
+	res.json(tag);
 });
 
 export default router;
