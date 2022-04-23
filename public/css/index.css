@@ -102,7 +102,7 @@ ol#fileList > li > span.path {
 	gap: 2rem;
 	margin: 0;
 	border: 0;
-	padding: 0;
+	padding: 0.5rem 0;
 	list-style: none;
 	font-size: 1.5rem;
 	transition: 0.4s;
@@ -116,7 +116,7 @@ ol#fileList > li > span.path {
 	background-color: transparent;
 	border: 0;
 	padding: 0 0.25rem;
-	font-size: 1.75rem;
+	font-size: 1.5rem;
 	text-align: center;
 	width: 12rem;
 }
@@ -139,6 +139,7 @@ ol#fileList > li > span.path {
 }
 .container-flay .flay .flay-info.horizontal div {
 	min-height: 3rem;
+	white-space: nowrap;
 }
 
 /* 커버 */

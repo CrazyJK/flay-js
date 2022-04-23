@@ -24,6 +24,7 @@
     "http-errors": "^2.0.0",
     "morgan": "^1.10.0",
     "properties-reader": "^2.2.0",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "socket.io": "^4.4.1"
   }
 }

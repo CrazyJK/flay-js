@@ -55,5 +55,6 @@ export default {
 			console.log('actressService', 'new actress', actress);
 		}
 		writeJson();
+		return actress;
 	},
 };

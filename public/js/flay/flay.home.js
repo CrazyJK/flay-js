@@ -2,22 +2,27 @@
  * flay.home.js
  */
 
-let flayList = [];
-let tagList = [];
+let flayMap = new Map();
 let actressMap = new Map();
+let tagMap = new Map();
 
-let filteredFlayList = new Array();
-let currentFlayIndex = 0;
-let currentFlay = null;
+let filteredOpus = [];
+let currentOpusIndex = 0;
+let currentFlay;
 
-let isNavActive = true;
+Promise.all([axios.get('/api/flay/list'), axios.get('/api/actress'), axios.get('/api/tag')]).then((results) => {
+	flayMap = results[0].data.reduce((map, flay) => {
+		map.set(flay.opus, flay);
+		return map;
+	}, new Map());
 
-Promise.all([axios.get('/api/flay/list'), axios.get('/api/tag'), axios.get('/api/actress')]).then((results) => {
-	flayList = results[0].data;
-	tagList = results[1].data;
-
-	actressMap = results[2].data.reduce((map, actress) => {
+	actressMap = results[1].data.reduce((map, actress) => {
 		map.set(actress.name, actress);
+		return map;
+	}, new Map());
+
+	tagMap = results[2].data.reduce((map, tag) => {
+		map.set(tag.id, tag);
 		return map;
 	}, new Map());
 
@@ -66,8 +71,8 @@ function filterFlay() {
 	LocalStorageItem.set('flay.home.cond.lanks', ranks);
 	LocalStorageItem.set('flay.home.cond.sort', sort);
 
-	filteredFlayList = [];
-	flayList.forEach((flay) => {
+	filteredOpus = [];
+	[...flayMap.values()].forEach((flay) => {
 		// rank
 		if (ranks.indexOf(flay.video.rank) < 0) {
 			return false;
@@ -101,10 +106,11 @@ function filterFlay() {
 				return false;
 			}
 		}
-		filteredFlayList.push(flay);
+		filteredOpus.push(flay.opus);
 	});
 
-	filteredFlayList.sort((f1, f2) => {
+	filteredOpus.sort((o1, o2) => {
+		const [f1, f2] = [flayMap.get(o1), flayMap.get(o2)];
 		switch (sort) {
 			case 'r':
 				return f1.release.localeCompare(f2.release);
@@ -118,28 +124,28 @@ function filterFlay() {
 	});
 
 	// go random page
-	goPage(Random.getInteger(0, filteredFlayList.length - 1));
+	goPage(Random.getInteger(0, filteredOpus.length - 1));
 }
 
 function goPage(selectedIndex) {
-	if (selectedIndex < 0 || selectedIndex >= filteredFlayList.length) {
+	if (selectedIndex < 0 || selectedIndex >= filteredOpus.length) {
 		return;
 	}
-	currentFlayIndex = selectedIndex;
+	currentOpusIndex = selectedIndex;
+	currentFlay = flayMap.get(filteredOpus[currentOpusIndex]);
 
 	// render pagination
 	renderPagination();
 
 	// show current flay
 	showFlay();
-
-	isNavActive = false;
+	showActress();
 }
 
 function renderPagination() {
-	const finalPageIndex = filteredFlayList.length;
-	const startPageIndex = Math.max(0, currentFlayIndex - 5);
-	const endPageIndex = Math.min(currentFlayIndex + 6, finalPageIndex);
+	const finalPageIndex = filteredOpus.length;
+	const startPageIndex = Math.max(0, currentOpusIndex - 5);
+	const endPageIndex = Math.min(currentOpusIndex + 6, finalPageIndex);
 	$('.pagination').empty();
 	// if not first
 	if (startPageIndex > 0) {
@@ -151,7 +157,7 @@ function renderPagination() {
 	}
 	for (let i = startPageIndex; i < endPageIndex; i++) {
 		$('.pagination').append(`
-			<li class="page-item ${currentFlayIndex === i ? 'active' : ''}">
+			<li class="page-item ${currentOpusIndex === i ? 'active' : ''}">
 				<a class="page-link" href="javascript: goPage(${i})">${i + 1}</a>
 			</li>
 		`);
@@ -165,14 +171,21 @@ function renderPagination() {
 		`);
 	}
 	// page progress bar
-	const pagePercent = ((currentFlayIndex + 1) / filteredFlayList.length) * 100;
+	const pagePercent = ((currentOpusIndex + 1) / filteredOpus.length) * 100;
 	$('.page-bar')
 		.attr('aria-valuenow', pagePercent)
 		.css('width', pagePercent + '%');
 }
 
 function showFlay() {
-	currentFlay = filteredFlayList[currentFlayIndex];
+	currentFlay = flayMap.get(filteredOpus[currentOpusIndex]);
+	console.log('showFlay', currentFlay.opus);
+
+	// getDominatedColors('/api/cover/' + currentFlay.opus).then((colors) => {
+	// 	$('.container-flay .flay .flay-info-cover').css({
+	// 		boxShadow: `inset 0 0 1rem rgba(${colors[0].rgba[0]}, ${colors[0].rgba[1]}, ${colors[0].rgba[2]}, ${colors[0].rgba[3]})`,
+	// 	});
+	// });
 
 	$('.container-flay .flay .flay-cover').css({
 		backgroundImage: 'url(/api/cover/' + currentFlay.opus + ')',
@@ -188,6 +201,44 @@ function showFlay() {
 		.html(StringUtils.isBlank(currentFlay.video.comment) ? 'Comment' : currentFlay.video.comment)
 		.show();
 	$('.container-flay .flay .flay-comment-input').hide();
+	$('.container-flay .flay .flay-info-rank input#flay-rank' + currentFlay.video.rank).prop('checked', true);
+	$('.container-flay .flay .flay-movie').html(
+		(function () {
+			let html = currentFlay.files.movie.length > 1 ? currentFlay.files.movie.length + 'V ' : '';
+			let sumSize = 0;
+			for (const file of currentFlay.files.movie) {
+				sumSize += file.size;
+			}
+			return html + FileUtils.formatSize(sumSize);
+		})(),
+	);
+	$('.container-flay .flay .flay-subtitles')
+		.html(
+			(function () {
+				if (currentFlay.files.subtitles.length === 0) {
+					return 'noS';
+				} else if (currentFlay.files.subtitles.length === 1) {
+					return 'Sub';
+				} else {
+					return currentFlay.files.subtitles.length + ' Sub';
+				}
+			})(),
+		)
+		.toggleClass('subtitles-empty', currentFlay.files.subtitles.length === 0);
+	$('.container-flay .flay .flay-score').hide();
+	$('.container-flay .flay .flay-played')
+		.html(currentFlay.video.play + 'p')
+		.toggle(currentFlay.video.play > 0);
+	// tag toggle
+	$('.flay-info-tag input:checkbox').prop('checked', false);
+	for (const tag of currentFlay.video.tags) {
+		$('.flay-info-tag .flay-tag #tag' + tag.id).prop('checked', true);
+	}
+}
+
+function showActress() {
+	console.log('showActress', currentFlay.actress);
+
 	$('.container-flay .flay .flay-info-actress').empty();
 	for (const actressName of currentFlay.actress) {
 		if (StringUtils.isBlank(actressName)) {
@@ -217,44 +268,12 @@ function showFlay() {
 			.data('actress', actress)
 			.appendTo($('.container-flay .flay .flay-info-actress'));
 	}
-	$('.container-flay .flay .flay-info-rank input#flay-rank' + currentFlay.video.rank).prop('checked', true);
-	$('.container-flay .flay .flay-movie').html(
-		(function () {
-			let html = currentFlay.files.movie.length > 1 ? currentFlay.files.movie.length + 'V ' : '';
-			let sumSize = 0;
-			for (const file of currentFlay.files.movie) {
-				sumSize += file.size;
-			}
-			return html + File.formatSize(sumSize);
-		})(),
-	);
-	$('.container-flay .flay .flay-subtitles')
-		.html(
-			(function () {
-				if (currentFlay.files.subtitles.length === 0) {
-					return 'noS';
-				} else if (currentFlay.files.subtitles.length === 1) {
-					return 'Sub';
-				} else {
-					return currentFlay.files.subtitles.length + ' Sub';
-				}
-			})(),
-		)
-		.toggleClass('subtitles-empty', currentFlay.files.subtitles.length === 0);
-	$('.container-flay .flay .flay-score').hide();
-	$('.container-flay .flay .flay-played')
-		.html(currentFlay.video.play + 'p')
-		.toggle(currentFlay.video.play > 0);
-	// tag toggle
-	$('.flay-info-tag input:checkbox').prop('checked', false);
-	for (const tag of currentFlay.video.tags) {
-		$('.flay-info-tag .flay-tag #tag' + tag.id).prop('checked', true);
-	}
 }
 
 function renderTagList() {
+	console.log('renderTagList');
 	$('.flay-info-tag .flay-tag').remove();
-	tagList
+	[...tagMap.values()]
 		.sort((t1, t2) => t2.name.localeCompare(t1.name))
 		.forEach((tag) => {
 			$(`	<label class="flay-tag">
@@ -291,18 +310,15 @@ function addEventListener() {
 				$('.container-flay .flay .flay-comment').html(commentText);
 				API.Video.save(currentFlay.video);
 			}
-			$('.container-flay .flay .flay-comment').show().toggleClass('comment-empty', StringUtils.isBlank(commentText));
-			$('.container-flay .flay .flay-comment-input').hide();
+			// $('.container-flay .flay .flay-comment').show().toggleClass('comment-empty', StringUtils.isBlank(commentText));
+			// $('.container-flay .flay .flay-comment-input').hide();
 		}
 	});
 	// actress favorite
 	$('.flay-info-actress').on('change', 'input[name="actressFavorite"]', (e) => {
 		const actress = $(e.target).closest('.flay-actress').data('actress');
 		actress.favorite = $(e.target).prop('checked');
-		API.Actress.save(actress, (response, actress) => {
-			actressMap.set(actress.name, actress);
-			$(e.target).next().find('.fa').toggleClass('fa-heart', actress.favorite).toggleClass('fa-heart-o', !actress.favorite);
-		});
+		API.Actress.save(actress);
 	});
 	// rank change
 	$('.flay-rank input').on('change', (e) => {
@@ -311,17 +327,7 @@ function addEventListener() {
 	});
 	// play click
 	$('.flay-movie').on('click', () => {
-		API.Flay.play(currentFlay, (response) => {
-			const resFlay = response.data;
-			filteredFlayList[currentFlayIndex] = resFlay;
-			for (let flay of flayList) {
-				if (flay.opus === resFlay.opus) {
-					flay = resFlay;
-					break;
-				}
-			}
-			showFlay();
-		});
+		API.Flay.play(currentFlay);
 	});
 	// tag click
 	$('.flay-info-tag').on('change', 'input:checkbox', (e) => {
@@ -345,24 +351,15 @@ function addEventListener() {
 		if (e.keyCode === 13) {
 			const newTag = $('.flay-info-tag-new input').serializeObject();
 			if (newTag.tagName) {
-				console.log('API.Tag.save call', newTag);
-				API.Tag.save(
-					{
-						id: 0,
-						name: newTag.tagName,
-						description: newTag.tagDesc,
-					},
-					(response) => {
-						const tag = response.data;
-						console.log('API.Tag.save callback', tag);
-						tagList.push(tag);
-						renderTagList();
-						currentFlay.video.tags.push(tag);
-						API.Video.save(currentFlay.video, () => {
-							showFlay();
-						});
-					},
-				);
+				const tag = {
+					id: 0,
+					name: newTag.tagName,
+					description: newTag.tagDesc,
+				};
+				API.Tag.save(tag, (response) => {
+					currentFlay.video.tags.push(tag);
+					API.Video.save(currentFlay.video);
+				});
 			}
 		}
 	});
@@ -371,38 +368,57 @@ function addEventListener() {
 	$(document).on('wheel keyup', (e) => {
 		e.stopPropagation();
 
-		if (e.type === 'wheel' && $(e.target).parents('.body').length === 0) {
+		console.debug('pagination event e.target', e.target);
+		if (e.type === 'wheel' && $(e.target).parents('main').length === 0) {
 			return;
 		}
 
 		const eventCode = e.keyCode || e.originalEvent.wheelDelta;
-		console.log('pagination event', eventCode);
+		console.debug('pagination event', eventCode);
 		switch (eventCode) {
 			case 32: // space -> random
-				goPage(Random.getInteger(0, filteredFlayList.length - 1));
+				goPage(Random.getInteger(0, filteredOpus.length - 1));
 				break;
 			case 37: // left key -> previous
 			case 120: // wheel up
-				goPage(currentFlayIndex - 1);
+				goPage(currentOpusIndex - 1);
 				break;
 			case 39: // right key -> next
 			case -120: // wheel down
-				goPage(currentFlayIndex + 1);
+				goPage(currentOpusIndex + 1);
 				break;
 			case 33: // page Up -> prev 10
-				goPage(Math.max(currentFlayIndex - 10, 0));
+				goPage(Math.max(currentOpusIndex - 10, 0));
 				break;
 			case 34: // page Down -> next 10
-				goPage(Math.min(currentFlayIndex + 10, filteredFlayList.length - 1));
+				goPage(Math.min(currentOpusIndex + 10, filteredOpus.length - 1));
 				break;
 			case 36: // Home -> 1
 				goPage(0);
 				break;
 			case 35: // End -> last
-				goPage(filteredFlayList.length - 1);
+				goPage(filteredOpus.length - 1);
 				break;
 			default:
 				break;
 		}
 	});
 }
+
+/* broadcast receiver */
+const flayBroadcastReceiver = (flay) => {
+	flayMap.set(flay.opus, flay);
+	if (currentFlay.opus === flay.opus) {
+		showFlay();
+	}
+};
+const actressBroadcastReceiver = (actress) => {
+	actressMap.set(actress.name, actress);
+	if (currentFlay.actress.includes(actress.name)) {
+		showActress();
+	}
+};
+const tagBroadcastReceiver = (tag) => {
+	tagMap.set(tag.id, tag);
+	renderTagList();
+};

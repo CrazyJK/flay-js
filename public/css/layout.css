@@ -287,28 +287,36 @@ aside button:not(.theme):focus::before {
 }
 aside .button-container {
 	box-sizing: border-box;
-	padding: 1rem 2rem;
+	padding: 1rem 1rem;
 	width: 100%;
 	background: var(--col-bg);
 	transition: 300ms;
 }
-aside .theme {
-	color: var(--gray-2);
+aside .chat-input {
+	width: calc(100% - 2rem);
 	background: var(--gray-2);
-	transition: 300ms;
-	width: 100%;
-	height: 3rem;
-	border: none;
-	margin: 0;
-	padding: 8px 15px;
-	border-radius: 14px;
+	border: 0;
+	border-radius: 8px;
+	margin: 1rem;
+	padding: 0.5rem 1rem;
+}
+aside .theme {
+	background: var(--gray-2);
+	color: var(--gray-2);
 	cursor: pointer;
+	border: none;
 	border-bottom: outside 20px solid var(--col-bg);
+	border-radius: 14px;
+	margin: 0 1rem;
+	padding: 0.5rem 1rem;
+	width: calc(100% - 2rem);
+	height: 3rem;
 	display: flex;
 	flex: none;
 	align-items: center;
 	justify-content: space-between;
 	flex-flow: row nowrap;
+	transition: 300ms;
 }
 aside .theme .light,
 aside .theme .dark {
@@ -427,6 +435,31 @@ main div.links {
 	align-items: center;
 	justify-content: space-between;
 	flex-flow: row wrap;
+}
+
+footer .notice-container {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+}
+footer .notice-container .notice {
+	background-color: var(--gray-2);
+	border: 1px solid var(--gray-3);
+	border-radius: 0.5rem;
+	box-shadow: var(--shadow-gray);
+	margin: 0.5rem;
+	padding: 0.5rem;
+	width: 10rem;
+}
+footer .notice-container .notice .notice-time {
+	float: right;
+}
+footer .notice-container .notice .notice-title {
+	color: rgba(var(--col-blue-rgb), 50);
+	font-weight: 700;
+}
+footer .notice-container .notice .notice-message {
+	color: rgba(var(--col-blue-rgb), 50);
 }
 
 @media screen and (min-width: 1081px) {

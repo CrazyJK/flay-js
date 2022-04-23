@@ -22,7 +22,7 @@ var KB = 1024,
 	MB = KB * KB,
 	GB = MB * KB,
 	TB = GB * KB;
-var File = {
+var FileUtils = {
 	formatSize: function (length, unit, digits) {
 		if (unit) {
 			if (typeof digits === 'undefined') digits = 1;

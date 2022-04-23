@@ -9,7 +9,9 @@
 		<link rel="stylesheet" href="/css/index.css" />
 		<script defer src="/lib/jquery/jquery-3.6.0.min.js"></script>
 		<script defer src="/lib/axios/axios.min.js"></script>
+		<script defer src="/lib/socket.io-4.4.1/socket.io.min.js"></script>
 		<script defer src="/js/layout.js"></script>
+		<script defer src="/js/utils/dominated-color.js"></script>
 		<script defer src="/js/flay/flay.common.js"></script>
 		<script defer src="/js/flay/flay.api.js"></script>
 	</head>
@@ -43,6 +45,7 @@
 				<a href="/flay/file">Files</a>
 			</div>
 			<div class="button-container">
+				<input class="chat-input" type="text" onkeyup="chat(event, this)" placeholder="type chat..." />
 				<button class="theme">
 					<div class="light">
 						<svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none" shape-rendering="geometricPrecision" style="color: currentcolor">
@@ -71,7 +74,9 @@
 		<main>
 			<div class="body"><%- body %></div>
 		</main>
-		<footer></footer>
+		<footer>
+			<div class="notice-container"></div>
+		</footer>
 		<script>
 			document.querySelector('#hamburger').addEventListener('click', () => {
 				document.body.classList.toggle('show-aside');
