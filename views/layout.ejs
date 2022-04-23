@@ -4,11 +4,11 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>flay-js Express Website</title>
+		<link rel="stylesheet" href="/lib/fontawesome-free-6.1.1-web/css/all.css" />
 		<link rel="stylesheet" href="/css/layout.css" />
 		<link rel="stylesheet" href="/css/index.css" />
-		<script defer src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-		<script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-		<script defer src="https://kit.fontawesome.com/673bdd6a2d.js" crossorigin="anonymous"></script>
+		<script defer src="/lib/jquery/jquery-3.6.0.min.js"></script>
+		<script defer src="/lib/axios/axios.min.js"></script>
 		<script defer src="/js/layout.js"></script>
 		<script defer src="/js/flay/flay.common.js"></script>
 		<script defer src="/js/flay/flay.api.js"></script>
@@ -17,13 +17,12 @@
 		<script>
 			let isDarkThemeActive = false;
 			const userDefaultTheme = localStorage.getItem('@flay-jk:theme');
-			if (userDefaultTheme && userDefaultTheme == 'true') {
+			if (userDefaultTheme && userDefaultTheme === 'true') {
 				document.body.classList.add('dark');
 				isDarkThemeActive = true;
 			}
 		</script>
 		<header>
-			<div></div>
 			<div class="left">
 				<button id="hamburger">
 					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" id="hamburgerIcon">

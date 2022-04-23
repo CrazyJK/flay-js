@@ -46,11 +46,12 @@ html {
 }
 
 body {
-	width: 200vw;
-	margin: 0;
-	overflow-x: hidden;
 	--sidebar-width: 0px;
 	background: var(--col-bg);
+	margin: 0;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
 	transition: 300ms;
 }
 body.show-aside {
