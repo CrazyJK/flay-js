@@ -1,18 +1,20 @@
 import express, { json, urlencoded } from 'express';
-import { createServer } from 'http';
+import { createServer } from 'https';
 import favicon from 'serve-favicon';
 import createError from 'http-errors';
 import cookieParser from 'cookie-parser';
 import expressLayouts from 'express-ejs-layouts';
 import { join, resolve } from 'path';
-import logger from 'morgan';
+import morgan from 'morgan';
+import cors from 'cors';
+import fs from 'fs';
 
 import indexRouter from './routes/indexRouter.js';
 import flayViewRouter from './routes/flayViewRouter.js';
 import flayApiRouter from './routes/flayApiRouter.js';
 
 const __dirname = resolve();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 443;
 const app = express();
 
 // view engine setup
@@ -23,8 +25,13 @@ app.set('layout', 'layout');
 app.set('layout extractScripts', true);
 app.use(expressLayouts);
 
-app.use(logger('dev'));
+app.use(
+	morgan('dev', {
+		skip: (req, res) => res.statusCode < 400,
+	}),
+);
 app.use(json());
+app.use(cors());
 app.use(urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(join(__dirname, 'public')));
@@ -66,9 +73,12 @@ app.use((err, req, res, next) => {
 	}
 });
 
-// app.set('port', port);
+const serverOptions = {
+	pfx: fs.readFileSync('certs/kamoru.jk.p12'),
+	passphrase: '697489',
+};
 
-const server = createServer(app);
+const server = createServer(serverOptions, app);
 server
 	.listen(port)
 	.on('error', (error) => {
