@@ -47,15 +47,11 @@ export default {
 					throw Error('same tag name ' + tag.name);
 				}
 			}
-			// next id
-			let idArray = [];
-			for (let i = 0; i < tagList.length; i++) {
-				idArray.push(tagList[i].id);
-			}
-			tag.id = Math.max(idArray) + 1;
+			tag.id = Math.max(...tagList.map((tag) => tag.id)) + 1;
 			tagList.push(tag);
 			console.log('tagService', 'new tag', tag);
 		}
 		writeJson();
+		return tag;
 	},
 };

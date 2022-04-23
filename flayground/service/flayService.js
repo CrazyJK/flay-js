@@ -31,13 +31,13 @@ export default {
 		const moviePath = resolve(file.path, file.name);
 		// call external command
 		console.log('flayService', 'play', PLAYER, moviePath);
-		const player = spawn(PLAYER, [moviePath]);
-		player.on('exist', (code) => {
+		spawn(PLAYER, [moviePath]).on('exist', (code) => {
 			console.log('flayService', 'player exited', code);
 		});
 		// update video
 		flay.video.play = flay.video.play + 1;
 		flay.video.lastAccess = Date.now();
 		videoService.save(flay.video);
+		return flay;
 	},
 };

@@ -47,7 +47,49 @@ var File = {
 	},
 };
 
-var String = {
+const FlayFiles = {
+	lastModified: (flay) => {
+		let mtime = -1;
+		mtime = Math.max(mtime, flay.files.cover.mtime);
+		flay.files.movie.forEach((file) => {
+			mtime = Math.max(mtime, file.mtime);
+		});
+		flay.files.subtitles.forEach((file) => {
+			mtime = Math.max(mtime, file.mtime);
+		});
+		return mtime;
+	},
+};
+
+const DateUtils = {
+	format: (date, pattern) => {
+		if (typeof date === 'number') {
+			date = new Date(date);
+		}
+		return pattern.replace(/(yyyy|yy|mm|dd|hh|mi|ss)/gi, function ($1) {
+			switch ($1) {
+				case 'yyyy':
+					return date.getFullYear();
+				case 'yy':
+					return date.getFullYear().toString().substring(2, 4);
+				case 'mm':
+					return (date.getMonth() + 1).zf(2);
+				case 'dd':
+					return date.getDate().zf(2);
+				case 'hh':
+					return date.getHours().zf(2);
+				case 'mi':
+					return date.getMinutes().zf(2);
+				case 'ss':
+					return date.getSeconds().zf(2);
+				default:
+					return $1;
+			}
+		});
+	},
+};
+
+var StringUtils = {
 	isBlank: function (str) {
 		return str === null || str.trim().length === 0;
 	},
@@ -121,4 +163,38 @@ var SessionStorageItem = {
 	clear: () => {
 		sessionStorage.clear();
 	},
+};
+
+/* ---- extends prototype ---- */
+String.prototype.stack = function (len) {
+	var s = '',
+		i = 0;
+	while (i++ < len) {
+		s += this;
+	}
+	return s;
+};
+String.prototype.zf = function (len) {
+	return '0'.stack(len - this.length) + this;
+};
+Number.prototype.zf = function (len) {
+	return this.toString().zf(len);
+};
+
+/* ---- extends jquery ---- */
+jQuery.fn.serializeObject = function () {
+	var obj = null;
+	try {
+		var arr = this.serializeArray();
+		if (arr) {
+			obj = {};
+			jQuery.each(arr, function () {
+				obj[this.name] = this.value;
+			});
+		}
+	} catch (e) {
+		alert(e.message);
+	}
+
+	return obj;
 };

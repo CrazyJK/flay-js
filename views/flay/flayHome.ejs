@@ -1,3 +1,10 @@
+<style>
+	main > div.body {
+		max-width: calc(800px + 2rem * 2);
+		padding: 0 2rem;
+		overflow: hidden;
+	}
+</style>
 <nav class="flay-navbar">
 	<ul>
 		<li>
@@ -39,6 +46,11 @@
 				<input class="sr-only" type="checkbox" id="rank5" name="rank" value="5" /><span><i class="fa fa-star"></i></span>
 			</label>
 		</li>
+		<li>
+			<label> <input class="sr-only" type="radio" name="sort" value="r" checked="true" /><span class="fw-700" title="Release">R</span> </label>
+			<label> <input class="sr-only" type="radio" name="sort" value="m" /><span class="fw-700" title="Modifed">M</span> </label>
+			<label> <input class="sr-only" type="radio" name="sort" value="a" /><span class="fw-700" title="Access">A</span> </label>
+		</li>
 	</ul>
 </nav>
 <div class="container-flay">
@@ -50,8 +62,10 @@
 			<div class="flay-info-opus">
 				<label class="flay-opus">□□□-□□</label>
 			</div>
-			<div class="flay-info-release">
+			<div class="flay-info-date">
 				<label class="flay-release">□□□□.□□.□□</label>
+				<label class="flay-modified">□□□□.□□.□□</label>
+				<label class="flay-access">□□□□.□□.□□</label>
 			</div>
 			<div class="flay-info-extra">
 				<label class="flay-movie">□.□ <span>GB</span></label>
@@ -118,7 +132,13 @@
 			</div>
 		</div>
 		<div class="flay-info">
-			<div class="flay-info-tag container px-0"></div>
+			<div class="flay-info-tag">
+				<button onclick="$('.flay-info-tag-new').toggle()"><i class="fa fa-plus"></i></button>
+			</div>
+			<div class="flay-info-tag-new">
+				<input type="text" name="tagName" placeholder="tag name" />
+				<input type="text" name="tagDesc" placeholder="tag description" />
+			</div>
 		</div>
 	</div>
 </div>

@@ -13,14 +13,12 @@
 		<script defer src="/js/flay/flay.common.js"></script>
 		<script defer src="/js/flay/flay.api.js"></script>
 	</head>
-	<body>
+	<body class="dark" style="background-color: black">
 		<script>
-			let isDarkThemeActive = false;
 			const userDefaultTheme = localStorage.getItem('@flay-jk:theme');
-			if (userDefaultTheme && userDefaultTheme === 'true') {
-				document.body.classList.add('dark');
-				isDarkThemeActive = true;
-			}
+			let isDarkThemeActive = userDefaultTheme && userDefaultTheme === 'true';
+			document.body.classList.toggle('dark', isDarkThemeActive);
+			document.body.style.backgroundColor = '';
 		</script>
 		<header>
 			<div class="left">
@@ -40,9 +38,9 @@
 				</a>
 			</div>
 			<div class="aside-container">
-				<a href="/flay/home">Home</a>
-				<a href="/flay/file">Files</a>
+				<a href="/flay/home">Flay</a>
 				<a href="/flay/list">List</a>
+				<a href="/flay/file">Files</a>
 			</div>
 			<div class="button-container">
 				<button class="theme">
@@ -74,7 +72,7 @@
 			<div class="body"><%- body %></div>
 		</main>
 		<footer></footer>
-		<script defer>
+		<script>
 			document.querySelector('#hamburger').addEventListener('click', () => {
 				document.body.classList.toggle('show-aside');
 			});
@@ -83,18 +81,13 @@
 				isDarkThemeActive = !isDarkThemeActive;
 				localStorage.setItem('@flay-jk:theme', isDarkThemeActive);
 
-				document.body.classList.toggle('dark');
-				document.querySelector('button.theme').classList.toggle('dark');
-
+				document.body.classList.toggle('dark', isDarkThemeActive);
+				document.querySelector('button.theme').classList.toggle('dark', isDarkThemeActive);
 				document.querySelector('#logo img').src = '/img/flayground-' + (isDarkThemeActive ? 'light' : 'dark') + '.svg';
 			});
 
-			window.onload = () => {
-				if (isDarkThemeActive) {
-					document.querySelector('button.theme').classList.toggle('dark');
-				}
-				document.querySelector('#logo img').src = '/img/flayground-' + (isDarkThemeActive ? 'light' : 'dark') + '.svg';
-			};
+			document.querySelector('button.theme').classList.toggle('dark', isDarkThemeActive);
+			document.querySelector('#logo img').src = '/img/flayground-' + (isDarkThemeActive ? 'light' : 'dark') + '.svg';
 		</script>
 		<%- script %>
 	</body>

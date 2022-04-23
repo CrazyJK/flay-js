@@ -127,6 +127,7 @@ ol#fileList > li > span.path {
 }
 .container-flay .flay {
 	margin-top: 1rem;
+	margin-bottom: 1rem;
 	width: 100%;
 }
 
@@ -135,9 +136,6 @@ ol#fileList > li > span.path {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-}
-.container-flay .flay .flay-info:last-child {
-	margin-bottom: 3rem;
 }
 .container-flay .flay .flay-info.horizontal div {
 	min-height: 3rem;
@@ -158,6 +156,10 @@ ol#fileList > li > span.path {
 	margin: 0;
 	padding: 0;
 	transition: background 0.2s ease-out;
+}
+/* date */
+.container-flay .flay .flay-info-date {
+	font-family: D2Coding;
 }
 
 /* 라벨 공통 */
@@ -252,18 +254,23 @@ ol#fileList > li > span.path {
 }
 .container-flay .flay .flay-info .flay-info-actress .flay-actress .flay-actress-age {
 	flex-grow: 0;
+	font-family: D2Coding;
 }
 .container-flay .flay .flay-info .flay-info-actress .flay-actress .flay-actress-birth {
 	flex-grow: 0;
+	font-family: D2Coding;
 }
 .container-flay .flay .flay-info .flay-info-actress .flay-actress .flay-actress-body {
 	flex-grow: 0;
+	font-family: D2Coding;
 }
 .container-flay .flay .flay-info .flay-info-actress .flay-actress .flay-actress-height {
 	flex-grow: 0;
+	font-family: D2Coding;
 }
 .container-flay .flay .flay-info .flay-info-actress .flay-actress .flay-actress-debut {
 	flex-grow: 0;
+	font-family: D2Coding;
 }
 
 /* 태그 */
@@ -272,6 +279,7 @@ ol#fileList > li > span.path {
 	flex-wrap: wrap;
 	justify-content: center;
 	gap: 0.25rem;
+	padding: 0.5rem;
 }
 .container-flay .flay .flay-info .flay-info-tag .flay-tag {
 	border-radius: 0.25rem;
@@ -282,6 +290,27 @@ ol#fileList > li > span.path {
 }
 .container-flay .flay .flay-info .flay-info-tag .flay-tag:hover {
 	box-shadow: 2px 3px 8px 0px var(--color-box-shadow);
+}
+.container-flay .flay .flay-info .flay-info-tag button {
+	background-color: transparent;
+	border: 0;
+}
+.flay-info-tag-new {
+	background-color: var(--gray-2);
+	border-radius: 0.25rem;
+	padding: 0.5rem;
+	display: none;
+}
+.flay-info-tag-new input {
+	background-color: transparent;
+	border: 0;
+	padding: 0 0.25rem;
+}
+.flay-info-tag-new input:nth-child(1) {
+	width: 10rem;
+}
+.flay-info-tag-new input:nth-child(2) {
+	width: 16rem;
 }
 
 /* 페이지네이션 */
@@ -334,4 +363,9 @@ ol#fileList > li > span.path {
 	.container-flay .flay .flay-info .flay-info-actress .flay-actress {
 		flex-direction: column;
 	}
+}
+
+/* ---- common class ---- */
+.fw-700 {
+	font-weight: 700;
 }

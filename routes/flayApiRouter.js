@@ -38,8 +38,8 @@ router.get('/flay/:opus', function (req, res, next) {
 });
 
 router.post('/flay/:opus/play', function (req, res, next) {
-	flayService.play(req.params.opus);
-	res.status(204).send();
+	const flay = flayService.play(req.params.opus);
+	res.json(flay);
 });
 
 /* ---- video ---- */
@@ -100,8 +100,8 @@ router.get('/tag/:id', function (req, res, next) {
 });
 
 router.post('/tag', function (req, res, next) {
-	tagService.save(req.body);
-	res.status(204).send();
+	const tag = tagService.save(req.body);
+	res.json(tag);
 });
 
 export default router;

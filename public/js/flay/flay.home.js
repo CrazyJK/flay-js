@@ -1,5 +1,5 @@
 /**
- * flayHome.js
+ * flay.home.js
  */
 
 let flayList = [];
@@ -10,6 +10,8 @@ let filteredFlayList = new Array();
 let currentFlayIndex = 0;
 let currentFlay = null;
 
+let isNavActive = true;
+
 Promise.all([axios.get('/api/flay/list'), axios.get('/api/tag'), axios.get('/api/actress')]).then((results) => {
 	flayList = results[0].data;
 	tagList = results[1].data;
@@ -19,10 +21,29 @@ Promise.all([axios.get('/api/flay/list'), axios.get('/api/tag'), axios.get('/api
 		return map;
 	}, new Map());
 
+	initCondition();
 	renderTagList();
 	addEventListener();
 	filterFlay();
 });
+
+function initCondition() {
+	const movie = LocalStorageItem.getBoolean('flay.home.cond.movie', true);
+	const subti = LocalStorageItem.getBoolean('flay.home.cond.subtitles', false);
+	const favor = LocalStorageItem.getBoolean('flay.home.cond.favorite', true);
+	const nofav = LocalStorageItem.getBoolean('flay.home.cond.nofavorite', true);
+	const ranks = LocalStorageItem.split('flay.home.cond.lanks', '0', ',');
+	const sort = LocalStorageItem.get('flay.home.cond.sort');
+
+	$('#movie').prop('checked', movie);
+	$('#subtitles').prop('checked', subti);
+	$('#favorite').prop('checked', favor);
+	$('#nofavorite').prop('checked', nofav);
+	ranks.forEach((rank) => {
+		$('input[name="rank"][value="' + rank + '"]').prop('checked', true);
+	});
+	$('input[name="sort"][value="' + sort + '"]').prop('checked', true);
+}
 
 function filterFlay() {
 	// filter
@@ -31,19 +52,21 @@ function filterFlay() {
 	const subtitles = $('#subtitles').prop('checked');
 	const favorite = $('#favorite').prop('checked');
 	const nofavorite = $('#nofavorite').prop('checked');
-	const rank0 = $('#rank0').prop('checked');
-	const rank1 = $('#rank1').prop('checked');
-	const rank2 = $('#rank2').prop('checked');
-	const rank3 = $('#rank3').prop('checked');
-	const rank4 = $('#rank4').prop('checked');
-	const rank5 = $('#rank5').prop('checked');
 	const ranks = $('input[name="rank"]:checked')
 		.serialize()
 		.replace(/rank=/gi, '')
 		.split('&')
 		.map((r) => Number(r));
+	const sort = $('input[name="sort"]:checked').val();
 
-	filteredFlayList = new Array();
+	LocalStorageItem.set('flay.home.cond.movie', movie);
+	LocalStorageItem.set('flay.home.cond.subtitles', subtitles);
+	LocalStorageItem.set('flay.home.cond.favorite', favorite);
+	LocalStorageItem.set('flay.home.cond.nofavorite', nofavorite);
+	LocalStorageItem.set('flay.home.cond.lanks', ranks);
+	LocalStorageItem.set('flay.home.cond.sort', sort);
+
+	filteredFlayList = [];
 	flayList.forEach((flay) => {
 		// rank
 		if (ranks.indexOf(flay.video.rank) < 0) {
@@ -81,6 +104,19 @@ function filterFlay() {
 		filteredFlayList.push(flay);
 	});
 
+	filteredFlayList.sort((f1, f2) => {
+		switch (sort) {
+			case 'r':
+				return f1.release.localeCompare(f2.release);
+			case 'm':
+				return FlayFiles.lastModified(f1) - FlayFiles.lastModified(f2);
+			case 'a':
+				return f1.video.lastAccess - f2.video.lastAccess;
+			default:
+				break;
+		}
+	});
+
 	// go random page
 	goPage(Random.getInteger(0, filteredFlayList.length - 1));
 }
@@ -96,6 +132,8 @@ function goPage(selectedIndex) {
 
 	// show current flay
 	showFlay();
+
+	isNavActive = false;
 }
 
 function renderPagination() {
@@ -139,18 +177,20 @@ function showFlay() {
 	$('.container-flay .flay .flay-cover').css({
 		backgroundImage: 'url(/api/cover/' + currentFlay.opus + ')',
 	});
-	$('.container-flay .flay .flay-studio ').html(currentFlay.studio);
-	$('.container-flay .flay .flay-opus   ').html(currentFlay.opus);
-	$('.container-flay .flay .flay-release').html(currentFlay.release);
-	$('.container-flay .flay .flay-title  ').html(currentFlay.title);
-	$('.container-flay .flay .flay-comment')
-		.toggleClass('comment-empty', String.isBlank(currentFlay.video.comment))
-		.html(String.isBlank(currentFlay.video.comment) ? 'Comment' : currentFlay.video.comment)
+	$('.container-flay .flay .flay-studio  ').html(currentFlay.studio);
+	$('.container-flay .flay .flay-opus    ').html(currentFlay.opus);
+	$('.container-flay .flay .flay-release ').html(currentFlay.release);
+	$('.container-flay .flay .flay-modified').html(DateUtils.format(FlayFiles.lastModified(currentFlay), 'yy.mm.dd'));
+	$('.container-flay .flay .flay-access  ').html(currentFlay.video.lastAccess > 0 ? DateUtils.format(currentFlay.video.lastAccess, 'yy.mm.dd') : '--.--.--');
+	$('.container-flay .flay .flay-title   ').html(currentFlay.title);
+	$('.container-flay .flay .flay-comment ')
+		.toggleClass('comment-empty', StringUtils.isBlank(currentFlay.video.comment))
+		.html(StringUtils.isBlank(currentFlay.video.comment) ? 'Comment' : currentFlay.video.comment)
 		.show();
 	$('.container-flay .flay .flay-comment-input').hide();
 	$('.container-flay .flay .flay-info-actress').empty();
 	for (const actressName of currentFlay.actress) {
-		if (String.isBlank(actressName)) {
+		if (StringUtils.isBlank(actressName)) {
 			break;
 		}
 		let actress = actressMap.get(actressName);
@@ -160,7 +200,7 @@ function showFlay() {
 		$(`<div class="flay-actress">
 			<label class="flay-actress-favorite">
 				<input type="checkbox" name="actressFavorite" class="sr-only" ${actress.favorite ? 'checked' : ''}>
-				<span><i class="fa fa-heart${actress.favorite ? '' : '-o'}"></i></span>
+				<span><i class="fa${actress.favorite ? '' : 'r'} fa-heart"></i></span>
 			</label>
 			<label class="flay-actress-name"     >${actress.name}</label>
 			<label class="flay-actress-localName">${actress.localName || ''}</label>
@@ -171,8 +211,8 @@ function showFlay() {
 			})(Number((actress.birth || '').substring(0, 4)))}</label>
 			<label class="flay-actress-birth"    >${(actress.birth || '').replace(/年|月|日/g, (match, offset, string) => '<small>' + match + '</small>')}</label>
 			<label class="flay-actress-body"     >${(actress.body || '').replace(/ - /g, (match) => '<small>' + match.trim() + '</small>')}</label>
-			<label class="flay-actress-height"   >${actress.height || ''}</label>
-			<label class="flay-actress-debut"    >${actress.debut || ''}</label>
+			<label class="flay-actress-height"   >${actress.height || '' ? actress.height + '<small>cm</small>' : ''}</label>
+			<label class="flay-actress-debut"    >${actress.debut || '' ? actress.debut + '<small>d</small>' : ''}</label>
 		</div>`)
 			.data('actress', actress)
 			.appendTo($('.container-flay .flay .flay-info-actress'));
@@ -213,25 +253,27 @@ function showFlay() {
 }
 
 function renderTagList() {
-	$('.flay-info-tag').empty();
+	$('.flay-info-tag .flay-tag').remove();
 	tagList
-		.sort((t1, t2) => t1.name.localeCompare(t2.name))
+		.sort((t1, t2) => t2.name.localeCompare(t1.name))
 		.forEach((tag) => {
 			$(`	<label class="flay-tag">
 					<input type="checkbox" id="tag${tag.id}" value="${tag.id}" class="sr-only">
 					<span title="${tag.description}">${tag.name}</span>
 				</label>`)
 				.data('tag', tag)
-				.appendTo($('.flay-info-tag'));
+				.prependTo($('.flay-info-tag'));
 		});
+	$('.flay-info-tag-new').hide().find('input').val('');
 }
 
 function addEventListener() {
 	// ==== filter event
 	$('#searchKeyword').on('keyup', (e) => {
+		e.stopPropagation();
 		if (e.keyCode === 13) filterFlay();
 	});
-	$('.flay-navbar input[type="checkbox"]').on('change', filterFlay);
+	$('.flay-navbar input[type="checkbox"], .flay-navbar input[type="radio"]').on('change', filterFlay);
 
 	// ==== flay event
 	// comment change
@@ -244,12 +286,12 @@ function addEventListener() {
 		e.stopPropagation();
 		if (e.keyCode === 13) {
 			let commentText = $('.container-flay .flay .flay-comment-input').val().trim();
-			if (!String.isBlank(commentText)) {
+			if (!StringUtils.isBlank(commentText)) {
 				currentFlay.video.comment = commentText;
 				$('.container-flay .flay .flay-comment').html(commentText);
 				API.Video.save(currentFlay.video);
 			}
-			$('.container-flay .flay .flay-comment').show().toggleClass('comment-empty', String.isBlank(commentText));
+			$('.container-flay .flay .flay-comment').show().toggleClass('comment-empty', StringUtils.isBlank(commentText));
 			$('.container-flay .flay .flay-comment-input').hide();
 		}
 	});
@@ -269,7 +311,17 @@ function addEventListener() {
 	});
 	// play click
 	$('.flay-movie').on('click', () => {
-		API.Flay.play(currentFlay);
+		API.Flay.play(currentFlay, (response) => {
+			const resFlay = response.data;
+			filteredFlayList[currentFlayIndex] = resFlay;
+			for (let flay of flayList) {
+				if (flay.opus === resFlay.opus) {
+					flay = resFlay;
+					break;
+				}
+			}
+			showFlay();
+		});
 	});
 	// tag click
 	$('.flay-info-tag').on('change', 'input:checkbox', (e) => {
@@ -285,7 +337,34 @@ function addEventListener() {
 	});
 	// opus click
 	$('.flay-opus').on('click', (e) => {
-		window.open('/api/video/' + currentFlay.opus, 'video-' + currentFlay.opus, 'width=300,height=400');
+		window.open('/api/flay/' + currentFlay.opus, 'video-' + currentFlay.opus, 'width=1000,height=800');
+	});
+	// create new tag
+	$('.flay-info-tag-new input').on('keyup', (e) => {
+		e.stopPropagation();
+		if (e.keyCode === 13) {
+			const newTag = $('.flay-info-tag-new input').serializeObject();
+			if (newTag.tagName) {
+				console.log('API.Tag.save call', newTag);
+				API.Tag.save(
+					{
+						id: 0,
+						name: newTag.tagName,
+						description: newTag.tagDesc,
+					},
+					(response) => {
+						const tag = response.data;
+						console.log('API.Tag.save callback', tag);
+						tagList.push(tag);
+						renderTagList();
+						currentFlay.video.tags.push(tag);
+						API.Video.save(currentFlay.video, () => {
+							showFlay();
+						});
+					},
+				);
+			}
+		}
 	});
 
 	// ==== pagination: wheel, key
@@ -297,6 +376,7 @@ function addEventListener() {
 		}
 
 		const eventCode = e.keyCode || e.originalEvent.wheelDelta;
+		console.log('pagination event', eventCode);
 		switch (eventCode) {
 			case 32: // space -> random
 				goPage(Random.getInteger(0, filteredFlayList.length - 1));
@@ -308,6 +388,18 @@ function addEventListener() {
 			case 39: // right key -> next
 			case -120: // wheel down
 				goPage(currentFlayIndex + 1);
+				break;
+			case 33: // page Up -> prev 10
+				goPage(Math.max(currentFlayIndex - 10, 0));
+				break;
+			case 34: // page Down -> next 10
+				goPage(Math.min(currentFlayIndex + 10, filteredFlayList.length - 1));
+				break;
+			case 36: // Home -> 1
+				goPage(0);
+				break;
+			case 35: // End -> last
+				goPage(filteredFlayList.length - 1);
 				break;
 			default:
 				break;
