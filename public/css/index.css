@@ -344,6 +344,19 @@ ol#fileList > li > span.path {
 	background-color: rgba(var(--col-blue-rgb), 50);
 }
 
+/* ---- history ---- */
+
+.flay-info-history {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	text-align: center;
+}
+.flay-info-history > * {
+	writing-mode: vertical-rl;
+	text-orientation: upright;
+}
+
 /* 낮은 높이에서 수평으로 배열 */
 @media screen and (max-height: 1440px) {
 	.container-flay .flay .flay-info.horizontal {
@@ -367,6 +380,7 @@ ol#fileList > li > span.path {
 }
 
 /* ---- common class ---- */
+
 .fw-700 {
 	font-weight: 700;
 }

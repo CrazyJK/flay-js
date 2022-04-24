@@ -270,6 +270,12 @@ function showFlay() {
 	// history
 	axios('/api/history/opus/' + currentFlay.opus).then((response) => {
 		console.log('histories', response.data);
+		response.data
+			.filter((history) => history.action === 'PLAY')
+			.forEach((history) => {
+				console.log(history.date, history.opus, history.action);
+				$('.flay-info-history').append(`<small>${history.date.substring(0, 10).replace(/-/g, '&nbsp;&nbsp;')}</small>`);
+			});
 	});
 }
 
