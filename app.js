@@ -111,6 +111,10 @@ httpsServer
     ############################################
 		env ${app.get('env')}
 		`);
+
+		setInterval(() => {
+			console.debug(`Server memory used ${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)} MB`);
+		}, 1000 * 10);
 	});
 
 const [IO_UPDATE_DATA, IO_CHAT] = ['update date room', 'chat room'];

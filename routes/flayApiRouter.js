@@ -9,6 +9,7 @@ import flayService from '../flayground/service/flayService.js';
 import videoService from '../flayground/service/videoService.js';
 import actressService from '../flayground/service/actressService.js';
 import tagService from '../flayground/service/tagService.js';
+import historyService from '../flayground/service/historyService.js';
 
 const router = Router();
 
@@ -105,6 +106,28 @@ router.post('/tag', function (req, res, next) {
 	const tag = tagService.save(req.body);
 	process.emit('update tag', tag);
 	res.json(tag);
+});
+
+/* ---- hsitory ---- */
+
+router.get('/history/:keyword', function (req, res, next) {
+	const histories = historyService.find(req.params.keyword);
+	res.json(histories);
+});
+
+router.get('/history/date/:date', function (req, res, next) {
+	const histories = historyService.getDate(req.params.date);
+	res.json(histories);
+});
+
+router.get('/history/opus/:opus', function (req, res, next) {
+	const histories = historyService.getOpus(req.params.opus);
+	res.json(histories);
+});
+
+router.get('/history/action/:action', function (req, res, next) {
+	const histories = historyService.getAction(req.params.action);
+	res.json(histories);
 });
 
 export default router;

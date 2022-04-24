@@ -44,4 +44,8 @@ export default class Flay {
 	setFavorite(bool) {
 		this.favorite = bool;
 	}
+
+	toString() {
+		return `[${this.studio}][${this.opus}][${this.title}][${this.actress.join(',')}][${this.release}]`;
+	}
 }

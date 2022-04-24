@@ -4,6 +4,8 @@ import createError from 'http-errors';
 
 import flaySource from '../source/flaySource.js';
 import videoService from './videoService.js';
+import historyService from './historyService.js';
+import History from '../domain/History.js';
 import { PLAYER } from '../flayProperties.js';
 
 export default {
@@ -38,6 +40,8 @@ export default {
 		flay.video.play = flay.video.play + 1;
 		flay.video.lastAccess = Date.now();
 		videoService.save(flay.video);
+		// save history
+		historyService.save(new History(new Date(), flay.opus, 'PLAY', flay.toString()));
 		return flay;
 	},
 };

@@ -267,6 +267,10 @@ function showFlay() {
 	for (const tag of currentFlay.video.tags) {
 		$('.flay-info-tag .flay-tag #tag' + tag.id).prop('checked', true);
 	}
+	// history
+	axios('/api/history/opus/' + currentFlay.opus).then((response) => {
+		console.log('histories', response.data);
+	});
 }
 
 function showActress() {

@@ -63,6 +63,9 @@ const FlayFiles = {
 
 const DateUtils = {
 	format: (date, pattern) => {
+		function zf(n) {
+			return n < 10 ? '0' + n : n;
+		}
 		if (typeof date === 'number') {
 			date = new Date(date);
 		}
@@ -73,15 +76,15 @@ const DateUtils = {
 				case 'yy':
 					return date.getFullYear().toString().substring(2, 4);
 				case 'mm':
-					return (date.getMonth() + 1).zf(2);
+					return zf(date.getMonth() + 1);
 				case 'dd':
-					return date.getDate().zf(2);
+					return zf(date.getDate());
 				case 'hh':
-					return date.getHours().zf(2);
+					return zf(date.getHours());
 				case 'mi':
-					return date.getMinutes().zf(2);
+					return zf(date.getMinutes());
 				case 'ss':
-					return date.getSeconds().zf(2);
+					return zf(date.getSeconds());
 				default:
 					return $1;
 			}
@@ -163,22 +166,6 @@ var SessionStorageItem = {
 	clear: () => {
 		sessionStorage.clear();
 	},
-};
-
-/* ---- extends prototype ---- */
-String.prototype.stack = function (len) {
-	var s = '',
-		i = 0;
-	while (i++ < len) {
-		s += this;
-	}
-	return s;
-};
-String.prototype.zf = function (len) {
-	return '0'.stack(len - this.length) + this;
-};
-Number.prototype.zf = function (len) {
-	return this.toString().zf(len);
 };
 
 /* ---- extends jquery ---- */
