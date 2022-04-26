@@ -1,7 +1,8 @@
 import path from 'path';
 import { readFileSync, writeFile } from 'fs';
 
-import { INFO_PATH } from '../flayProperties.js';
+import { INFO_PATH } from '../flayProperties';
+import { Video } from '../domain/Video';
 
 const videoJsonPath = path.resolve(INFO_PATH, 'video.json');
 
@@ -22,7 +23,7 @@ export default {
 	list: () => {
 		return videoList;
 	},
-	get: (opus) => {
+	get: (opus: string) => {
 		for (const video of videoList) {
 			if (video.opus === opus) {
 				return video;
@@ -39,7 +40,7 @@ export default {
 			tags: [],
 		};
 	},
-	save: (video) => {
+	save: (video: Video) => {
 		let found = false;
 		for (let i = 0; i < videoList.length; i++) {
 			if (videoList[i].opus === video.opus) {

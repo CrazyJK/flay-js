@@ -2,11 +2,11 @@ import { resolve } from 'path';
 import { spawn } from 'child_process';
 import createError from 'http-errors';
 
-import flaySource from '../source/flaySource.js';
-import videoService from './videoService.js';
-import historyService from './historyService.js';
-import History from '../domain/History.js';
-import { PLAYER } from '../flayProperties.js';
+import flaySource from '../source/flaySource';
+import videoService from './videoService';
+import historyService from './historyService';
+import History, { Action } from '../domain/History';
+import { PLAYER } from '../flayProperties';
 
 export default {
 	listFiles: () => {
@@ -18,7 +18,7 @@ export default {
 	getMap: () => {
 		return flaySource.getMap();
 	},
-	get: (opus) => {
+	get: (opus: string) => {
 		const flay = flaySource.getMap().get(opus);
 		if (flay) {
 			return flay;
@@ -27,7 +27,7 @@ export default {
 		}
 		// return flaySource.getMap().get(opus) || Error('notfound');
 	},
-	play: (opus) => {
+	play: (opus: string) => {
 		const flay = flaySource.getMap().get(opus);
 		const file = flay.files.movie[0];
 		const moviePath = resolve(file.path, file.name);
@@ -41,7 +41,7 @@ export default {
 		flay.video.lastAccess = Date.now();
 		videoService.save(flay.video);
 		// save history
-		historyService.save(new History(new Date(), flay.opus, 'PLAY', flay.toString()));
+		historyService.save(new History(new Date(), flay.opus, Action.PLAY, flay.toString()));
 		return flay;
 	},
 };
