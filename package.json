@@ -6,17 +6,11 @@
   "author": "kamoru",
   "license": "MIT",
   "scripts": {
-    "start": "node ./src/app.js",
-    "start:dev": "nodemon ./src/app.js",
-    "build": "webpack",
-    "build:watch": "webpack -w"
-  },
-  "nodemonConfig": {
-    "ignore": [
-      "public/**",
-      "views/**",
-      "www_sc/**"
-    ]
+    "express-start": "node ./src/app.js",
+    "express-start:dev": "nodemon --watch ./src ./src/app.js",
+    "webpack-build": "webpack",
+    "webpack-build:watch": "webpack -w",
+    "start:dev": "concurrently --kill-others-on-fail \"yarn webpack-build:watch\" \"yarn express-start:dev\""
   },
   "dependencies": {
     "axios": "^0.27.1",
@@ -36,6 +30,7 @@
     "socket.io-client": "^4.5.0"
   },
   "devDependencies": {
+    "concurrently": "^7.1.0",
     "css-loader": "^6.7.1",
     "eslint": "^8.14.0",
     "eslint-config-prettier": "^8.5.0",

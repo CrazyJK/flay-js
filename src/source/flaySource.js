@@ -11,58 +11,58 @@ let flayMap = new Map();
 let flayList = new Array();
 
 function load() {
-    // collecting files
-    foundFileList = new Array();
-    for (const folder of instanceFolderList) {
-        console.log('flaySource', 'reading', folder);
-        const foundFiles = FileUtils.listFiles(folder);
-        foundFileList.push(...foundFiles);
-    }
-    console.log('flaySource', 'foundFileList length', foundFileList.length);
+	// collecting files
+	foundFileList = new Array();
+	for (const folder of instanceFolderList) {
+		console.log('flaySource', 'reading', folder);
+		const foundFiles = FileUtils.listFiles(folder);
+		foundFileList.push(...foundFiles);
+	}
+	console.log('flaySource', 'foundFileList length', foundFileList.length);
 
-    // making Flay Map
-    flayMap = new Map();
-    for (const file of foundFileList) {
-        const namePart = file.name.replace(/[[]/gi, '').split(']');
-        // console.log(namePart);
-        const studio = namePart[0];
-        const opus = namePart[1];
-        const title = namePart[2];
-        const actressArray = namePart[3].split(',').map((name) => name.trim());
-        const release = namePart[4];
+	// making Flay Map
+	flayMap = new Map();
+	for (const file of foundFileList) {
+		const namePart = file.name.replace(/[[]/gi, '').split(']');
+		// console.log(namePart);
+		const studio = namePart[0];
+		const opus = namePart[1];
+		const title = namePart[2];
+		const actressArray = namePart[3].split(',').map((name) => name.trim());
+		const release = namePart[4];
 
-        let flay = flayMap.get(opus);
-        if (!flay) {
-            flay = new Flay(studio, opus, title, actressArray, release);
-            flay.setVideo(videoService.get(opus));
-            let favorite = false;
-            for (const name of actressArray) {
-                const actress = actressService.get(name);
-                favorite = favorite || actress.favorite;
-            }
-            flay.setFavorite(favorite);
+		let flay = flayMap.get(opus);
+		if (!flay) {
+			flay = new Flay(studio, opus, title, actressArray, release);
+			flay.setVideo(videoService.get(opus));
+			let favorite = false;
+			for (const name of actressArray) {
+				const actress = actressService.get(name);
+				favorite = favorite || actress.favorite;
+			}
+			flay.setFavorite(favorite);
 
-            flayMap.set(opus, flay);
-        }
-        flay.addFile(file);
-    }
-    console.log('flaySource', 'flayMap size', flayMap.size);
+			flayMap.set(opus, flay);
+		}
+		flay.addFile(file);
+	}
+	console.log('flaySource', 'flayMap size', flayMap.size);
 
-    // make flay Array
-    flayList = Array.from(flayMap.values());
-    console.log('flaySource', 'flayList length', flayList.length);
+	// make flay Array
+	flayList = Array.from(flayMap.values());
+	console.log('flaySource', 'flayList length', flayList.length);
 }
 
 load();
 
 export default {
-    listFiles: () => {
-        return foundFileList;
-    },
-    getMap: () => {
-        return flayMap;
-    },
-    list: () => {
-        return flayList;
-    },
+	listFiles: () => {
+		return foundFileList;
+	},
+	getMap: () => {
+		return flayMap;
+	},
+	list: () => {
+		return flayList;
+	},
 };
