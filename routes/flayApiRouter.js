@@ -5,12 +5,11 @@
 import { Router } from 'express';
 import path from 'path';
 
-import flayService from '../flayground/service/flayService';
-import videoService from '../flayground/service/videoService';
-import actressService from '../flayground/service/actressService';
-import tagService from '../flayground/service/tagService';
-import historyService from '../flayground/service/historyService';
-import idEmitter from './ioEmitter';
+import flayService from '../flayground/service/flayService.js';
+import videoService from '../flayground/service/videoService.js';
+import actressService from '../flayground/service/actressService.js';
+import tagService from '../flayground/service/tagService.js';
+import historyService from '../flayground/service/historyService.js';
 
 const router = Router();
 
@@ -41,7 +40,7 @@ router.get('/flay/:opus', function (req, res, next) {
 
 router.post('/flay/:opus/play', function (req, res, next) {
 	const flay = flayService.play(req.params.opus);
-	idEmitter.flay.emit('updateFlay', flay);
+	process.emit('update flay', flay);
 	res.status(204).send();
 });
 
@@ -62,7 +61,7 @@ router.post('/video', function (req, res, next) {
 	// assamble flay
 	const flay = flayService.get(video.opus);
 	flay.video = video;
-	idEmitter.flay.emit('updateFlay', flay);
+	process.emit('update flay', flay);
 	res.status(204).send();
 });
 
@@ -87,7 +86,7 @@ router.get('/actress/:name', function (req, res, next) {
 
 router.post('/actress', function (req, res, next) {
 	const actress = actressService.save(req.body);
-	idEmitter.actress.emit('updateActress', actress);
+	process.emit('update actress', actress);
 	res.status(204).send();
 });
 
@@ -99,13 +98,13 @@ router.get('/tag', function (req, res, next) {
 });
 
 router.get('/tag/:id', function (req, res, next) {
-	const tag = tagService.get(parseInt(req.params.id));
+	const tag = tagService.get(req.params.id);
 	res.json(tag);
 });
 
 router.post('/tag', function (req, res, next) {
 	const tag = tagService.save(req.body);
-	idEmitter.tag.emit('updateTag', tag);
+	process.emit('update tag', tag);
 	res.json(tag);
 });
 
