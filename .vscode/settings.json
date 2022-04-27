@@ -5,5 +5,8 @@
 	"editor.formatOnSave": true,
 	"prettier.htmlWhitespaceSensitivity": "strict",
 	"prettier.printWidth": 320,
-	"prettier.useTabs": true
+	"prettier.useTabs": true,
+	"[html]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	}
 }

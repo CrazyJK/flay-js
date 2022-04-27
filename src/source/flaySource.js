@@ -1,8 +1,8 @@
 import Flay from '../domain/Flay.js';
-import FileUtils from '../FileUtils.js';
+import FileUtils from '../utils/FileUtils.js';
 import videoService from '../service/videoService.js';
 import actressService from '../service/actressService.js';
-import { INSTANCE_PATH } from '../flayProperties.js';
+import { INSTANCE_PATH } from '../config/flayProperties.js';
 
 const instanceFolderList = INSTANCE_PATH;
 

@@ -1,7 +1,7 @@
 import path from 'path';
 import { readFileSync, writeFile } from 'fs';
 
-import { INFO_PATH } from '../flayProperties.js';
+import { INFO_PATH } from '../config/flayProperties.js';
 
 const videoJsonPath = path.resolve(INFO_PATH, 'video.json');
 

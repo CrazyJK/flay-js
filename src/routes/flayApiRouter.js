@@ -5,11 +5,11 @@
 import { Router } from 'express';
 import path from 'path';
 
-import flayService from '../flayground/service/flayService.js';
-import videoService from '../flayground/service/videoService.js';
-import actressService from '../flayground/service/actressService.js';
-import tagService from '../flayground/service/tagService.js';
-import historyService from '../flayground/service/historyService.js';
+import flayService from '../service/flayService.js';
+import videoService from '../service/videoService.js';
+import actressService from '../service/actressService.js';
+import tagService from '../service/tagService.js';
+import historyService from '../service/historyService.js';
 
 const router = Router();
 
