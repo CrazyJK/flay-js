@@ -1,8 +1,7 @@
 import { resolve } from 'path';
 import { readFileSync, writeFile } from 'fs';
 
-import { INFO_PATH } from '../flayProperties';
-import { Actress } from '../domain/Actress';
+import { INFO_PATH } from '../flayProperties.js';
 
 const actressJsonPath = resolve(INFO_PATH, 'actress.json');
 
@@ -23,7 +22,7 @@ export default {
 	list: () => {
 		return actressList;
 	},
-	get: (name: string) => {
+	get: (name) => {
 		for (const actress of actressList) {
 			if (actress.name === name) {
 				return actress;
@@ -41,7 +40,7 @@ export default {
 			coverSize: 0,
 		};
 	},
-	save: (actress: Actress) => {
+	save: (actress) => {
 		let found = false;
 		for (let i = 0; i < actressList.length; i++) {
 			if (actressList[i].name === actress.name) {
