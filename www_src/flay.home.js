@@ -3,6 +3,9 @@
  */
 import axios from 'axios';
 import $ from 'jquery';
+import { API } from './lib/flay.api.js';
+import dominatedColor from './lib/dominated.color.js';
+import { DateUtils, FileUtils, StringUtils, Random, FlayFiles, Tag, LocalStorageItem } from './lib/common.js';
 
 let flayMap = new Map();
 let actressMap = new Map();
@@ -206,7 +209,7 @@ function showCover() {
 			backgroundImage: 'url(' + coverObjectURL + ')',
 		});
 
-		getDominatedColors(coverObjectURL).then((colors) => {
+		dominatedColor(coverObjectURL).then((colors) => {
 			$('.container-flay .flay .flay-info-cover').css({
 				boxShadow: `inset 0 0 1rem 0.5rem rgba(${colors[0].rgba[0]}, ${colors[0].rgba[1]}, ${colors[0].rgba[2]}, ${colors[0].rgba[3]})`,
 			});

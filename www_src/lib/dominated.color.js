@@ -1,6 +1,6 @@
 export const GREY_RGB_ARRAY = Array.from({ length: 256 }).map((v, i) => [i, i, i]);
 
-export async function getDominatedColors(src, opts) {
+export default async function getDominatedColors(src, opts) {
 	if (!src) {
 		throw new Error('src musr be specified');
 	}
