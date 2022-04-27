@@ -19,10 +19,11 @@ export const Random = {
   },
 };
 
-export var KB = 1024,
+const KB = 1024,
   MB = KB * KB,
   GB = MB * KB,
   TB = GB * KB;
+
 export const FileUtils = {
   formatSize: function (length, unit, digits) {
     if (unit) {

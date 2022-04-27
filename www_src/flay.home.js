@@ -1,8 +1,8 @@
 /**
  * flay.home.js
  */
-import axios from 'axios';
 import $ from 'jquery';
+import axios from 'axios';
 import { API } from './lib/flay.api.js';
 import dominatedColor from './lib/dominated.color.js';
 import { DateUtils, FileUtils, StringUtils, Random, FlayFiles, Tag, LocalStorageItem } from './lib/common.js';
@@ -151,44 +151,8 @@ function goPage(selectedIndex) {
 
   isLoading = true;
 
-  // render pagination
-  renderPagination();
-
   // show current flay
   showCover();
-  showActress();
-}
-
-function renderPagination() {
-  const finalPageIndex = filteredOpus.length;
-  const startPageIndex = Math.max(0, currentOpusIndex - 5);
-  const endPageIndex = Math.min(currentOpusIndex + 6, finalPageIndex);
-  $('.pagination').empty();
-  // if not first
-  if (startPageIndex > 0) {
-    $('.pagination').append(`
-      <li class="page-item">
-        <a class="page-link" href="javascript: goPage(0)">1</a>
-      </li>`);
-  }
-  for (let i = startPageIndex; i < endPageIndex; i++) {
-    $('.pagination').append(`
-      <li class="page-item ${currentOpusIndex === i ? 'active' : ''}">
-        <a class="page-link" href="javascript: goPage(${i})">${i + 1}</a>
-      </li>`);
-  }
-  // if not last
-  if (endPageIndex < finalPageIndex) {
-    $('.pagination').append(`
-      <li class="page-item">
-        <a class="page-link" href="javascript: goPage(${finalPageIndex - 1})">${finalPageIndex}</a>
-      </li>`);
-  }
-  // page progress bar
-  const pagePercent = ((currentOpusIndex + 1) / filteredOpus.length) * 100;
-  $('.page-bar')
-    .attr('aria-valuenow', pagePercent)
-    .css('width', pagePercent + '%');
 }
 
 function showCover() {
@@ -201,12 +165,14 @@ function showCover() {
     responseType: 'blob',
   }).then(function (response) {
     const coverObjectURL = URL.createObjectURL(response.data);
+    console.log('showCover', 'coverObjectURL', coverObjectURL);
 
     $('.container-flay .flay .flay-cover').css({
       backgroundImage: 'url(' + coverObjectURL + ')',
     });
 
     dominatedColor(coverObjectURL).then((colors) => {
+      console.log('showCover', 'colors[0].rgba', colors[0].rgba);
       $('.container-flay .flay .flay-info-cover').css({
         boxShadow: `inset 0 0 1rem 0.5rem rgba(${colors[0].rgba[0]}, ${colors[0].rgba[1]}, ${colors[0].rgba[2]}, ${colors[0].rgba[3]})`,
       });
@@ -215,6 +181,9 @@ function showCover() {
       });
 
       showFlay();
+      showActress();
+      showHistory();
+      renderPagination();
 
       isLoading = false;
     });
@@ -269,21 +238,20 @@ function showFlay() {
   for (const tag of currentFlay.video.tags) {
     $('.flay-info-tag .flay-tag #tag' + tag.id).prop('checked', true);
   }
-  // history
+}
+
+function showHistory() {
   axios('/api/history/opus/' + currentFlay.opus).then((response) => {
     console.log('histories', response.data);
     response.data
       .filter((history) => history.action === 'PLAY')
       .forEach((history) => {
-        console.log(history.date, history.opus, history.action);
         $('.flay-info-history').append(`<small>${history.date.substring(0, 10).replace(/-/g, '&nbsp;&nbsp;')}</small>`);
       });
   });
 }
 
 function showActress() {
-  console.log('showActress', currentFlay.actress);
-
   $('.container-flay .flay .flay-info-actress').empty();
   for (const actressName of currentFlay.actress) {
     if (StringUtils.isBlank(actressName)) {
@@ -293,6 +261,8 @@ function showActress() {
     if (!actress) {
       actress = { name: actressName };
     }
+    console.log('showActress', actress);
+
     $(`<div class="flay-actress">
       <label class="flay-actress-favorite">
         <input type="checkbox" name="actressFavorite" class="sr-only" ${actress.favorite ? 'checked' : ''}>
@@ -313,6 +283,38 @@ function showActress() {
       .data('actress', actress)
       .appendTo($('.container-flay .flay .flay-info-actress'));
   }
+}
+
+function renderPagination() {
+  const finalPageIndex = filteredOpus.length;
+  const startPageIndex = Math.max(0, currentOpusIndex - 5);
+  const endPageIndex = Math.min(currentOpusIndex + 6, finalPageIndex);
+  $('.pagination').empty();
+  // if not first
+  if (startPageIndex > 0) {
+    $('.pagination').append(`
+      <li class="page-item">
+        <a class="page-link" href="javascript: goPage(0)">1</a>
+      </li>`);
+  }
+  for (let i = startPageIndex; i < endPageIndex; i++) {
+    $('.pagination').append(`
+      <li class="page-item ${currentOpusIndex === i ? 'active' : ''}">
+        <a class="page-link" href="javascript: goPage(${i})">${i + 1}</a>
+      </li>`);
+  }
+  // if not last
+  if (endPageIndex < finalPageIndex) {
+    $('.pagination').append(`
+      <li class="page-item">
+        <a class="page-link" href="javascript: goPage(${finalPageIndex - 1})">${finalPageIndex}</a>
+      </li>`);
+  }
+  // page progress bar
+  const pagePercent = ((currentOpusIndex + 1) / filteredOpus.length) * 100;
+  $('.page-bar')
+    .attr('aria-valuenow', pagePercent)
+    .css('width', pagePercent + '%');
 }
 
 function renderTagList() {

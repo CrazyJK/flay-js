@@ -361,6 +361,7 @@ ol#fileList > li > span.path {
 @media screen and (max-height: 1440px) {
   .container-flay .flay .flay-info.horizontal {
     flex-direction: row;
+    align-items: baseline;
   }
 }
 
