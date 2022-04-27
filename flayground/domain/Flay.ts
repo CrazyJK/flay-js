@@ -1,5 +1,17 @@
+import File from './File';
+import { Video } from './Video';
+
 export default class Flay {
-	constructor(studio, opus, title, actressArray, release) {
+	studio: string;
+	opus: string;
+	title: string;
+	actress: string[];
+	release: string;
+	files: { movie: File[]; cover: File | null; subtitles: File[] };
+	video: Video | null;
+	favorite: boolean;
+
+	constructor(studio: string, opus: string, title: string, actressArray: string[], release: string) {
 		this.studio = studio;
 		this.opus = opus;
 		this.title = title;
@@ -14,7 +26,7 @@ export default class Flay {
 		this.favorite = false;
 	}
 
-	addFile(file) {
+	addFile(file: File) {
 		switch (file.ext) {
 			case '.avi':
 			case '.mp4':
@@ -37,11 +49,11 @@ export default class Flay {
 		}
 	}
 
-	setVideo(video) {
+	setVideo(video: Video) {
 		this.video = video;
 	}
 
-	setFavorite(bool) {
+	setFavorite(bool: boolean) {
 		this.favorite = bool;
 	}
 

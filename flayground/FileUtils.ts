@@ -4,9 +4,15 @@
 import { resolve } from 'path';
 import { readdirSync, statSync } from 'fs';
 
-import File from './domain/File.js';
+import File from './domain/File';
 
-function listFiles(dirPath, arrayOfFiles) {
+/**
+ *
+ * @param dirPath
+ * @param arrayOfFiles
+ * @returns
+ */
+function listFiles(dirPath: string, arrayOfFiles: any[]) {
 	const files = readdirSync(dirPath);
 
 	arrayOfFiles = arrayOfFiles || [];
@@ -15,7 +21,7 @@ function listFiles(dirPath, arrayOfFiles) {
 		const filepath = resolve(dirPath, file);
 
 		if (statSync(filepath).isDirectory()) {
-			arrayOfFiles = this.listFiles(filepath, arrayOfFiles);
+			arrayOfFiles = listFiles(filepath, arrayOfFiles);
 		} else {
 			arrayOfFiles.push(new File(filepath));
 		}

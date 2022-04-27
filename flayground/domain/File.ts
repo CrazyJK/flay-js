@@ -2,7 +2,15 @@ import { dirname, basename, extname } from 'path';
 import { statSync } from 'fs';
 
 export default class File {
-	constructor(filepath) {
+	ino: number;
+	path: string;
+	name: string;
+	ext: string;
+	size: number;
+	mtime: number;
+	birth: number;
+
+	constructor(filepath: string) {
 		const stats = statSync(filepath);
 
 		this.ino = stats.ino;

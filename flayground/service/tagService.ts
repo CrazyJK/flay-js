@@ -1,13 +1,14 @@
 import { resolve } from 'path';
 import { readFileSync, writeFile } from 'fs';
 
-import { INFO_PATH } from '../flayProperties.js';
+import { INFO_PATH } from '../flayProperties';
+import { Tag } from '../domain/Tag';
 
 const tagJsonPath = resolve(INFO_PATH, 'tag.json');
 
 console.log('tagService', 'reading', tagJsonPath);
 const rowData = readFileSync(tagJsonPath, 'utf8');
-const tagList = JSON.parse(rowData);
+const tagList: Tag[] = JSON.parse(rowData);
 console.log('tagService', 'read data', tagList.length);
 
 function writeJson() {
@@ -22,7 +23,7 @@ export default {
 	list: () => {
 		return tagList;
 	},
-	get: (id) => {
+	get: (id: number) => {
 		for (const tag of tagList) {
 			if (tag.id === id) {
 				return tag;
@@ -30,7 +31,7 @@ export default {
 		}
 		return null;
 	},
-	save: (tag) => {
+	save: (tag: Tag) => {
 		let found = false;
 		for (let i = 0; i < tagList.length; i++) {
 			if (tagList[i].id === tag.id) {

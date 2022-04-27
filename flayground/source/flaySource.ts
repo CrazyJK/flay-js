@@ -1,8 +1,8 @@
-import Flay from '../domain/Flay.js';
-import FileUtils from '../FileUtils.js';
-import videoService from '../service/videoService.js';
-import actressService from '../service/actressService.js';
-import { INSTANCE_PATH } from '../flayProperties.js';
+import Flay from '../domain/Flay';
+import FileUtils from '../FileUtils';
+import videoService from '../service/videoService';
+import actressService from '../service/actressService';
+import { INSTANCE_PATH } from '../flayProperties';
 
 const instanceFolderList = INSTANCE_PATH;
 
@@ -15,7 +15,7 @@ function load() {
 	foundFileList = new Array();
 	for (const folder of instanceFolderList) {
 		console.log('flaySource', 'reading', folder);
-		const foundFiles = FileUtils.listFiles(folder);
+		const foundFiles = FileUtils.listFiles(folder, []);
 		foundFileList.push(...foundFiles);
 	}
 	console.log('flaySource', 'foundFileList length', foundFileList.length);
@@ -23,7 +23,7 @@ function load() {
 	// making Flay Map
 	flayMap = new Map();
 	for (const file of foundFileList) {
-		const namePart = file.name.replace(/[[]/gi, '').split(']');
+		const namePart: string[] = file.name.replace(/[[]/gi, '').split(']');
 		// console.log(namePart);
 		const studio = namePart[0];
 		const opus = namePart[1];
