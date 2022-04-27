@@ -1,16 +1,23 @@
 export default ({ io }) => {
-
     const [IO_UPDATE_DATA, IO_CHAT] = ['update date room', 'chat room'];
 
     io.on('connection', (socket) => {
-        console.log('socket.io connection', socket.id, socket.handshake.address);
+        console.log(
+            'socket.io connection',
+            socket.id,
+            socket.handshake.address
+        );
 
         socket.join(IO_UPDATE_DATA);
         socket.join(IO_CHAT);
 
         const rooms = io.of('/').adapter.rooms;
         const sids = io.of('/').adapter.sids;
-        console.log('socket.io rooms', IO_UPDATE_DATA, rooms.get(IO_UPDATE_DATA).size);
+        console.log(
+            'socket.io rooms',
+            IO_UPDATE_DATA,
+            rooms.get(IO_UPDATE_DATA).size
+        );
         console.log('socket.io rooms', IO_CHAT, rooms.get(IO_CHAT).size);
         console.log('socket.io sids', sids.size);
 
@@ -49,4 +56,4 @@ export default ({ io }) => {
         });
 
     return io;
-}
+};

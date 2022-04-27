@@ -47,7 +47,6 @@ directory
 
 ref. http://expressjs.com/en/4x/api.html
 
-
     "morgan": "~1.9.1",
     "to": "^0.2.9",
     "update": "^0.7.4"

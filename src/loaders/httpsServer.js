@@ -1,5 +1,4 @@
 export default ({ httpsServer }) => {
-
     const port = process.env.PORT || 443;
 
     httpsServer
@@ -9,7 +8,8 @@ export default ({ httpsServer }) => {
             if (error.syscall !== 'listen') {
                 throw error;
             }
-            const bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
+            const bind =
+                typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
             // handle specific listen errors with friendly messages
             switch (error.code) {
                 case 'EACCES':
@@ -26,18 +26,22 @@ export default ({ httpsServer }) => {
         })
         .on('listening', () => {
             const addr = httpsServer.address();
-            const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
+            const bind =
+                typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
             console.log(`
     ############################################
         Flay JS Start. Listening on ${bind}
     ############################################
-		env ${app.get('env')}
 		`);
 
             setInterval(() => {
-                console.debug(`Server memory used ${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)} MB`);
-            }, 1000 * 10);
+                console.debug(
+                    `Server memory used ${Math.round(
+                        process.memoryUsage().heapUsed / 1024 / 1024
+                    )} MB`
+                );
+            }, 1000 * 60 * 60);
         });
 
     return httpsServer;
-}
+};

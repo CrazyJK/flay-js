@@ -1,6 +1,6 @@
 import propertiesReader from 'properties-reader';
 
-const flayProperties = propertiesReader('./flay.properties');
+const flayProperties = propertiesReader('src/config/flay.properties');
 console.log('flayProperties', 'loaded');
 
 let instancePath = flayProperties.get('flay.stage-paths').split(',');

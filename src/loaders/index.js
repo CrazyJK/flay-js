@@ -1,5 +1,5 @@
 import expressLoader from './express.js';
-import httpsServerLoader from './httpsServer.js'
+import httpsServerLoader from './httpsServer.js';
 import socketIoLoader from './socketio.js';
 
 export default ({ expressApp, https, socketIo }) => {
@@ -11,5 +11,4 @@ export default ({ expressApp, https, socketIo }) => {
 
     socketIoLoader({ io: socketIo });
     console.log('Socket.IO initialized');
-
-}
+};

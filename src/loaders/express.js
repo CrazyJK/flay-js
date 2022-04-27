@@ -12,7 +12,6 @@ import flayViewRouter from '../routes/flayViewRouter.js';
 import flayApiRouter from '../routes/flayApiRouter.js';
 
 export default ({ app }) => {
-
     const __dirname = resolve();
 
     // view engine setup
@@ -26,7 +25,7 @@ export default ({ app }) => {
     app.use(
         morgan('dev', {
             skip: (req, res) => res.statusCode < 400,
-        }),
+        })
     );
     app.use(json());
     app.use(cors());
@@ -47,7 +46,9 @@ export default ({ app }) => {
     app.use((err, req, res, next) => {
         // console.log(req.headers);
         const resErr = {
-            isXhr: req.headers['x-requested-with'] === 'XMLHttpRequest' || req.headers.accept.indexOf('json') > -1,
+            isXhr:
+                req.headers['x-requested-with'] === 'XMLHttpRequest' ||
+                req.headers.accept.indexOf('json') > -1,
             status: err.status || 500,
             message: err.message || 'unknown error',
             stack: err.stack,
@@ -73,4 +74,3 @@ export default ({ app }) => {
 
     return app;
 };
-

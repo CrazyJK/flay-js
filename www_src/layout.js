@@ -3,6 +3,7 @@
  */
 import { io } from 'socket.io-client';
 import $ from 'jquery';
+import { DateUtils } from './lib/common.js';
 
 /* ---- socket.io ---- */
 const socket = io();
@@ -17,6 +18,7 @@ socket
         console.log('socket on update flay', flay);
         showNotice('[Flay]', flay.opus, Date.now());
         if (typeof flayBroadcastReceiver === 'function') {
+            // eslint-disable-next-line no-undef
             flayBroadcastReceiver(flay);
         }
     })
@@ -24,6 +26,7 @@ socket
         console.log('socket on update actress', actress);
         showNotice('[Actress]', actress.name, Date.now());
         if (typeof actressBroadcastReceiver === 'function') {
+            // eslint-disable-next-line no-undef
             actressBroadcastReceiver(actress);
         }
     })
@@ -31,6 +34,7 @@ socket
         console.log('socket on update tag', tag);
         showNotice('[Tag]', tag.name, Date.now());
         if (typeof tagBroadcastReceiver === 'function') {
+            // eslint-disable-next-line no-undef
             tagBroadcastReceiver(tag);
         }
     })
@@ -45,7 +49,7 @@ $('#chatInput').on('keyup', (e) => {
         socket.emit('chat room', $(e.target).val());
         $(e.target).val('');
     }
-})
+});
 
 const showNotice = (title, message, time) => {
     const $notice = $(`
