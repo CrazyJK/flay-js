@@ -167,25 +167,22 @@ function renderPagination() {
   // if not first
   if (startPageIndex > 0) {
     $('.pagination').append(`
-			<li class="page-item">
-				<a class="page-link" href="javascript: goPage(0)">1</a>
-			</li>
-		`);
+      <li class="page-item">
+        <a class="page-link" href="javascript: goPage(0)">1</a>
+      </li>`);
   }
   for (let i = startPageIndex; i < endPageIndex; i++) {
     $('.pagination').append(`
-			<li class="page-item ${currentOpusIndex === i ? 'active' : ''}">
-				<a class="page-link" href="javascript: goPage(${i})">${i + 1}</a>
-			</li>
-		`);
+      <li class="page-item ${currentOpusIndex === i ? 'active' : ''}">
+        <a class="page-link" href="javascript: goPage(${i})">${i + 1}</a>
+      </li>`);
   }
   // if not last
   if (endPageIndex < finalPageIndex) {
     $('.pagination').append(`
-			<li class="page-item">
-				<a class="page-link" href="javascript: goPage(${finalPageIndex - 1})">${finalPageIndex}</a>
-			</li>
-		`);
+      <li class="page-item">
+        <a class="page-link" href="javascript: goPage(${finalPageIndex - 1})">${finalPageIndex}</a>
+      </li>`);
   }
   // page progress bar
   const pagePercent = ((currentOpusIndex + 1) / filteredOpus.length) * 100;
@@ -297,22 +294,22 @@ function showActress() {
       actress = { name: actressName };
     }
     $(`<div class="flay-actress">
-			<label class="flay-actress-favorite">
-				<input type="checkbox" name="actressFavorite" class="sr-only" ${actress.favorite ? 'checked' : ''}>
-				<span><i class="fa${actress.favorite ? '' : 'r'} fa-heart"></i></span>
-			</label>
-			<label class="flay-actress-name"     >${actress.name}</label>
-			<label class="flay-actress-localName">${actress.localName || ''}</label>
-			<label class="flay-actress-age"      >${(function (year) {
+      <label class="flay-actress-favorite">
+        <input type="checkbox" name="actressFavorite" class="sr-only" ${actress.favorite ? 'checked' : ''}>
+        <span><i class="fa${actress.favorite ? '' : 'r'} fa-heart"></i></span>
+      </label>
+      <label class="flay-actress-name"     >${actress.name}</label>
+      <label class="flay-actress-localName">${actress.localName || ''}</label>
+      <label class="flay-actress-age"      >${(function (year) {
         if (year === 0) return '';
         const age = new Date().getFullYear() - year + 1;
         return age + '<small>y</small>';
       })(Number((actress.birth || '').substring(0, 4)))}</label>
-			<label class="flay-actress-birth"    >${(actress.birth || '').replace(/年|月|日/g, (match, offset, string) => '<small>' + match + '</small>')}</label>
-			<label class="flay-actress-body"     >${(actress.body || '').replace(/ - /g, (match) => '<small>' + match.trim() + '</small>')}</label>
-			<label class="flay-actress-height"   >${actress.height || '' ? actress.height + '<small>cm</small>' : ''}</label>
-			<label class="flay-actress-debut"    >${actress.debut || '' ? actress.debut + '<small>d</small>' : ''}</label>
-		</div>`)
+      <label class="flay-actress-birth"    >${(actress.birth || '').replace(/年|月|日/g, (match, offset, string) => '<small>' + match + '</small>')}</label>
+      <label class="flay-actress-body"     >${(actress.body || '').replace(/ - /g, (match) => '<small>' + match.trim() + '</small>')}</label>
+      <label class="flay-actress-height"   >${actress.height || '' ? actress.height + '<small>cm</small>' : ''}</label>
+      <label class="flay-actress-debut"    >${actress.debut || '' ? actress.debut + '<small>d</small>' : ''}</label>
+    </div>`)
       .data('actress', actress)
       .appendTo($('.container-flay .flay .flay-info-actress'));
   }
@@ -324,10 +321,10 @@ function renderTagList() {
   [...tagMap.values()]
     .sort((t1, t2) => t2.name.localeCompare(t1.name))
     .forEach((tag) => {
-      $(`	<label class="flay-tag">
-					<input type="checkbox" id="tag${tag.id}" value="${tag.id}" class="sr-only">
-					<span title="${tag.description}">${tag.name}</span>
-				</label>`)
+      $(`<label class="flay-tag">
+          <input type="checkbox" id="tag${tag.id}" value="${tag.id}" class="sr-only">
+          <span title="${tag.description}">${tag.name}</span>
+        </label>`)
         .data('tag', tag)
         .prependTo($('.flay-info-tag'));
     });

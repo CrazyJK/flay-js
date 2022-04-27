@@ -53,13 +53,13 @@ $('#chatInput').on('keyup', (e) => {
 
 const showNotice = (title, message, time) => {
   const $notice = $(`
-		<div class="notice">
-			<div>
-				<small class="notice-time">${DateUtils.format(time, 'hh:mi')}</small>
-				<span class="notice-title">${title}</span>
-			</div>
-			<div class="notice-message">${message}</div>
-		</div>`).appendTo($('.notice-container'));
+    <div class="notice">
+      <div>
+        <small class="notice-time">${DateUtils.format(time, 'hh:mi')}</small>
+        <span class="notice-title">${title}</span>
+      </div>
+      <div class="notice-message">${message}</div>
+    </div>`).appendTo($('.notice-container'));
 
   setTimeout(() => {
     $notice.hide();

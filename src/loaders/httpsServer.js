@@ -30,7 +30,7 @@ export default ({ httpsServer }) => {
     ############################################
         Flay JS Start. Listening on ${bind}
     ############################################
-		`);
+    `);
 
       setInterval(() => {
         console.debug(`Server memory used ${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)} MB`);
