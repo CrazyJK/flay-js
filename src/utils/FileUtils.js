@@ -4,7 +4,7 @@
 import { resolve } from 'path';
 import { readdirSync, statSync } from 'fs';
 
-import File from './domain/File.js';
+import File from '../domain/File.js';
 
 function listFiles(dirPath, arrayOfFiles) {
 	const files = readdirSync(dirPath);
