@@ -15,7 +15,9 @@ export default async function getDominatedColors(src, opts) {
 	// console.debug('getDominatedColors', 'scale', scale, 'offset', offset, 'limit', limit, 'ignore', ignore.length);
 
 	if (scale > 1 || scale <= 0) {
-		throw new Error(`You set scale to ${scale}, which isn't between 0-1. This is either pointless (> 1) or a no-op (≤ 0)`);
+		throw new Error(
+			`You set scale to ${scale}, which isn't between 0-1. This is either pointless (> 1) or a no-op (≤ 0)`
+		);
 	}
 
 	// console.time(src);
@@ -53,7 +55,8 @@ export default async function getDominatedColors(src, opts) {
 				resolve(getContextImageData(img, scale));
 			};
 
-			const errorHandler = () => reject(new Error('An error occurred attempting to load image'));
+			const errorHandler = () =>
+				reject(new Error('An error occurred attempting to load image'));
 
 			img.onerror = errorHandler;
 			img.onabort = errorHandler;

@@ -36,9 +36,13 @@
   },
   "devDependencies": {
     "css-loader": "^6.7.1",
+    "eslint": "^8.14.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "mini-css-extract-plugin": "^2.6.0",
     "postcss": "^8.4.12",
     "postcss-loader": "^6.2.1",
+    "prettier": "^2.6.2",
     "sass": "^1.51.0",
     "sass-loader": "^12.6.0",
     "webpack": "^5.72.0",

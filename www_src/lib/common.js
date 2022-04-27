@@ -1,6 +1,7 @@
 /**
  * common utilities
  */
+import $ from 'jquery';
 
 export const Random = {
 	get: function (start, end) {
@@ -36,14 +37,25 @@ export const FileUtils = {
 		} else {
 			if (length < KB) return length + ' B';
 			else if (length < MB) return (length / KB).toFixed(0) + ' kB';
-			else if (length < GB) return (length / MB).toFixed(0) + ' <span>MB</span>';
-			else if (length < TB) return (length / GB).toFixed(1) + ' <span>GB</span>';
+			else if (length < GB)
+				return (length / MB).toFixed(0) + ' <span>MB</span>';
+			else if (length < TB)
+				return (length / GB).toFixed(1) + ' <span>GB</span>';
 			else return (length / TB).toFixed(2) + ' <span>TB</span>';
 		}
 	},
 	validName: (name) => {
 		// \ / : * ? " < > |
-		return name.replace(/[\\]/gi, '＼').replace(/[/]/gi, '／').replace(/[:]/gi, '：').replace(/[*]/gi, '＊').replace(/[?]/gi, '？').replace(/["]/gi, '＂').replace(/[<]/gi, '＜').replace(/[>]/gi, '＞').replace(/[|]/gi, '｜');
+		return name
+			.replace(/[\\]/gi, '＼')
+			.replace(/[/]/gi, '／')
+			.replace(/[:]/gi, '：')
+			.replace(/[*]/gi, '＊')
+			.replace(/[?]/gi, '？')
+			.replace(/["]/gi, '＂')
+			.replace(/[<]/gi, '＜')
+			.replace(/[>]/gi, '＞')
+			.replace(/[|]/gi, '｜');
 	},
 };
 
@@ -111,10 +123,14 @@ export const Tag = {
 
 export const LocalStorageItem = {
 	set: function (itemName, itemValue) {
-		typeof Storage !== 'undefined' && localStorage.setItem(itemName, itemValue);
+		typeof Storage !== 'undefined' &&
+			localStorage.setItem(itemName, itemValue);
 	},
 	get: function (itemName, notfoundDefault) {
-		return typeof Storage !== 'undefined' && (localStorage.getItem(itemName) || notfoundDefault);
+		return (
+			typeof Storage !== 'undefined' &&
+			(localStorage.getItem(itemName) || notfoundDefault)
+		);
 	},
 	getInteger: function (itemName, notfoundDefault) {
 		return parseInt(this.get(itemName, notfoundDefault));
@@ -130,6 +146,7 @@ export const LocalStorageItem = {
 		return this.get(itemName, notfoundDefault).split(delimiter);
 	},
 	has: (itemName) => {
+		// eslint-disable-next-line no-prototype-builtins
 		return localStorage.hasOwnProperty(itemName);
 	},
 	remove: (itemName) => {
@@ -142,10 +159,14 @@ export const LocalStorageItem = {
 
 export const SessionStorageItem = {
 	set: function (itemName, itemValue) {
-		typeof Storage !== 'undefined' && sessionStorage.setItem(itemName, itemValue);
+		typeof Storage !== 'undefined' &&
+			sessionStorage.setItem(itemName, itemValue);
 	},
 	get: function (itemName, notfoundDefault) {
-		return typeof Storage !== 'undefined' && (sessionStorage.getItem(itemName) || notfoundDefault);
+		return (
+			typeof Storage !== 'undefined' &&
+			(sessionStorage.getItem(itemName) || notfoundDefault)
+		);
 	},
 	getInteger: function (itemName, notfoundDefault) {
 		return parseInt(this.get(itemName, notfoundDefault));
@@ -158,6 +179,7 @@ export const SessionStorageItem = {
 		}
 	},
 	has: (itemName) => {
+		// eslint-disable-next-line no-prototype-builtins
 		return sessionStorage.hasOwnProperty(itemName);
 	},
 	remove: (itemName) => {
@@ -169,13 +191,13 @@ export const SessionStorageItem = {
 };
 
 /* ---- extends jquery ---- */
-jQuery.fn.serializeObject = function () {
+$.fn.serializeObject = function () {
 	var obj = null;
 	try {
 		var arr = this.serializeArray();
 		if (arr) {
 			obj = {};
-			jQuery.each(arr, function () {
+			$.each(arr, function () {
 				obj[this.name] = this.value;
 			});
 		}
