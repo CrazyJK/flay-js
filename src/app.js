@@ -10,11 +10,11 @@ dotenv.config();
 const app = express();
 
 const httpsServer = createServer(
-	{
-		pfx: fs.readFileSync('certs/kamoru.jk.p12'),
-		passphrase: process.env.SSL_PASSPHRASE,
-	},
-	app
+  {
+    pfx: fs.readFileSync('certs/kamoru.jk.p12'),
+    passphrase: process.env.SSL_PASSPHRASE,
+  },
+  app
 );
 
 const io = new SocketIoServer(httpsServer);

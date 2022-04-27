@@ -1,175 +1,175 @@
 <style>
-	main > div.body {
-		max-width: calc(800px + 2rem * 2);
-		padding: 0 2rem;
-		overflow: hidden;
-	}
+  main > div.body {
+    max-width: calc(800px + 2rem * 2);
+    padding: 0 2rem;
+    overflow: hidden;
+  }
 </style>
 <nav class="flay-navbar">
-	<ul>
-		<li>
-			<input type="search" id="searchKeyword" placeholder="Search..." />
-		</li>
-		<li>
-			<label>
-				<input class="sr-only" type="checkbox" id="movie" checked="true" /><span><i class="fa fa-film"></i></span>
-			</label>
-			<label>
-				<input class="sr-only" type="checkbox" id="subtitles" /><span><i class="fa fa-closed-captioning"></i></span>
-			</label>
-		</li>
-		<li>
-			<label>
-				<input class="sr-only" type="checkbox" id="favorite" checked="true" /><span><i class="fa fa-heart"></i></span>
-			</label>
-			<label>
-				<input class="sr-only" type="checkbox" id="nofavorite" checked="true" /><span><i class="fa-regular fa-heart"></i></span>
-			</label>
-		</li>
-		<li>
-			<label>
-				<input class="sr-only" type="checkbox" id="rank0" name="rank" value="0" checked="true" /><span><i class="fa fa-circle"></i></span>
-			</label>
-			<label>
-				<input class="sr-only" type="checkbox" id="rank1" name="rank" value="1" /><span><i class="fa fa-star"></i></span>
-			</label>
-			<label>
-				<input class="sr-only" type="checkbox" id="rank2" name="rank" value="2" /><span><i class="fa fa-star"></i></span>
-			</label>
-			<label>
-				<input class="sr-only" type="checkbox" id="rank3" name="rank" value="3" /><span><i class="fa fa-star"></i></span>
-			</label>
-			<label>
-				<input class="sr-only" type="checkbox" id="rank4" name="rank" value="4" /><span><i class="fa fa-star"></i></span>
-			</label>
-			<label>
-				<input class="sr-only" type="checkbox" id="rank5" name="rank" value="5" /><span><i class="fa fa-star"></i></span>
-			</label>
-		</li>
-		<li>
-			<label> <input class="sr-only" type="radio" name="sort" value="r" checked="true" /><span class="fw-700" title="Release">R</span> </label>
-			<label> <input class="sr-only" type="radio" name="sort" value="m" /><span class="fw-700" title="Modifed">M</span> </label>
-			<label> <input class="sr-only" type="radio" name="sort" value="a" /><span class="fw-700" title="Access">A</span> </label>
-		</li>
-	</ul>
+  <ul>
+    <li>
+      <input type="search" id="searchKeyword" placeholder="Search..." />
+    </li>
+    <li>
+      <label>
+        <input class="sr-only" type="checkbox" id="movie" checked="true" /><span><i class="fa fa-film"></i></span>
+      </label>
+      <label>
+        <input class="sr-only" type="checkbox" id="subtitles" /><span><i class="fa fa-closed-captioning"></i></span>
+      </label>
+    </li>
+    <li>
+      <label>
+        <input class="sr-only" type="checkbox" id="favorite" checked="true" /><span><i class="fa fa-heart"></i></span>
+      </label>
+      <label>
+        <input class="sr-only" type="checkbox" id="nofavorite" checked="true" /><span><i class="fa-regular fa-heart"></i></span>
+      </label>
+    </li>
+    <li>
+      <label>
+        <input class="sr-only" type="checkbox" id="rank0" name="rank" value="0" checked="true" /><span><i class="fa fa-circle"></i></span>
+      </label>
+      <label>
+        <input class="sr-only" type="checkbox" id="rank1" name="rank" value="1" /><span><i class="fa fa-star"></i></span>
+      </label>
+      <label>
+        <input class="sr-only" type="checkbox" id="rank2" name="rank" value="2" /><span><i class="fa fa-star"></i></span>
+      </label>
+      <label>
+        <input class="sr-only" type="checkbox" id="rank3" name="rank" value="3" /><span><i class="fa fa-star"></i></span>
+      </label>
+      <label>
+        <input class="sr-only" type="checkbox" id="rank4" name="rank" value="4" /><span><i class="fa fa-star"></i></span>
+      </label>
+      <label>
+        <input class="sr-only" type="checkbox" id="rank5" name="rank" value="5" /><span><i class="fa fa-star"></i></span>
+      </label>
+    </li>
+    <li>
+      <label> <input class="sr-only" type="radio" name="sort" value="r" checked="true" /><span class="fw-700" title="Release">R</span> </label>
+      <label> <input class="sr-only" type="radio" name="sort" value="m" /><span class="fw-700" title="Modifed">M</span> </label>
+      <label> <input class="sr-only" type="radio" name="sort" value="a" /><span class="fw-700" title="Access">A</span> </label>
+    </li>
+  </ul>
 </nav>
 <div class="container-flay">
-	<div class="flay">
-		<div class="flay-info horizontal">
-			<div class="flay-info-studio">
-				<label class="flay-studio">□□□□□□</label>
-			</div>
-			<div class="flay-info-opus">
-				<label class="flay-opus">□□□-□□</label>
-			</div>
-			<div class="flay-info-date">
-				<label class="flay-release">□□□□.□□.□□</label>
-				<label class="flay-modified">□□□□.□□.□□</label>
-				<label class="flay-access">□□□□.□□.□□</label>
-			</div>
-			<div class="flay-info-extra">
-				<label class="flay-movie">□.□ <span>GB</span></label>
-				<label class="flay-subtitles subtitles-empty">□□□</label>
-				<label class="flay-score" style="display: none"></label>
-				<label class="flay-played">□p</label>
-			</div>
-		</div>
-		<div class="flay-info">
-			<div class="flay-info-rank">
-				<span class="flay-rank">
-					<label>
-						<input class="sr-only" type="radio" id="flay-rank-1" name="flay-rank" value="-1" /><span><i class="fa fa-thumbs-down"></i></span>
-					</label>
-					<label>
-						<input class="sr-only" type="radio" id="flay-rank0" name="flay-rank" value="0" /><span><i class="fa fa-circle"></i></span>
-					</label>
-					<label>
-						<input class="sr-only" type="radio" id="flay-rank1" name="flay-rank" value="1" /><span><i class="fa fa-star"></i></span>
-					</label>
-					<label>
-						<input class="sr-only" type="radio" id="flay-rank2" name="flay-rank" value="2" /><span><i class="fa fa-star"></i></span>
-					</label>
-					<label>
-						<input class="sr-only" type="radio" id="flay-rank3" name="flay-rank" value="3" /><span><i class="fa fa-star"></i></span>
-					</label>
-					<label>
-						<input class="sr-only" type="radio" id="flay-rank4" name="flay-rank" value="4" /><span><i class="fa fa-star"></i></span>
-					</label>
-					<label>
-						<input class="sr-only" type="radio" id="flay-rank5" name="flay-rank" value="5" /><span><i class="fa fa-star"></i></span>
-					</label>
-				</span>
-			</div>
-		</div>
-		<div class="flay-info">
-			<div class="flay-info-comment">
-				<label class="flay-comment comment-empty">Comment</label>
-				<input class="flay-comment-input" type="text" style="display: none" />
-			</div>
-			<div class="flay-info-title">
-				<label class="flay-title">□□□□□□□□□□□□□□□□□□□</label>
-			</div>
-		</div>
-		<div class="flay-info">
-			<div class="flay-info-cover">
-				<div class="flay-cover" style="background-image: none"></div>
-			</div>
-		</div>
-		<div class="flay-info">
-			<div class="flay-info-actress">
-				<div class="flay-actress">
-					<label class="flay-actress-favorite">
-						<input type="checkbox" name="actressFavorite" class="sr-only" />
-						<span><i class="fa fa-heart"></i></span>
-					</label>
-					<label class="flay-actress-name">□□□□□□□</label>
-					<label class="flay-actress-localName">□□□□□□</label>
-					<label class="flay-actress-birth">□□□□年□□月□□日</label>
-					<label class="flay-actress-body">□□□ - □□ - □□</label>
-					<label class="flay-actress-height">□□□</label>
-					<label class="flay-actress-debut">□□□□</label>
-				</div>
-			</div>
-		</div>
-		<div class="flay-info">
-			<div class="flay-info-tag">
-				<button onclick="$('.flay-info-tag-new').toggle()">
-					<i class="fa fa-plus"></i>
-				</button>
-			</div>
-			<div class="flay-info-tag-new">
-				<input type="text" name="tagName" placeholder="tag name" />
-				<input type="text" name="tagDesc" placeholder="tag description" />
-			</div>
-		</div>
-		<div class="flay-info">
-			<div class="flay-info-history"></div>
-		</div>
-	</div>
+  <div class="flay">
+    <div class="flay-info horizontal">
+      <div class="flay-info-studio">
+        <label class="flay-studio">□□□□□□</label>
+      </div>
+      <div class="flay-info-opus">
+        <label class="flay-opus">□□□-□□</label>
+      </div>
+      <div class="flay-info-date">
+        <label class="flay-release">□□□□.□□.□□</label>
+        <label class="flay-modified">□□□□.□□.□□</label>
+        <label class="flay-access">□□□□.□□.□□</label>
+      </div>
+      <div class="flay-info-extra">
+        <label class="flay-movie">□.□ <span>GB</span></label>
+        <label class="flay-subtitles subtitles-empty">□□□</label>
+        <label class="flay-score" style="display: none"></label>
+        <label class="flay-played">□p</label>
+      </div>
+    </div>
+    <div class="flay-info">
+      <div class="flay-info-rank">
+        <span class="flay-rank">
+          <label>
+            <input class="sr-only" type="radio" id="flay-rank-1" name="flay-rank" value="-1" /><span><i class="fa fa-thumbs-down"></i></span>
+          </label>
+          <label>
+            <input class="sr-only" type="radio" id="flay-rank0" name="flay-rank" value="0" /><span><i class="fa fa-circle"></i></span>
+          </label>
+          <label>
+            <input class="sr-only" type="radio" id="flay-rank1" name="flay-rank" value="1" /><span><i class="fa fa-star"></i></span>
+          </label>
+          <label>
+            <input class="sr-only" type="radio" id="flay-rank2" name="flay-rank" value="2" /><span><i class="fa fa-star"></i></span>
+          </label>
+          <label>
+            <input class="sr-only" type="radio" id="flay-rank3" name="flay-rank" value="3" /><span><i class="fa fa-star"></i></span>
+          </label>
+          <label>
+            <input class="sr-only" type="radio" id="flay-rank4" name="flay-rank" value="4" /><span><i class="fa fa-star"></i></span>
+          </label>
+          <label>
+            <input class="sr-only" type="radio" id="flay-rank5" name="flay-rank" value="5" /><span><i class="fa fa-star"></i></span>
+          </label>
+        </span>
+      </div>
+    </div>
+    <div class="flay-info">
+      <div class="flay-info-comment">
+        <label class="flay-comment comment-empty">Comment</label>
+        <input class="flay-comment-input" type="text" style="display: none" />
+      </div>
+      <div class="flay-info-title">
+        <label class="flay-title">□□□□□□□□□□□□□□□□□□□</label>
+      </div>
+    </div>
+    <div class="flay-info">
+      <div class="flay-info-cover">
+        <div class="flay-cover" style="background-image: none"></div>
+      </div>
+    </div>
+    <div class="flay-info">
+      <div class="flay-info-actress">
+        <div class="flay-actress">
+          <label class="flay-actress-favorite">
+            <input type="checkbox" name="actressFavorite" class="sr-only" />
+            <span><i class="fa fa-heart"></i></span>
+          </label>
+          <label class="flay-actress-name">□□□□□□□</label>
+          <label class="flay-actress-localName">□□□□□□</label>
+          <label class="flay-actress-birth">□□□□年□□月□□日</label>
+          <label class="flay-actress-body">□□□ - □□ - □□</label>
+          <label class="flay-actress-height">□□□</label>
+          <label class="flay-actress-debut">□□□□</label>
+        </div>
+      </div>
+    </div>
+    <div class="flay-info">
+      <div class="flay-info-tag">
+        <button onclick="$('.flay-info-tag-new').toggle()">
+          <i class="fa fa-plus"></i>
+        </button>
+      </div>
+      <div class="flay-info-tag-new">
+        <input type="text" name="tagName" placeholder="tag name" />
+        <input type="text" name="tagDesc" placeholder="tag description" />
+      </div>
+    </div>
+    <div class="flay-info">
+      <div class="flay-info-history"></div>
+    </div>
+  </div>
 </div>
 <nav class="fixed-bottom">
-	<ul class="pagination justify-content-center">
-		<li class="page-item">
-			<a class="page-link" href="javascript: goPage(0)">□</a>
-		</li>
-		<li class="page-item">
-			<a class="page-link" href="javascript: goPage(124)">□□</a>
-		</li>
-		<li class="page-item active">
-			<a class="page-link" href="javascript: goPage(125)">□□</a>
-		</li>
-		<li class="page-item">
-			<a class="page-link" href="javascript: goPage(126)">□□</a>
-		</li>
-		<li class="page-item">
-			<a class="page-link" href="javascript: goPage(351)">□□□</a>
-		</li>
-	</ul>
-	<div class="progress" style="height: 1px">
-		<div class="progress-bar page-bar" style="width: 0%"></div>
-	</div>
+  <ul class="pagination justify-content-center">
+    <li class="page-item">
+      <a class="page-link" href="javascript: goPage(0)">□</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="javascript: goPage(124)">□□</a>
+    </li>
+    <li class="page-item active">
+      <a class="page-link" href="javascript: goPage(125)">□□</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="javascript: goPage(126)">□□</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="javascript: goPage(351)">□□□</a>
+    </li>
+  </ul>
+  <div class="progress" style="height: 1px">
+    <div class="progress-bar page-bar" style="width: 0%"></div>
+  </div>
 </nav>
 <script defer src="/dist/flayHome.js"></script>
 <script>
-	document.title = '<%= title %>';
+  document.title = '<%= title %>';
 </script>
