@@ -3,6 +3,7 @@
  */
 
 import { Router } from 'express';
+
 const router = Router();
 
 // VIEW
@@ -16,6 +17,10 @@ router.get('/file', (req, res) => {
 
 router.get('/list', (req, res) => {
   res.render('flay/flayList', { title: 'Flay list' });
+});
+
+router.get('/manager', (req, res) => {
+  res.render('flay/flayManager', { title: 'Flay Manager' });
 });
 
 export default router;

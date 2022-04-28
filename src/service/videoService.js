@@ -56,4 +56,7 @@ export default {
     writeJson();
     return video;
   },
+  find: (keyword) => {
+    videoList.filter((video) => JSON.stringify(video).indexOf(keyword) > -1);
+  },
 };

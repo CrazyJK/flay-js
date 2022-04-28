@@ -9,6 +9,7 @@ module.exports = {
     flayFiles: './www/flay.files.js',
     flayHome: './www/flay.home.js',
     flayList: './www/flay.list.js',
+    flayManager: './www/flay.manager.js',
   },
   devtool: 'source-map',
   output: {

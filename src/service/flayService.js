@@ -44,4 +44,7 @@ export default {
     historyService.save(new History(new Date(), flay.opus, 'PLAY', flay.toString()));
     return flay;
   },
+  find: (keyword) => {
+    return flaySource.list().filter((flay) => flay.toString().indexOf(keyword) > -1);
+  },
 };
