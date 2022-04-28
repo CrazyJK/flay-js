@@ -1,0 +1,314 @@
+main {
+  div.body {
+    max-width: calc(800px + 2rem * 2);
+    padding: 0 2rem;
+    overflow: hidden;
+  }
+}
+
+/* ---- flay home ---- */
+.flay-navbar {
+  padding: 0;
+
+  ul {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 2rem;
+    margin: 0;
+    border: 0;
+    padding: 0.5rem 0;
+    list-style: none;
+    font-size: 1.5rem;
+    transition: 0.4s;
+
+    &:hover {
+      box-shadow: var(--shadow-gray);
+    }
+  }
+
+  input[type='search'] {
+    background-color: transparent;
+    border: 0;
+    padding: 0 0.25rem;
+    font-size: 1.5rem;
+    text-align: center;
+    width: 12rem;
+  }
+}
+
+.container-flay {
+  display: flex;
+  justify-content: center;
+
+  .flay {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+
+    .flay-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      &.horizontal div {
+        min-height: 3rem;
+        white-space: nowrap;
+      }
+
+      label {
+        border-radius: 0.5rem;
+        margin: 0.25rem;
+        border: 0;
+        padding: 0.25rem 0.5rem;
+        font-weight: 700;
+        font-size: 1.25rem;
+        text-align: center;
+      }
+
+      .flay-info-title {
+        width: 100%;
+
+        .flay-title {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          max-width: fit-content;
+          font-size: 1.5rem;
+        }
+      }
+
+      .flay-info-extra {
+        .flay-movie {
+          cursor: pointer;
+        }
+        .flay-subtitles.subtitles-empty {
+          color: var(--gray-3);
+        }
+      }
+
+      .flay-info-rank {
+        .flay-rank {
+          display: flex;
+
+          label {
+            margin: 0.25rem 0;
+          }
+        }
+      }
+
+      .flay-info-actress {
+        margin-top: 1rem;
+        min-height: 2.75rem;
+        min-width: 90%;
+
+        .flay-actress {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+
+          label {
+            font-size: 1rem;
+            margin: 0;
+
+            &.flay-actress-favorite {
+              flex-grow: 0;
+            }
+            &.flay-actress-name {
+              flex: 1 0 auto;
+              text-align: left;
+            }
+            &.flay-actress-localName {
+              flex-grow: 0;
+            }
+            &.flay-actress-age {
+              flex-grow: 0;
+              font-family: D2Coding;
+            }
+            &.flay-actress-birth {
+              flex-grow: 0;
+              font-family: D2Coding;
+            }
+            &.flay-actress-body {
+              flex-grow: 0;
+              font-family: D2Coding;
+            }
+            &.flay-actress-height {
+              flex-grow: 0;
+              font-family: D2Coding;
+            }
+            &.flay-actress-debut {
+              flex-grow: 0;
+              font-family: D2Coding;
+            }
+          }
+        }
+      }
+
+      .flay-info-tag {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.25rem;
+        padding: 0.5rem;
+
+        .flay-tag {
+          border-radius: 0.25rem;
+          font-size: 0.875rem;
+          margin: 0.25rem;
+          padding: 0 0.25rem;
+          transition: box-shadow 0.2s;
+
+          &:hover {
+            box-shadow: 2px 3px 8px 0px var(--color-box-shadow);
+          }
+        }
+
+        button {
+          background-color: transparent;
+          border: 0;
+        }
+
+        .flay-info-tag-new {
+          background-color: var(--gray-2);
+          border-radius: 0.25rem;
+          padding: 0.5rem;
+          display: none;
+
+          input {
+            background-color: transparent;
+            border: 0;
+            padding: 0 0.25rem;
+
+            &:nth-child(1) {
+              width: 10rem;
+            }
+            &:nth-child(2) {
+              width: 16rem;
+            }
+          }
+        }
+      }
+
+      .flay-info-comment {
+        text-align: center;
+        width: 100%;
+
+        .flay-comment {
+          min-height: 2rem;
+
+          &.comment-empty {
+            color: var(--gray-3);
+          }
+        }
+
+        .flay-comment-input {
+          background-color: transparent;
+          border: 1px solid var(--gray-2);
+          margin: 0;
+          height: 2rem;
+          font-size: 1rem;
+          text-align: center;
+          width: 80%;
+        }
+      }
+    }
+
+    .flay-info-cover {
+      background-color: var(--gray-2);
+      border-radius: 0.25rem;
+      padding: 0.5rem;
+      width: 100%;
+
+      .flay-cover {
+        aspect-ratio: 800 / 538;
+        background: var(--gray-2) no-repeat center;
+        background-size: contain;
+        border-radius: 0.25rem;
+        margin: 0;
+        padding: 0;
+        transition: background 0.2s ease-out;
+      }
+    }
+
+    .flay-info-date {
+      font-family: D2Coding;
+    }
+  }
+}
+
+/* 페이지네이션 */
+.pagination {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem;
+  justify-content: center;
+
+  .page-item {
+    background-color: var(--col-bg);
+    border: 1px solid var(--gray-2);
+    padding: 0.25rem;
+
+    .page-link {
+      display: block;
+      color: var(--col-fg);
+      min-width: 2.5rem;
+      font-size: 0.875rem;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    &.active .page-link {
+      color: rgb(var(--col-blue-rgb));
+    }
+  }
+}
+
+/* 페이지 바 */
+.page-bar {
+  background-color: rgba(var(--col-blue-rgb), 50);
+}
+
+/* ---- history ---- */
+
+.flay-info-history {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  text-align: center;
+
+  * {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+  }
+}
+
+/* 낮은 높이에서 수평으로 배열 */
+@media screen and (max-height: 1440px) {
+  .container-flay .flay .flay-info.horizontal {
+    flex-direction: row;
+    align-items: baseline;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .flay-navbar ul {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .container-flay .flay .flay-info {
+    &.horizontal {
+      flex-direction: column;
+    }
+    .flay-info-actress .flay-actress {
+      flex-direction: column;
+    }
+  }
+}

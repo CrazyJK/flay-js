@@ -1,0 +1,38 @@
+:focus-visible {
+  outline: none;
+}
+
+.fixed-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.progress {
+  display: flex;
+
+  .progress-bar {
+    display: flex;
+    transition: width 0.6s ease;
+  }
+}
+
+/* 라디오, 체크박스 */
+label {
+  input {
+    &.sr-only:checked ~ span,
+    &.sr-only:checked ~ span > * {
+      color: var(--col-check-active);
+    }
+  }
+  &:hover input.sr-only ~ span,
+  &:hover input.sr-only ~ span > * {
+    cursor: pointer;
+    color: var(--col-check-hover);
+  }
+}
+
+.fw-700 {
+  font-weight: 700;
+}

@@ -6,6 +6,7 @@ import axios from 'axios';
 import { API } from './lib/flay.api.js';
 import dominatedColor from './lib/dominated.color.js';
 import { DateUtils, FileUtils, StringUtils, Random, FlayFiles, Tag, LocalStorageItem } from './lib/common.js';
+import './css/app/flay.home.scss';
 
 let flayMap = new Map();
 let actressMap = new Map();

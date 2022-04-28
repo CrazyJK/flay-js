@@ -3,6 +3,7 @@
  */
 import axios from 'axios';
 import $ from 'jquery';
+import './css/app/flay.list.scss';
 
 axios
   .get('/api/flay/list')
