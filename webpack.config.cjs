@@ -4,10 +4,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
   mode: 'development',
   entry: {
-    layout: './www_src/layout.js',
-    flayFiles: './www_src/flay.files.js',
-    flayHome: './www_src/flay.home.js',
-    flayList: './www_src/flay.list.js',
+    layout: './www/layout.js',
+    flayFiles: './www/flay.files.js',
+    flayHome: './www/flay.home.js',
+    flayList: './www/flay.list.js',
   },
   devtool: 'source-map',
   output: {
