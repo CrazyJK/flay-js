@@ -7,7 +7,7 @@ main {
 }
 
 /* ---- flay home ---- */
-.flay-navbar {
+nav.flay-navbar {
   padding: 0;
 
   ul {
@@ -25,15 +25,15 @@ main {
     &:hover {
       box-shadow: var(--shadow-gray);
     }
-  }
 
-  input[type='search'] {
-    background-color: transparent;
-    border: 0;
-    padding: 0 0.25rem;
-    font-size: 1.5rem;
-    text-align: center;
-    width: 12rem;
+    input[type='search'] {
+      background-color: transparent;
+      border: 0;
+      padding: 0 0.25rem;
+      font-size: 1.5rem;
+      text-align: center;
+      width: 12rem;
+    }
   }
 }
 
@@ -67,19 +67,8 @@ main {
         text-align: center;
       }
 
-      .flay-info-title {
-        width: 100%;
-
-        .flay-title {
-          display: block;
-          margin-left: auto;
-          margin-right: auto;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-          max-width: fit-content;
-          font-size: 1.5rem;
-        }
+      .flay-info-date {
+        font-family: D2Coding;
       }
 
       .flay-info-extra {
@@ -98,6 +87,61 @@ main {
           label {
             margin: 0.25rem 0;
           }
+        }
+      }
+
+      .flay-info-comment {
+        text-align: center;
+        width: 100%;
+
+        .flay-comment {
+          min-height: 2rem;
+
+          &.comment-empty {
+            color: var(--gray-3);
+          }
+        }
+
+        .flay-comment-input {
+          background-color: transparent;
+          border: 1px solid var(--gray-2);
+          margin: 0;
+          height: 2rem;
+          font-size: 1rem;
+          text-align: center;
+          width: 80%;
+        }
+      }
+
+      .flay-info-title {
+        width: 100%;
+
+        .flay-title {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          max-width: fit-content;
+          font-size: 1.5rem;
+        }
+      }
+
+      .flay-info-cover {
+        background-color: var(--gray-2);
+        border-radius: 0.25rem;
+        padding: 0.5rem;
+        width: 100%;
+
+        .flay-cover {
+          aspect-ratio: 800 / 538;
+          background: var(--gray-2) no-repeat center;
+          background-size: contain;
+          border-radius: 0.25rem;
+          margin: 0;
+          padding: 0;
+          transition: background 0.2s ease-out;
         }
       }
 
@@ -172,71 +216,39 @@ main {
           background-color: transparent;
           border: 0;
         }
-
-        .flay-info-tag-new {
-          background-color: var(--gray-2);
-          border-radius: 0.25rem;
-          padding: 0.5rem;
-          display: none;
-
-          input {
-            background-color: transparent;
-            border: 0;
-            padding: 0 0.25rem;
-
-            &:nth-child(1) {
-              width: 10rem;
-            }
-            &:nth-child(2) {
-              width: 16rem;
-            }
-          }
-        }
       }
 
-      .flay-info-comment {
-        text-align: center;
-        width: 100%;
-
-        .flay-comment {
-          min-height: 2rem;
-
-          &.comment-empty {
-            color: var(--gray-3);
-          }
-        }
-
-        .flay-comment-input {
-          background-color: transparent;
-          border: 1px solid var(--gray-2);
-          margin: 0;
-          height: 2rem;
-          font-size: 1rem;
-          text-align: center;
-          width: 80%;
-        }
-      }
-    }
-
-    .flay-info-cover {
-      background-color: var(--gray-2);
-      border-radius: 0.25rem;
-      padding: 0.5rem;
-      width: 100%;
-
-      .flay-cover {
-        aspect-ratio: 800 / 538;
-        background: var(--gray-2) no-repeat center;
-        background-size: contain;
+      .flay-info-tag-new {
+        background-color: var(--gray-2);
         border-radius: 0.25rem;
-        margin: 0;
-        padding: 0;
-        transition: background 0.2s ease-out;
-      }
-    }
+        padding: 0.5rem;
+        display: none;
 
-    .flay-info-date {
-      font-family: D2Coding;
+        input {
+          background-color: transparent;
+          border: 0;
+          padding: 0 0.25rem;
+
+          &:nth-child(1) {
+            width: 10rem;
+          }
+          &:nth-child(2) {
+            width: 16rem;
+          }
+        }
+      }
+
+      .flay-info-history {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        text-align: center;
+
+        * {
+          writing-mode: vertical-rl;
+          text-orientation: upright;
+        }
+      }
     }
   }
 }
@@ -272,20 +284,6 @@ main {
 /* 페이지 바 */
 .page-bar {
   background-color: rgba(var(--col-blue-rgb), 50);
-}
-
-/* ---- history ---- */
-
-.flay-info-history {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  text-align: center;
-
-  * {
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-  }
 }
 
 /* 낮은 높이에서 수평으로 배열 */
