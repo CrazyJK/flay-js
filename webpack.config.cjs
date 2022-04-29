@@ -1,13 +1,16 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  /* mode: development, production, none */
   mode: 'development',
   entry: {
-    layout: './www_src/layout.js',
-    flayFiles: './www_src/flay.files.js',
-    flayHome: './www_src/flay.home.js',
-    flayList: './www_src/flay.list.js',
+    layout: './views/layout.js',
+    flayFiles: './views/flay/flayFiles.js',
+    flayHome: './views/flay/flayHome.js',
+    flayList: './views/flay/flayList.js',
+    flayManager: './views/flay/flayManager.js',
   },
   devtool: 'source-map',
   output: {
@@ -16,7 +19,7 @@ module.exports = {
     path: path.resolve(__dirname, './public/dist'),
     clean: true,
   },
-  plugins: [new MiniCssExtractPlugin()],
+  plugins: [new MiniCssExtractPlugin(), new HtmlWebpackPlugin()],
   module: {
     rules: [
       {
@@ -64,6 +67,11 @@ module.exports = {
         vendor: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
+          chunks: 'all',
+        },
+        commons: {
+          test: /[\\/]lib[\\/]/,
+          name: 'commons',
           chunks: 'all',
         },
       },

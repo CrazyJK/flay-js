@@ -1,9 +1,13 @@
 import path from 'path';
-import { readFileSync, writeFile } from 'fs';
+import { existsSync, readFileSync, writeFile, writeFileSync } from 'fs';
 
 import { INFO_PATH } from '../config/flayProperties.js';
 
 const videoJsonPath = path.resolve(INFO_PATH, 'video.json');
+if (!existsSync(videoJsonPath)) {
+  writeFileSync(videoJsonPath, '[]');
+  console.warn('videoService', 'file is not exists, create it', videoJsonPath);
+}
 
 console.log('videoService', 'reading', videoJsonPath);
 const rowData = readFileSync(videoJsonPath, 'utf8');
@@ -55,5 +59,8 @@ export default {
     }
     writeJson();
     return video;
+  },
+  find: (keyword) => {
+    return videoList.filter((video) => JSON.stringify(video).indexOf(keyword) > -1);
   },
 };

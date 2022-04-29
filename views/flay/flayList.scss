@@ -1,0 +1,40 @@
+/* ---- Flay List ---- */
+ol#flayList {
+  li {
+    font-family: D2Coding;
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+
+    &:first-child {
+      font-weight: 700;
+      border-bottom: 1px solid #eee;
+      margin-bottom: 0.5rem;
+    }
+
+    .studio {
+      flex: 0 0 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .opus {
+      flex: 0 0 100px;
+    }
+    .title {
+      flex: 1 1 auto;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .actress {
+      flex: 0 0 150px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .release {
+      flex: 0 0 100px;
+    }
+  }
+}

@@ -1,0 +1,30 @@
+/* 라디오, 체크박스 */
+label {
+  input {
+    &.sr-only:checked ~ span,
+    &.sr-only:checked ~ span > * {
+      color: var(--col-check-active);
+    }
+  }
+  &:hover input.sr-only ~ span,
+  &:hover input.sr-only ~ span > * {
+    cursor: pointer;
+    color: var(--col-check-hover);
+  }
+}
+
+input[type='search'],
+input[type='text'],
+textarea {
+  background-color: transparent;
+  border: 0;
+}
+
+textarea {
+  width: 100%;
+}
+
+button {
+  background: none;
+  border: none;
+}

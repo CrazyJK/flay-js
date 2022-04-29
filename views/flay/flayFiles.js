@@ -3,7 +3,8 @@
  */
 import axios from 'axios';
 import $ from 'jquery';
-import { FileUtils } from './lib/common.js';
+import { FileUtils } from '../lib/common.js';
+import './flayFiles.scss';
 
 // list display
 axios.get('/api/listFiles').then((response) => {

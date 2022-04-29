@@ -1,0 +1,38 @@
+:root {
+  --primary-color: #671ddf;
+  --col-black: #1c1c1c;
+  --col-bg: #ffffff;
+  --col-fg: var(--col-black);
+  --gray-2: #edf2f6;
+  --gray-3: #dbe1e6;
+  --max-contrast: #000000;
+  --col-blue-rgb: 0, 170, 255;
+  --col-check-active: orange;
+  --col-check-hover: rgb(187, 150, 82);
+  /* Shadows */
+  --shadow-blue-light: 0px 10px 20px rgba(var(--col-blue-rgb), 0.6);
+  --shadow-blue-dark: 0px 10px 20px rgba(var(--col-blue-rgb), 0.2);
+  --shadow-blue: var(--shadow-blue-light);
+  --shadow-gray-light: 0px 10px 50px rgb(0 0 0 / 10%);
+  --shadow-gray-dark: 0px 10px 50px rgb(255 255 255 / 10%);
+  --shadow-gray: var(--shadow-gray-light);
+  /* header height */
+  --header-height: 0rem;
+}
+
+* {
+  color: var(--col-fg);
+  box-sizing: border-box;
+  line-height: 1.6;
+}
+
+body.dark {
+  --primary-color: #cdcdcd;
+  --col-bg: var(--col-black);
+  --col-fg: #cdcdcd;
+  --gray-2: #3c3c3c;
+  --gray-3: #505063;
+  --max-contrast: #ffffff;
+  --shadow-blue: var(--shadow-blue-dark);
+  --shadow-gray: var(--shadow-gray-dark);
+}

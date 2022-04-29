@@ -1,9 +1,13 @@
 import { resolve } from 'path';
-import { readFileSync, writeFile } from 'fs';
+import { existsSync, readFileSync, writeFile, writeFileSync } from 'fs';
 
 import { INFO_PATH } from '../config/flayProperties.js';
 
 const tagJsonPath = resolve(INFO_PATH, 'tag.json');
+if (!existsSync(tagJsonPath)) {
+  writeFileSync(tagJsonPath, '[]');
+  console.warn('tagService', 'file is not exists, create it', tagJsonPath);
+}
 
 console.log('tagService', 'reading', tagJsonPath);
 const rowData = readFileSync(tagJsonPath, 'utf8');

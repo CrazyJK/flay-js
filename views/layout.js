@@ -3,7 +3,9 @@
  */
 import { io } from 'socket.io-client';
 import $ from 'jquery';
+import './lib/jquery-extends.js';
 import { DateUtils } from './lib/common.js';
+import './layout.scss';
 
 /* ---- socket.io ---- */
 const socket = io();

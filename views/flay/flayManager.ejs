@@ -1,0 +1,54 @@
+<link rel="stylesheet" href="/dist/flayManager.css" />
+<nav class="flay-navbar">
+  <ul>
+    <li><input type="search" id="keyword" placeholder="Search..." /></li>
+    <li><button id="btnBatch">Batch</button></li>
+    <li><button onclick="document.getElementById('newFlayIncome').classList.toggle('show')">New</button></li>
+  </ul>
+</nav>
+<div id="newFlayIncome" class="my-3 collapse bordered">
+  <div class="">
+    <input type="text" id="newOpus" placeholder="opus" />
+    <input type="text" id="newTitle" placeholder="title" />
+    <input type="text" id="newActress" placeholder="actress" />
+  </div>
+  <div>
+    <textarea id="newDesc" placeholder="flay description..."></textarea>
+  </div>
+  <div>
+    <div id="actress-duplicated" class="collapse"></div>
+    <div id="actress-inputgroup">
+      <label class="actress-favorite-label">
+        <input type="checkbox" id="actress-favorite" name="favorite" class="sr-only" />
+        <span><i class="fa fa-heart"></i></span>
+      </label>
+      <input type="text" id="actress-name" name="name" placeholder="name" />
+      <input type="text" id="actress-localname" name="localName" placeholder="local name" />
+      <input type="text" id="actress-birth" name="birth" placeholder="birth" />
+      <input type="text" id="actress-body" name="body" placeholder="body" />
+      <input type="text" id="actress-height" name="height" placeholder="height" />
+      <input type="text" id="actress-debut" name="debut" placeholder="debut" />
+      <button id="btnActressSave">Update</button>
+    </div>
+    <div>
+      <textarea id="actress-data"></textarea>
+    </div>
+  </div>
+  <form id="flay-inputgroup" onsubmit="() => {return false;}">
+    <input type="text" id="flay-studio" name="studio" placeholder="studio" />
+    <input type="text" id="flay-opus" name="opus" placeholder="opus" />
+    <input type="text" id="flay-title" name="title" placeholder="title" />
+    <input type="text" id="flay-actress" name="actress" placeholder="actress" />
+    <input type="text" id="flay-release" name="release" placeholder="release" />
+    <button id="btnFlayCopy">Copy</button>
+  </form>
+</div>
+<div id="searchResult" class="my-3 collapse bordered">
+  <ul id="flaySearchResult"></ul>
+  <ul id="videoSearchResult"></ul>
+  <ul id="historySearchResult"></ul>
+</div>
+<script defer src="/dist/flayManager.js"></script>
+<script>
+  document.title = '<%= title %>';
+</script>

@@ -1,9 +1,13 @@
 import { resolve } from 'path';
-import { readFileSync, writeFile } from 'fs';
+import { existsSync, readFileSync, writeFile, writeFileSync } from 'fs';
 
 import { INFO_PATH } from '../config/flayProperties.js';
 
 const actressJsonPath = resolve(INFO_PATH, 'actress.json');
+if (!existsSync(actressJsonPath)) {
+  writeFileSync(actressJsonPath, '[]');
+  console.warn('actressService', 'file is not exists, create it', actressJsonPath);
+}
 
 console.log('actressService', 'reading', actressJsonPath);
 const rowData = readFileSync(actressJsonPath, 'utf8');

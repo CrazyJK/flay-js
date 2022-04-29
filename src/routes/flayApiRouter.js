@@ -10,6 +10,7 @@ import videoService from '../service/videoService.js';
 import actressService from '../service/actressService.js';
 import tagService from '../service/tagService.js';
 import historyService from '../service/historyService.js';
+import batchService from '../service/batchService.js';
 
 const router = Router();
 
@@ -44,6 +45,11 @@ router.post('/flay/:opus/play', function (req, res, next) {
   res.status(204).send();
 });
 
+router.get('/flay/find/:keyword', (req, res, next) => {
+  const found = flayService.find(req.params.keyword);
+  res.json(found);
+});
+
 /* ---- video ---- */
 
 router.get('/video', function (req, res, next) {
@@ -63,6 +69,11 @@ router.post('/video', function (req, res, next) {
   flay.video = video;
   process.emit('update flay', flay);
   res.status(204).send();
+});
+
+router.get('/video/find/:keyword', (req, res) => {
+  const found = videoService.find(req.params.keyword);
+  res.json(found);
 });
 
 /* ---- cover ---- */
@@ -90,6 +101,13 @@ router.post('/actress', function (req, res, next) {
   res.status(204).send();
 });
 
+/* ---- studio ---- */
+
+router.get('/studio/guess/:opusPrefix', (req, res) => {
+  const studio = flayService.guessStudio(req.params.opusPrefix);
+  res.send(studio);
+});
+
 /* ---- tag ---- */
 
 router.get('/tag', function (req, res, next) {
@@ -110,9 +128,9 @@ router.post('/tag', function (req, res, next) {
 
 /* ---- hsitory ---- */
 
-router.get('/history/:keyword', function (req, res, next) {
-  const histories = historyService.find(req.params.keyword);
-  res.json(histories);
+router.get('/history/find/:keyword', function (req, res, next) {
+  const found = historyService.find(req.params.keyword);
+  res.json(found);
 });
 
 router.get('/history/date/:date', function (req, res, next) {
@@ -128,6 +146,14 @@ router.get('/history/opus/:opus', function (req, res, next) {
 router.get('/history/action/:action', function (req, res, next) {
   const histories = historyService.getAction(req.params.action);
   res.json(histories);
+});
+
+/* ---- batch ---- */
+
+router.post('/batch/instance', (req, res) => {
+  batchService.instance();
+  // emit batch
+  res.status(204).send();
 });
 
 export default router;
