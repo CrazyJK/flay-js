@@ -47,4 +47,11 @@ export default {
   find: (keyword) => {
     return flaySource.list().filter((flay) => flay.toString().indexOf(keyword) > -1);
   },
+  guessStudio: (opusPrefix) => {
+    const list = flaySource
+      .list()
+      .filter((flay) => flay.opus.startsWith(opusPrefix))
+      .sort((f1, f2) => f1.release.localCompare(f2.release));
+    return list.length > 0 ? list[0].studio : '';
+  },
 };

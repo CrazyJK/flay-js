@@ -101,6 +101,13 @@ router.post('/actress', function (req, res, next) {
   res.status(204).send();
 });
 
+/* ---- studio ---- */
+
+router.get('/studio/guess/:opusPrefix', (req, res) => {
+  const studio = flayService.guessStudio(req.params.opusPrefix);
+  res.send(studio);
+});
+
 /* ---- tag ---- */
 
 router.get('/tag', function (req, res, next) {
