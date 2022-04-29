@@ -1,19 +1,19 @@
 <link rel="stylesheet" href="/dist/flayManager.css" />
 <nav class="flay-navbar">
   <ul>
-    <li><input type="search" id="keyword" placeholder="Search keyword..." /></li>
+    <li><input type="search" id="keyword" placeholder="Search..." /></li>
     <li><button id="btnBatch">Batch</button></li>
     <li><button onclick="document.getElementById('newFlayIncome').classList.toggle('show')">New</button></li>
   </ul>
 </nav>
-<div id="newFlayIncome" class="collapse">
+<div id="newFlayIncome" class="my-3 collapse bordered">
   <div class="">
     <input type="text" id="newOpus" placeholder="opus" />
     <input type="text" id="newTitle" placeholder="title" />
     <input type="text" id="newActress" placeholder="actress" />
   </div>
   <div>
-    <textarea id="newDesc"></textarea>
+    <textarea id="newDesc" placeholder="flay description..."></textarea>
   </div>
   <div>
     <div id="actress-duplicated" class="collapse"></div>
@@ -34,16 +34,16 @@
       <textarea id="actress-data"></textarea>
     </div>
   </div>
-  <div id="flay-inputgroup">
+  <form id="flay-inputgroup" onsubmit="() => {return false;}">
     <input type="text" id="flay-studio" name="studio" placeholder="studio" />
     <input type="text" id="flay-opus" name="opus" placeholder="opus" />
     <input type="text" id="flay-title" name="title" placeholder="title" />
     <input type="text" id="flay-actress" name="actress" placeholder="actress" />
     <input type="text" id="flay-release" name="release" placeholder="release" />
     <button id="btnFlayCopy">Copy</button>
-  </div>
+  </form>
 </div>
-<div>
+<div id="searchResult" class="my-3 collapse bordered">
   <ul id="flaySearchResult"></ul>
   <ul id="videoSearchResult"></ul>
   <ul id="historySearchResult"></ul>

@@ -6,37 +6,6 @@ main {
   }
 }
 
-/* ---- flay home ---- */
-nav.flay-navbar {
-  padding: 0;
-
-  ul {
-    display: flex;
-    justify-content: center;
-    align-items: baseline;
-    gap: 2rem;
-    margin: 0;
-    border: 0;
-    padding: 0.5rem 0;
-    list-style: none;
-    font-size: 1.5rem;
-    transition: 0.4s;
-
-    &:hover {
-      box-shadow: var(--shadow-gray);
-    }
-
-    input[type='search'] {
-      background-color: transparent;
-      border: 0;
-      padding: 0 0.25rem;
-      font-size: 1.5rem;
-      text-align: center;
-      width: 12rem;
-    }
-  }
-}
-
 .container-flay {
   display: flex;
   justify-content: center;

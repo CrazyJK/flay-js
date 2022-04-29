@@ -4,6 +4,7 @@
 
 import $ from 'jquery';
 import axios from 'axios';
+import child_process from 'child_process';
 import { API } from '../lib/flay.api.js';
 import { StringUtils } from '../lib/common.js';
 import { flayRow, videoRow, historyRow, actressRow } from '../lib/flay.component.js';
@@ -89,7 +90,9 @@ $('#newOpus, #newTitle, #newActress, #newDesc').on('keyup', (e) => {
 /* ---- copy flay file name ---- */
 $('#btnFlayCopy').on('click', () => {
   const flay = $('#flay-inputgroup').serializeObject();
-  navigator.clipboard.writeText(`[${flay.studio}][${flay.opus}][${flay.title}][${flay.actress}][${flay.release}]`);
+  const text = `[${flay.studio}][${flay.opus}][${flay.title}][${flay.actress}][${flay.release}]`;
+  console.log('clipboard', text);
+  navigator.clipboard.writeText(text);
 });
 
 /* ---- new actress save ---- */
@@ -115,6 +118,16 @@ async function findAll(keyword) {
     videoList.forEach((video) => $('#videoSearchResult').append(videoRow(video)));
     historyList.forEach((historyy) => $('#historySearchResult').append(historyRow(history)));
 
+    $('#searchResult').addClass('show');
     return [flayList, videoList, historyList];
   });
+}
+
+// This uses an external application for clipboard access, so fill it in here
+// Some options: pbcopy (macOS), xclip (Linux or anywhere with Xlib)
+const COPY_APP = 'xclip';
+function copy(data, encoding = 'utf8') {
+  const proc = child_process.spawn(COPY_APP);
+  proc.stdin.write(data, { encoding });
+  proc.stdin.end();
 }
