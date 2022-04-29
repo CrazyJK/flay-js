@@ -3,8 +3,8 @@
  */
 import axios from 'axios';
 import $ from 'jquery';
-import './css/app/flay.list.scss';
-import { flayRow } from './lib/flay.component.js';
+import { flayRow } from '../lib/flay.component.js';
+import './flayList.scss';
 
 axios
   .get('/api/flay/list')

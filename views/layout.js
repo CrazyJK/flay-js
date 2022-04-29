@@ -4,7 +4,7 @@
 import { io } from 'socket.io-client';
 import $ from 'jquery';
 import { DateUtils } from './lib/common.js';
-import './css/index.scss';
+import './layout.scss';
 
 /* ---- socket.io ---- */
 const socket = io();

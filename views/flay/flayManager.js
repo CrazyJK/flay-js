@@ -4,10 +4,10 @@
 
 import $ from 'jquery';
 import axios from 'axios';
-import { API } from './lib/flay.api.js';
-import { StringUtils } from './lib/common.js';
-import { flayRow, videoRow, historyRow, actressRow } from './lib/flay.component.js';
-import './css/app/flay.manager.scss';
+import { API } from '../lib/flay.api.js';
+import { StringUtils } from '../lib/common.js';
+import { flayRow, videoRow, historyRow, actressRow } from '../lib/flay.component.js';
+import './flayManager.scss';
 
 $('#keyword').on('keyup', (e) => {
   if (e.key === 'Enter') {

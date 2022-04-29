@@ -5,11 +5,11 @@ module.exports = {
   /* mode: development, production, none */
   mode: 'development',
   entry: {
-    layout: './www/layout.js',
-    flayFiles: './www/flay.files.js',
-    flayHome: './www/flay.home.js',
-    flayList: './www/flay.list.js',
-    flayManager: './www/flay.manager.js',
+    layout: './views/layout.js',
+    flayFiles: './views/flay/flayFiles.js',
+    flayHome: './views/flay/flayHome.js',
+    flayList: './views/flay/flayList.js',
+    flayManager: './views/flay/flayManager.js',
   },
   devtool: 'source-map',
   output: {
