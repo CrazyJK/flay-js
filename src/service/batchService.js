@@ -2,7 +2,6 @@ import flaySource from '../source/flaySource.js';
 import fs from 'fs';
 import path from 'path';
 import { ARCHIVE_PATH, STORAGE_PATH } from '../config/flayProperties.js';
-import { DateUtils } from '../../www/lib/common.js';
 
 function execDelete(flay) {
   const yyyymm = flay.release.substring(0, 7).replace(/./i, '-');
