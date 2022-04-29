@@ -65,4 +65,5 @@ export default {
   list: () => {
     return flayList;
   },
+  reload: load,
 };

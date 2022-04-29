@@ -174,18 +174,17 @@ export const SessionStorageItem = {
 
 /* ---- extends jquery ---- */
 $.fn.serializeObject = function () {
-  var obj = null;
+  let obj = null;
   try {
-    var arr = this.serializeArray();
+    const arr = this.serializeArray();
     if (arr) {
       obj = {};
       $.each(arr, function () {
-        obj[this.name] = this.value;
+        obj[this.name] = this.value ? this.value.trim() : '';
       });
     }
   } catch (e) {
     alert(e.message);
   }
-
   return obj;
 };
