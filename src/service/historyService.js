@@ -1,11 +1,15 @@
 import { resolve } from 'path';
-import { appendFile } from 'fs';
+import { appendFile, existsSync, writeFileSync } from 'fs';
 import lineReader from 'line-reader';
 import { INFO_PATH } from '../config/flayProperties.js';
 import History from '../domain/History.js';
 
 const historyFilePath = resolve(INFO_PATH, 'history.csv');
 console.log('historyService', 'reading', historyFilePath);
+if (!existsSync(historyFilePath)) {
+  writeFileSync(historyFilePath, '');
+  console.warn('historyService', 'file is not exists, create it', historyFilePath);
+}
 
 const histories = [];
 
