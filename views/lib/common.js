@@ -1,7 +1,6 @@
 /**
  * common utilities
  */
-import $ from 'jquery';
 
 export const Random = {
   get: function (start, end) {
@@ -170,21 +169,4 @@ export const SessionStorageItem = {
   clear: () => {
     sessionStorage.clear();
   },
-};
-
-/* ---- extends jquery ---- */
-$.fn.serializeObject = function () {
-  let obj = null;
-  try {
-    const arr = this.serializeArray();
-    if (arr) {
-      obj = {};
-      $.each(arr, function () {
-        obj[this.name] = this.value ? this.value.trim() : '';
-      });
-    }
-  } catch (e) {
-    alert(e.message);
-  }
-  return obj;
 };

@@ -68,6 +68,11 @@ module.exports = {
           name: 'vendors',
           chunks: 'all',
         },
+        commons: {
+          test: /[\\/]lib[\\/]/,
+          name: 'commons',
+          chunks: 'all',
+        },
       },
     },
   },
