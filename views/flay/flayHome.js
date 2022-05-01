@@ -17,7 +17,11 @@ let currentFlay;
 
 let isLoading = false;
 
+console.time('axios');
 Promise.all([axios.get('/api/flay/list'), axios.get('/api/actress'), axios.get('/api/tag')]).then((results) => {
+  console.timeEnd('axios');
+
+  console.time('mapping');
   flayMap = results[0].data.reduce((map, flay) => {
     map.set(flay.opus, flay);
     return map;
@@ -32,6 +36,7 @@ Promise.all([axios.get('/api/flay/list'), axios.get('/api/actress'), axios.get('
     map.set(tag.id, tag);
     return map;
   }, new Map());
+  console.timeEnd('mapping');
 
   initCondition();
   renderTagList();
@@ -64,11 +69,6 @@ function filterFlay() {
   const subtitles = $('#subtitles').prop('checked');
   const favorite = $('#favorite').prop('checked');
   const nofavorite = $('#nofavorite').prop('checked');
-  // const ranks = $('input[name="rank"]:checked')
-  // 	.serialize()
-  // 	.replace(/rank=/gi, '')
-  // 	.split('&')
-  // 	.map((r) => Number(r));
   const ranks = $('input[name="rank"]:checked')
     .serializeArray()
     .map((r) => Number(r.value));
@@ -81,43 +81,44 @@ function filterFlay() {
   LocalStorageItem.set('flay.home.cond.lanks', ranks);
   LocalStorageItem.set('flay.home.cond.sort', sort);
 
-  filteredOpus = [];
-  [...flayMap.values()].forEach((flay) => {
-    // rank
-    if (!ranks.includes(flay.video.rank)) {
-      return false;
-    }
-    // movie
-    if (movie && flay.files.movie.length === 0) {
-      return false;
-    }
-    // subtitles
-    if (subtitles && flay.files.subtitles.length === 0) {
-      return false;
-    }
-    // favorite
-    if (favorite && nofavorite) {
-      // all
-    } else if (favorite && !nofavorite) {
-      if (!FlayUtils.isFavorite(actressMap, flay)) {
+  filteredOpus = [...flayMap.values()]
+    .filter((flay) => {
+      // rank
+      if (!ranks.includes(flay.video.rank)) {
         return false;
       }
-    } else if (!favorite && nofavorite) {
-      if (FlayUtils.isFavorite(actressMap, flay)) {
+      // movie
+      if (movie && flay.files.movie.length === 0) {
         return false;
       }
-    } else if (!favorite && !nofavorite) {
-      return false;
-    }
-    // keyword
-    if (searchKeyword.length > 0) {
-      const fullname = `${flay.studio} ${flay.opus} ${flay.title} ${flay.actress} ${flay.release}`;
-      if (fullname.indexOf(searchKeyword) < 0) {
+      // subtitles
+      if (subtitles && flay.files.subtitles.length === 0) {
         return false;
       }
-    }
-    filteredOpus.push(flay.opus);
-  });
+      // favorite
+      if (favorite && nofavorite) {
+        // all
+      } else if (favorite && !nofavorite) {
+        if (!FlayUtils.isFavorite(actressMap, flay)) {
+          return false;
+        }
+      } else if (!favorite && nofavorite) {
+        if (FlayUtils.isFavorite(actressMap, flay)) {
+          return false;
+        }
+      } else if (!favorite && !nofavorite) {
+        return false;
+      }
+      // keyword
+      if (searchKeyword.length > 0) {
+        const fullname = `${flay.studio} ${flay.opus} ${flay.title} ${flay.actress} ${flay.release}`;
+        if (fullname.indexOf(searchKeyword) < 0) {
+          return false;
+        }
+      }
+      return true;
+    })
+    .map((flay) => flay.opus);
 
   filteredOpus.sort((o1, o2) => {
     const [f1, f2] = [flayMap.get(o1), flayMap.get(o2)];
@@ -183,11 +184,9 @@ function showCover() {
       $('.container-flay .flay .flay-cover').css({
         boxShadow: `inset 0 0 4rem 2rem ${colors[0]}`,
       });
-      colors.forEach((color, index) => {
-        $('.flay-color label:nth-child(' + (index + 1) + ')').css({
-          backgroundColor: color,
-        });
-      });
+      $('.flay-color')
+        .empty()
+        .append(colors.map((color) => `<label style="background-color: ${color}"></label>`));
 
       isLoading = false;
     });
@@ -235,7 +234,7 @@ function showFlay() {
     .toggleClass('subtitles-empty', currentFlay.files.subtitles.length === 0);
   $('.container-flay .flay .flay-score').hide();
   $('.container-flay .flay .flay-played')
-    .html(currentFlay.video.play + 'p')
+    .html(currentFlay.video.play + '<small>play</small>')
     .toggle(currentFlay.video.play > 0);
   // tag toggle
   $('.flay-info-tag input:checkbox').prop('checked', false);
@@ -299,18 +298,14 @@ function showPagination() {
   // if not first
   if (startPageIndex > 0) {
     $('.pagination').append(
-      $(`<li class="page-item">
-        <a class="page-link">1</a>
-      </li>`).on('click', () => {
+      $(`<li class="page-item"><a class="page-link">1</a></li>`).on('click', () => {
         goPage(0);
       })
     );
   }
   for (let i = startPageIndex; i < endPageIndex; i++) {
     $('.pagination').append(
-      $(`<li class="page-item ${currentOpusIndex === i ? 'active' : ''}">
-        <a class="page-link">${i + 1}</a>
-      </li>`).on('click', () => {
+      $(`<li class="page-item ${currentOpusIndex === i ? 'active' : ''}"><a class="page-link">${i + 1}</a></li>`).on('click', () => {
         goPage(i);
       })
     );
@@ -318,9 +313,7 @@ function showPagination() {
   // if not last
   if (endPageIndex < finalPageIndex) {
     $('.pagination').append(
-      $(`<li class="page-item">
-        <a class="page-link">${finalPageIndex}</a>
-      </li>`).on('click', () => {
+      $(`<li class="page-item"><a class="page-link">${finalPageIndex}</a></li>`).on('click', () => {
         goPage(finalPageIndex - 1);
       })
     );
@@ -366,12 +359,8 @@ function addEventListener() {
   $('.container-flay .flay .flay-comment-input').on('keyup', (e) => {
     e.stopPropagation();
     if (e.key === 'Enter') {
-      let commentText = $('.container-flay .flay .flay-comment-input').val().trim();
-      if (!StringUtils.isBlank(commentText)) {
-        currentFlay.video.comment = commentText;
-        $('.container-flay .flay .flay-comment').html(commentText);
-        API.Video.save(currentFlay.video);
-      }
+      currentFlay.video.comment = $('.container-flay .flay .flay-comment-input').val().trim();
+      API.Video.save(currentFlay.video);
     }
   });
   // actress favorite
