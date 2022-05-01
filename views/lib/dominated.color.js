@@ -18,31 +18,34 @@ export default async function getDominatedColors(src, opts) {
     throw new Error(`You set scale to ${scale}, which isn't between 0-1. This is either pointless (> 1) or a no-op (≤ 0)`);
   }
 
-  // console.time(src);
+  console.time(src);
   let imageData;
   if (typeof src === 'string') {
     imageData = await getImageData(src, scale);
   } else if (typeof src === 'object' && src instanceof Image) {
-    imageData = getContextImageData(src, scale);
+    imageData = await getContextImageData(src, scale);
   } else {
     throw new Error(`unrecognized src ${src}`);
   }
-  const rgbas = getRGBAs(imageData, ignore, offset);
-  // console.timeEnd(src);
+  const rgbas = await getRGBAs(imageData, ignore, offset);
+  console.timeEnd(src);
 
   return rgbas.slice(0, limit);
 }
 
 function getContextImageData(img, scale) {
+  console.time('getContextImageData');
   const width = Math.round(img.width * scale);
   const height = Math.round(img.height * scale);
   const context = getContext(width, height);
   context.drawImage(img, 0, 0, width, height);
   const { data } = context.getImageData(0, 0, width, height);
+  console.timeEnd('getContextImageData');
   return data;
 }
 
 async function getImageData(src, scale) {
+  console.time('getImageData');
   const img = new Image();
 
   // Can't set cross origin to be anonymous for data url's
@@ -51,6 +54,7 @@ async function getImageData(src, scale) {
 
   return await new Promise((resolve, reject) => {
     img.onload = function () {
+      console.timeEnd('getImageData');
       resolve(getContextImageData(img, scale));
     };
 
@@ -63,6 +67,7 @@ async function getImageData(src, scale) {
 }
 
 function getContext(width, height) {
+  console.time('getContext');
   let canvas = document.querySelector('#dominatedColorCanvas');
   if (canvas === null) {
     canvas = document.createElement('canvas');
@@ -72,11 +77,14 @@ function getContext(width, height) {
   }
   canvas.setAttribute('width', width);
   canvas.setAttribute('height', height);
+  console.timeEnd('getContext');
   return canvas.getContext('2d');
 }
 
-function getRGBAs(data, ignoreRGBs, offset) {
+async function getRGBAs(data, ignoreRGBs, offset) {
+  console.time('getRGBAs');
   const ignoreRgbStrings = ignoreRGBs.map((i) => i.join(','));
+  console.log('getRGBAs', data.length / 4);
 
   const countMap = {};
   for (let i = 0; i < data.length; i += 4 /* 4 gives us r, g, b, and a */) {
@@ -114,5 +122,6 @@ function getRGBAs(data, ignoreRGBs, offset) {
   }
 
   const counts = Object.values(countMap);
+  console.timeEnd('getRGBAs');
   return counts.sort((a, b) => b.count - a.count);
 }

@@ -1,7 +1,19 @@
 import path from 'path';
 import { existsSync, readFileSync, writeFile, writeFileSync } from 'fs';
+import _ from 'lodash';
 
 import { INFO_PATH } from '../config/flayProperties.js';
+
+const VIDEO = {
+  opus: 'NO_OPUS',
+  play: 0,
+  rank: 0,
+  lastAccess: 0,
+  comment: null,
+  title: null,
+  desc: null,
+  tags: [],
+};
 
 const videoJsonPath = path.resolve(INFO_PATH, 'video.json');
 if (!existsSync(videoJsonPath)) {
@@ -32,33 +44,25 @@ export default {
         return video;
       }
     }
-    return {
-      opus: opus,
-      play: 0,
-      rank: 0,
-      lastAccess: 0,
-      comment: null,
-      title: null,
-      desc: null,
-      tags: [],
-    };
+    return VIDEO;
   },
   save: (video) => {
+    const mergedVideo = _.merge({}, VIDEO, video);
     let found = false;
     for (let i = 0; i < videoList.length; i++) {
-      if (videoList[i].opus === video.opus) {
-        videoList[i] = video;
+      if (videoList[i].opus === mergedVideo.opus) {
+        videoList[i] = mergedVideo;
         found = true;
         console.log('videoService', 'found video', videoList[i]);
         break;
       }
     }
     if (!found) {
-      videoList.push(video);
-      console.log('videoService', 'new video', video);
+      videoList.push(mergedVideo);
+      console.log('videoService', 'new video', mergedVideo);
     }
     writeJson();
-    return video;
+    return mergedVideo;
   },
   find: (keyword) => {
     return videoList.filter((video) => JSON.stringify(video).indexOf(keyword) > -1);

@@ -98,6 +98,7 @@ main {
       }
 
       .flay-info-cover {
+        position: relative;
         background-color: var(--gray-2);
         border-radius: 0.25rem;
         padding: 0.5rem;
@@ -111,6 +112,20 @@ main {
           margin: 0;
           padding: 0;
           transition: background 0.2s ease-out;
+        }
+
+        .flay-color {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          margin: 0.75rem;
+          display: flex;
+
+          label {
+            border-radius: 0.25rem;
+            width: 2rem;
+            height: 0.5rem;
+          }
         }
       }
 
@@ -208,14 +223,17 @@ main {
       }
 
       .flay-info-history {
-        display: flex;
         width: 100%;
-        justify-content: space-between;
-        text-align: center;
+        padding: 0.5rem 1.5rem;
+        display: flex;
+        flex-direction: row-reverse;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 0 0.5rem;
+        overflow: hidden;
 
-        * {
-          writing-mode: vertical-rl;
-          text-orientation: upright;
+        small {
+          font-family: D2Coding;
         }
       }
     }
@@ -238,6 +256,7 @@ main {
     .page-link {
       display: block;
       color: var(--col-fg);
+      cursor: pointer;
       min-width: 2.5rem;
       font-size: 0.875rem;
       text-align: center;

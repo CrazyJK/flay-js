@@ -62,12 +62,24 @@ export const FlayFiles = {
   },
 };
 
+export const FlayUtils = {
+  isFavorite: (actressMap, flay) => {
+    for (const name of flay.actress) {
+      const actress = actressMap.get(name);
+      if (actress && actress.favorite === true) {
+        return true;
+      }
+    }
+    return false;
+  },
+};
+
 export const DateUtils = {
   format: (date, pattern) => {
     function zf(n) {
       return n < 10 ? '0' + n : n;
     }
-    if (typeof date === 'number') {
+    if (typeof date === 'number' || typeof date === 'string') {
       date = new Date(date);
     }
     return pattern.replace(/(yyyy|yy|mm|dd|hh|mi|ss)/gi, function ($1) {

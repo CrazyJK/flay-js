@@ -61,4 +61,7 @@ export default {
     writeJson();
     return actress;
   },
+  findLocalName: (localName) => {
+    return actressList.filter((actress) => actress.localName === localName);
+  },
 };

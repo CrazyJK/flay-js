@@ -31,6 +31,18 @@ export const API = {
           alert(error.response.data.message);
         });
     },
+    update: (video, callback) => {
+      axios
+        .put('/api/video', video)
+        .then((response) => {
+          console.log('API.Video.update', response);
+          if (callback) callback(response);
+        })
+        .catch((error) => {
+          console.error('API.Video.update', error.response.data);
+          alert(error.response.data.message);
+        });
+    },
   },
   Actress: {
     save: (actress, callback) => {

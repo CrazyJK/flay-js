@@ -1,30 +1,53 @@
 import { DateUtils } from './common.js';
 
+/**
+ * div로 둘러싼 flay 기본 내용
+ * @param {Flay} flay
+ * @returns
+ */
 export const flayRow = (flay) => {
-  return `<li class="flay-row">
+  return `<div class="flay-row">
         <span class="studio">${flay.studio}</span>
-        <span class="opus"><a href="javascript: window.open('/api/video/${flay.opus}', 'video-${flay.opus}', 'width=300,height=200')">${flay.opus}</a></span>
+        <span class="opus"><a href="javascript: window.open('/api/flay/${flay.opus}', 'video-${flay.opus}', 'width=300,height=200')">${flay.opus}</a></span>
         <span class="title"><a href="javascript: window.open('/api/cover/${flay.opus}', 'cover-${flay.opus}', 'width=800,height=538')">${flay.title}</a></span>
         <span class="actress">${flay.actress}</span>
         <span class="release">${flay.release}</span>
-      </li>`;
+      </div>`;
 };
+
+/**
+ * div로 둘러싼 video 기본 내용
+ * @param {video} video
+ * @returns
+ */
 export const videoRow = (video) => {
-  return `<li class="video-row">
+  return `<div class="video-row">
       <span class="opus">${video.opus}</span>
-      <span class="rank">${video.rank}</span>
-      <span class="play">${video.play}</span>
-      <span class="last">${video.lastAccess}</span>
+      <span class="rank">${video.rank} <small>rank</small></span>
+      <span class="play">${video.play} <small>play</small></span>
+      <span class="last">${DateUtils.format(video.lastAccess, 'yyyy-mm-dd hh:mi')}</span>
       <span class="tags">${video.tags.map((tag) => tag.name).join(', ')}</span>
-    </li>`;
+    </div>`;
 };
+
+/**
+ * div로 둘러싼 history 내용
+ * @param {history} history
+ * @returns
+ */
 export const historyRow = (history) => {
-  return `<li class="history-row">
+  return `<div class="history-row">
       <span class="opus">${history.opus}</span>
+      <span class="date">${history.date}</span>
       <span class="action">${history.action}</span>
-      <span class="date">${DateUtils.format(history.date, 'yyyy-mm-dd hh:mi')}</span>
-    </li>`;
+    </div>`;
 };
+
+/**
+ * div로 둘러싼 actress 내용
+ * @param {actress} actress
+ * @returns
+ */
 export const actressRow = (actress) => {
   return `<div>
       <span class="actress-favorite" >${actress.favorite}</span>

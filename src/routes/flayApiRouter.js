@@ -3,7 +3,6 @@
  */
 
 import { Router } from 'express';
-import path from 'path';
 
 import flayService from '../service/flayService.js';
 import videoService from '../service/videoService.js';
@@ -11,6 +10,8 @@ import actressService from '../service/actressService.js';
 import tagService from '../service/tagService.js';
 import historyService from '../service/historyService.js';
 import batchService from '../service/batchService.js';
+import candidatesService from '../service/candidatesService.js';
+import getDominatedColors from '../service/dominatedColorsService.js';
 
 const router = Router();
 
@@ -46,7 +47,7 @@ router.post('/flay/:opus/play', function (req, res, next) {
 });
 
 router.get('/flay/find/:keyword', (req, res, next) => {
-  const found = flayService.find(req.params.keyword);
+  const found = flayService.findByKeyword(req.params.keyword);
   res.json(found);
 });
 
@@ -62,7 +63,20 @@ router.get('/video/:opus', function (req, res, next) {
   res.json(video);
 });
 
+// create
 router.post('/video', function (req, res, next) {
+  const video = videoService.save(req.body);
+  // assamble flay if exists
+  const flay = flayService.find(video.opus);
+  if (flay) {
+    flay.video = video;
+    process.emit('update flay', flay);
+  }
+  res.status(204).send();
+});
+
+// update
+router.put('/video', function (req, res, next) {
   const video = videoService.save(req.body);
   // assamble flay
   const flay = flayService.get(video.opus);
@@ -80,7 +94,13 @@ router.get('/video/find/:keyword', (req, res) => {
 
 router.get('/cover/:opus', function (req, res, next) {
   const flay = flayService.get(req.params.opus);
-  res.sendFile(path.resolve(flay.files.cover.path, flay.files.cover.name));
+  res.sendFile(flay.files.cover.filepath);
+});
+
+router.get('/cover/color/:opus', async (req, res) => {
+  const flay = flayService.get(req.params.opus);
+  const colors = await getDominatedColors(flay.files.cover.filepath);
+  res.json(colors);
 });
 
 /* ---- actress ---- */
@@ -93,6 +113,11 @@ router.get('/actress', function (req, res, next) {
 router.get('/actress/:name', function (req, res, next) {
   const actress = actressService.get(req.params.name);
   res.json(actress);
+});
+
+router.get('/actress/localName/:localName', (req, res) => {
+  const actressList = actressService.findLocalName(decodeURI(req.params.localName));
+  res.json(actressList);
 });
 
 router.post('/actress', function (req, res, next) {
@@ -152,7 +177,26 @@ router.get('/history/action/:action', function (req, res, next) {
 
 router.post('/batch/instance', (req, res) => {
   batchService.instance();
-  // emit batch
+  // emit batch TODO
+  res.status(204).send();
+});
+
+router.post('/batch/reload', (req, res) => {
+  batchService.reload();
+  // emit reload TODO
+  res.status(204).send();
+});
+
+/* ---- candidates ---- */
+
+router.get('/candidates', (req, res) => {
+  const list = candidatesService.find();
+  res.json(list);
+});
+
+router.put('/candidates/:opus', (req, res) => {
+  const list = candidatesService.accept(req.params.opus, req.body);
+  // emit accept candidates TODO
   res.status(204).send();
 });
 

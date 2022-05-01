@@ -26,4 +26,35 @@ function listFiles(dirPath, arrayOfFiles) {
 
 export default {
   listFiles: listFiles,
+  isMovie: (ext) => {
+    switch (ext) {
+      case '.avi':
+      case '.mp4':
+      case '.mkv':
+      case '.wmv':
+      case '.m2ts':
+        return true;
+      default:
+        return false;
+    }
+  },
+  isSubtitles: (ext) => {
+    switch (ext) {
+      case '.smi':
+      case '.ass':
+      case '.srt':
+        return true;
+      default:
+        return false;
+    }
+  },
+  isImage: (ext) => {
+    switch (ext) {
+      case '.jpg':
+      case '.webp':
+        return true;
+      default:
+        return false;
+    }
+  },
 };

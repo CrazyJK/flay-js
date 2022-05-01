@@ -1,3 +1,5 @@
+import FileUtils from '../utils/FileUtils.js';
+
 export default class Flay {
   constructor(studio, opus, title, actressArray, release) {
     this.studio = studio;
@@ -9,40 +11,25 @@ export default class Flay {
       movie: [],
       cover: null,
       subtitles: [],
+      candidates: [],
     };
     this.video = null;
-    this.favorite = false;
   }
 
   addFile(file) {
-    switch (file.ext) {
-      case '.avi':
-      case '.mp4':
-      case '.mkv':
-      case '.wmv':
-      case '.m2ts':
-        this.files.movie.push(file);
-        break;
-      case '.jpg':
-      case '.webp':
-        this.files.cover = file;
-        break;
-      case '.smi':
-      case '.ass':
-      case '.srt':
-        this.files.subtitles.push(file);
-        break;
-      default:
-        throw Error('unknown extention: ' + file.ext + ' of ' + file.name);
+    if (FileUtils.isMovie(file.ext)) {
+      this.files.movie.push(file);
+    } else if (FileUtils.isImage(file.ext)) {
+      this.files.cover = file;
+    } else if (FileUtils.isSubtitles(file.ext)) {
+      this.files.subtitles.push(file);
+    } else {
+      throw Error('unknown extention: ' + file.ext + ' of ' + file.name);
     }
   }
 
   setVideo(video) {
     this.video = video;
-  }
-
-  setFavorite(bool) {
-    this.favorite = bool;
   }
 
   toString() {

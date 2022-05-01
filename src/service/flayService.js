@@ -18,6 +18,11 @@ export default {
   getMap: () => {
     return flaySource.getMap();
   },
+  /**
+   * flay 얻기
+   * @param {string} opus
+   * @returns 못찾으면 404 Error
+   */
   get: (opus) => {
     const flay = flaySource.getMap().get(opus);
     if (flay) {
@@ -26,6 +31,22 @@ export default {
       throw createError(404, 'flay notfound: ' + opus);
     }
     // return flaySource.getMap().get(opus) || Error('notfound');
+  },
+  /**
+   * flay 찾기
+   * @param {string} opus
+   * @returns 못찾으면 null
+   */
+  find: (opus) => {
+    return flaySource.getMap().get(opus);
+  },
+  /**
+   * 키워드에 해당하는 flay list
+   * @param {string} keyword
+   * @returns
+   */
+  findByKeyword: (keyword) => {
+    return flaySource.list().filter((flay) => flay.toString().indexOf(keyword) > -1);
   },
   play: (opus) => {
     const flay = flaySource.getMap().get(opus);
@@ -44,14 +65,11 @@ export default {
     historyService.save(new History(new Date(), flay.opus, 'PLAY', flay.toString()));
     return flay;
   },
-  find: (keyword) => {
-    return flaySource.list().filter((flay) => flay.toString().indexOf(keyword) > -1);
-  },
   guessStudio: (opusPrefix) => {
     const list = flaySource
       .list()
       .filter((flay) => flay.opus.startsWith(opusPrefix))
-      .sort((f1, f2) => f1.release.localCompare(f2.release));
+      .sort((f1, f2) => f1.release.localeCompare(f2.release));
     return list.length > 0 ? list[0].studio : '';
   },
 };

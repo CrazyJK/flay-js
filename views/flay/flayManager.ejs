@@ -2,52 +2,86 @@
 <nav class="flay-navbar">
   <ul>
     <li><input type="search" id="keyword" placeholder="Search..." /></li>
-    <li><button id="btnBatch">Batch</button></li>
     <li><button onclick="document.getElementById('newFlayIncome').classList.toggle('show')">New</button></li>
+    <li><button onclick="document.getElementById('newCandidates').classList.toggle('show')">Candidates</button></li>
+    <li><button onclick="document.getElementById('batchAction').classList.toggle('show')">Batch</button></li>
   </ul>
 </nav>
-<div id="newFlayIncome" class="my-3 collapse bordered">
-  <div class="">
+
+<div id="newFlayIncome" class="my-3 collapse bordered box-shadow">
+  <div id="new-flay-input">
     <input type="text" id="newOpus" placeholder="opus" />
     <input type="text" id="newTitle" placeholder="title" />
     <input type="text" id="newActress" placeholder="actress" />
+    <button id="btnClear"><i class="fa fa-trash-can"></i></button>
   </div>
-  <div>
-    <textarea id="newDesc" placeholder="flay description..."></textarea>
+  <div id="new-flay-textarea">
+    <textarea id="newDesc" style="font-size: 12px" placeholder="flay description..."></textarea>
   </div>
-  <div>
-    <div id="actress-duplicated" class="collapse"></div>
-    <div id="actress-inputgroup">
-      <label class="actress-favorite-label">
-        <input type="checkbox" id="actress-favorite" name="favorite" class="sr-only" />
-        <span><i class="fa fa-heart"></i></span>
-      </label>
-      <input type="text" id="actress-name" name="name" placeholder="name" />
-      <input type="text" id="actress-localname" name="localName" placeholder="local name" />
-      <input type="text" id="actress-birth" name="birth" placeholder="birth" />
-      <input type="text" id="actress-body" name="body" placeholder="body" />
-      <input type="text" id="actress-height" name="height" placeholder="height" />
-      <input type="text" id="actress-debut" name="debut" placeholder="debut" />
-      <button id="btnActressSave">Update</button>
-    </div>
-    <div>
-      <textarea id="actress-data"></textarea>
-    </div>
-  </div>
-  <form id="flay-inputgroup" onsubmit="() => {return false;}">
+  <div id="flay-inputgroup">
+    <button id="btnFlayCopy"><i class="far fa-copy"></i></button>
     <input type="text" id="flay-studio" name="studio" placeholder="studio" />
     <input type="text" id="flay-opus" name="opus" placeholder="opus" />
     <input type="text" id="flay-title" name="title" placeholder="title" />
     <input type="text" id="flay-actress" name="actress" placeholder="actress" />
     <input type="text" id="flay-release" name="release" placeholder="release" />
-    <button id="btnFlayCopy">Copy</button>
-  </form>
+  </div>
+  <div id="actress-inputgroup">
+    <label class="actress-favorite-label">
+      <input type="checkbox" id="actress-favorite" name="favorite" class="sr-only" />
+      <span class="mx-2"><i class="fa fa-heart"></i></span>
+    </label>
+    <input type="text" id="actress-name" name="name" placeholder="name" />
+    <input type="text" id="actress-localname" name="localName" placeholder="local name" />
+    <input type="text" id="actress-birth" name="birth" placeholder="birth" />
+    <input type="text" id="actress-body" name="body" placeholder="body" />
+    <input type="text" id="actress-height" name="height" placeholder="height" />
+    <input type="text" id="actress-debut" name="debut" placeholder="debut" />
+    <button id="btnActressSave"><i class="fa fa-upload"></i></button>
+  </div>
+  <div>
+    <textarea
+      id="actress-data"
+      rows="4"
+      style="font-size: 12px"
+      placeholder="1999年12月01日 （現在 21歳）いて座
+サイズ
+
+T163 / B92(Hカップ) / W62 / H89"
+    ></textarea>
+  </div>
+  <div id="actress-duplicated" class="collapse"></div>
 </div>
-<div id="searchResult" class="my-3 collapse bordered">
-  <ul id="flaySearchResult"></ul>
-  <ul id="videoSearchResult"></ul>
-  <ul id="historySearchResult"></ul>
+
+<div id="searchResult" class="my-3 collapse bordered box-shadow">
+  <div class="m-2">
+    <legend>Flay</legend>
+    <ul id="flaySearchResult" class="mx-2"></ul>
+  </div>
+  <div class="m-2">
+    <legend>Video</legend>
+    <ul id="videoSearchResult" class="mx-2"></ul>
+  </div>
+  <div class="m-2">
+    <legend>History</legend>
+    <ul id="historySearchResult" class="mx-2"></ul>
+  </div>
 </div>
+
+<div id="newCandidates" class="my-3 collapse bordered box-shadow">
+  <div class="m-2">
+    <button id="btnGetCandidates">Get Candidates</button>
+  </div>
+  <ul id="candidatesList" class="m-2"></ul>
+</div>
+
+<div id="batchAction" class="my-3 collapse bordered box-shadow">
+  <div class="m-2">
+    <button id="btnBatch">Instance Batch</button>
+    <button id="btnReload">Reload</button>
+  </div>
+</div>
+
 <script defer src="/dist/flayManager.js"></script>
 <script>
   document.title = '<%= title %>';

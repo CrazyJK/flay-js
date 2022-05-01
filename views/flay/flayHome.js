@@ -4,8 +4,7 @@
 import $ from 'jquery';
 import axios from 'axios';
 import { API } from '../lib/flay.api.js';
-import dominatedColor from '../lib/dominated.color.js';
-import { DateUtils, FileUtils, StringUtils, Random, FlayFiles, Tag, LocalStorageItem } from '../lib/common.js';
+import { DateUtils, FileUtils, FlayUtils, StringUtils, Random, FlayFiles, Tag, LocalStorageItem } from '../lib/common.js';
 import './flayHome.scss';
 
 let flayMap = new Map();
@@ -100,11 +99,11 @@ function filterFlay() {
     if (favorite && nofavorite) {
       // all
     } else if (favorite && !nofavorite) {
-      if (!flay.favorite) {
+      if (!FlayUtils.isFavorite(actressMap, flay)) {
         return false;
       }
     } else if (!favorite && nofavorite) {
-      if (flay.favorite) {
+      if (FlayUtils.isFavorite(actressMap, flay)) {
         return false;
       }
     } else if (!favorite && !nofavorite) {
@@ -166,25 +165,29 @@ function showCover() {
     responseType: 'blob',
   }).then(function (response) {
     const coverObjectURL = URL.createObjectURL(response.data);
-    console.log('showCover', 'coverObjectURL', coverObjectURL);
-
     $('.container-flay .flay .flay-cover').css({
       backgroundImage: 'url(' + coverObjectURL + ')',
     });
 
-    dominatedColor(coverObjectURL).then((colors) => {
-      console.log('showCover', 'colors[0].rgba', colors[0].rgba);
+    showFlay();
+    showActress();
+    showHistory();
+    showPagination();
+
+    axios.get('/api/cover/color/' + currentFlay.opus).then((response) => {
+      const colors = response.data;
+      console.log('dominated colors', colors);
       $('.container-flay .flay .flay-info-cover').css({
-        boxShadow: `inset 0 0 1rem 0.5rem rgba(${colors[0].rgba[0]}, ${colors[0].rgba[1]}, ${colors[0].rgba[2]}, ${colors[0].rgba[3]})`,
+        boxShadow: `inset 0 0 1rem 0.5rem ${colors[2]}`,
       });
       $('.container-flay .flay .flay-cover').css({
-        boxShadow: `inset 0 0 4rem 2rem rgba(${colors[1].rgba[0]}, ${colors[1].rgba[1]}, ${colors[1].rgba[2]}, ${colors[1].rgba[3]})`,
+        boxShadow: `inset 0 0 4rem 2rem ${colors[0]}`,
       });
-
-      showFlay();
-      showActress();
-      showHistory();
-      renderPagination();
+      colors.forEach((color, index) => {
+        $('.flay-color label:nth-child(' + (index + 1) + ')').css({
+          backgroundColor: color,
+        });
+      });
 
       isLoading = false;
     });
@@ -242,12 +245,14 @@ function showFlay() {
 }
 
 function showHistory() {
+  $('.flay-info-history').empty();
   axios('/api/history/opus/' + currentFlay.opus).then((response) => {
-    console.log('histories', response.data);
+    console.log('showHistory', response.data.length);
     response.data
       .filter((history) => history.action === 'PLAY')
+      .sort((h1, h2) => h2.date.localeCompare(h1.date))
       .forEach((history) => {
-        $('.flay-info-history').append(`<small>${history.date.substring(0, 10).replace(/-/g, '&nbsp;&nbsp;')}</small>`);
+        $('.flay-info-history').append(`<small>${history.date.substring(0, 10).replace(/-/g, '.')}</small>`);
       });
   });
 }
@@ -286,30 +291,39 @@ function showActress() {
   }
 }
 
-function renderPagination() {
+function showPagination() {
   const finalPageIndex = filteredOpus.length;
   const startPageIndex = Math.max(0, currentOpusIndex - 5);
   const endPageIndex = Math.min(currentOpusIndex + 6, finalPageIndex);
   $('.pagination').empty();
   // if not first
   if (startPageIndex > 0) {
-    $('.pagination').append(`
-      <li class="page-item">
-        <a class="page-link" href="javascript: goPage(0)">1</a>
-      </li>`);
+    $('.pagination').append(
+      $(`<li class="page-item">
+        <a class="page-link">1</a>
+      </li>`).on('click', () => {
+        goPage(0);
+      })
+    );
   }
   for (let i = startPageIndex; i < endPageIndex; i++) {
-    $('.pagination').append(`
-      <li class="page-item ${currentOpusIndex === i ? 'active' : ''}">
-        <a class="page-link" href="javascript: goPage(${i})">${i + 1}</a>
-      </li>`);
+    $('.pagination').append(
+      $(`<li class="page-item ${currentOpusIndex === i ? 'active' : ''}">
+        <a class="page-link">${i + 1}</a>
+      </li>`).on('click', () => {
+        goPage(i);
+      })
+    );
   }
   // if not last
   if (endPageIndex < finalPageIndex) {
-    $('.pagination').append(`
-      <li class="page-item">
-        <a class="page-link" href="javascript: goPage(${finalPageIndex - 1})">${finalPageIndex}</a>
-      </li>`);
+    $('.pagination').append(
+      $(`<li class="page-item">
+        <a class="page-link">${finalPageIndex}</a>
+      </li>`).on('click', () => {
+        goPage(finalPageIndex - 1);
+      })
+    );
   }
   // page progress bar
   const pagePercent = ((currentOpusIndex + 1) / filteredOpus.length) * 100;
@@ -319,7 +333,7 @@ function renderPagination() {
 }
 
 function renderTagList() {
-  console.log('renderTagList');
+  console.log('renderTagList', tagMap.size);
   $('.flay-info-tag .flay-tag').remove();
   [...tagMap.values()]
     .sort((t1, t2) => t2.name.localeCompare(t1.name))
