@@ -18,7 +18,7 @@ export default ({ app }) => {
   // ### ejs & layouts
   app.set('views', join(__dirname, 'views'));
   app.set('view engine', 'ejs');
-  app.set('layout', 'layout');
+  app.set('layout', 'layout', 'popup');
   app.set('layout extractScripts', true);
   app.use(expressLayouts);
 

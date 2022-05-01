@@ -1,3 +1,5 @@
+import $ from 'jquery';
+import _ from 'lodash';
 import { DateUtils } from './common.js';
 
 /**
@@ -58,4 +60,54 @@ export const actressRow = (actress) => {
       <span class="actress-height"   >${actress.height}</span>
       <span class="actress-debut"    >${actress.debut}</span>
     <div>`;
+};
+
+export const flayCard = (flay, options) => {
+  const opts = {
+    excludes: [],
+  };
+  _.extend(opts, options);
+
+  const $studio = $('<div>').html(`<label class="flay-studio">${flay.studio}</label>`);
+  const $title = $('<div>').html(`<label class="flay-title">${flay.title}</label>`);
+  const $opus_rank = $('<div>').append(`<label class="flay-opus">${flay.opus}</label>`, `<label class="flay-rank mx-2 px-2">${flay.video.rank}</label>`);
+  const $actress = $('<div>', { class: 'flay-actress-wrap' }).append(
+    (() => {
+      const a = [];
+      flay.actress.forEach((name) => {
+        a.push(
+          $(`<label class="flay-actress mr-2">${name}</label>`).on('click', (e) => {
+            console.log('actress click', name);
+            window.open('/flay/actress/' + name, name, 'width=1050,height=1200');
+          })
+        );
+      });
+      return a;
+    })()
+  );
+  const $tag = $('<div>', { class: 'flay-tag-wrap' }).html(flay.video.tags.map((t) => `<small class="flay-tag mx-1">${t.name}</small>`));
+  const $files = $('<div>', { class: 'flay-files-wrap' }).append(
+    $('<label>', { class: 'flay-files ' + (flay.files.movie.length > 0 ? '' : 'no-movie') })
+      .html('Mov')
+      .on('click', () => {
+        console.log('movie click', flay.opus);
+      }),
+    $('<label>', { class: 'flay-files mx-2 ' + (flay.files.subtitles.length > 0 ? '' : 'no-subtitles') }).html('Sub')
+  );
+
+  const $card = $('<div>', { class: 'box-shadow flay-card' }).css({
+    backgroundImage: `url(/api/cover/${flay.opus})`,
+  });
+  $card.append($title);
+  $card.append($opus_rank);
+  if (!opts.excludes.includes('studio')) {
+    $card.append($studio);
+  }
+  if (!opts.excludes.includes('actress')) {
+    $card.append($actress);
+  }
+  $card.append($files);
+  $card.append($tag);
+
+  return $card;
 };

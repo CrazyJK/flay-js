@@ -1,0 +1,33 @@
+<link rel="stylesheet" href="/dist/actress.css" />
+
+<div class="actress-container">
+  <div>
+    <label id="favorite-label" class="px-2">
+      <input type="checkbox" id="favorite" class="sr-only" />
+      <span><i class="fa fa-heart"></i></span>
+    </label>
+    <input type="text" id="name" />
+    <input type="text" id="localName" />
+    <input type="text" id="birth" />
+    <input type="text" id="body" />
+    <input type="number" id="height" />
+    <input type="number" id="debut" />
+    <button id="btnSave" class="px-2"><i class="fa-solid fa-cloud-arrow-up"></i></button>
+  </div>
+  <div>
+    <textarea id="comment"></textarea>
+  </div>
+</div>
+<div class="flay-container mb-3"></div>
+
+<script defer src="/dist/actress.js"></script>
+<script>
+  document.title = '<%= title %>';
+  // let params = new URLSearchParams(document.location.search);
+  // let name = params.get('name');
+  let name = '<%= name %>';
+
+  window.onload = () => {
+    initActress(name);
+  };
+</script>

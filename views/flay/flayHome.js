@@ -274,7 +274,7 @@ function showActress() {
         <input type="checkbox" name="actressFavorite" class="sr-only" ${actress.favorite ? 'checked' : ''}>
         <span><i class="fa${actress.favorite ? '' : 'r'} fa-heart"></i></span>
       </label>
-      <label class="flay-actress-name"     >${actress.name}</label>
+      <label class="flay-actress-name link">${actress.name}</label>
       <label class="flay-actress-localName">${actress.localName || ''}</label>
       <label class="flay-actress-age"      >${(function (year) {
         if (year === 0) return '';
@@ -372,16 +372,20 @@ function addEventListener() {
         $('.container-flay .flay .flay-comment').html(commentText);
         API.Video.save(currentFlay.video);
       }
-      // $('.container-flay .flay .flay-comment').show().toggleClass('comment-empty', StringUtils.isBlank(commentText));
-      // $('.container-flay .flay .flay-comment-input').hide();
     }
   });
   // actress favorite
-  $('.flay-info-actress').on('change', 'input[name="actressFavorite"]', (e) => {
-    const actress = $(e.target).closest('.flay-actress').data('actress');
-    actress.favorite = $(e.target).prop('checked');
-    API.Actress.save(actress);
-  });
+  // actress가 새로 생기므로, 랩퍼에 이벤트를 걸어야 한다
+  $('.flay-info-actress')
+    .on('change', 'input[name="actressFavorite"]', (e) => {
+      const actress = $(e.target).closest('.flay-actress').data('actress');
+      actress.favorite = $(e.target).prop('checked');
+      API.Actress.save(actress);
+    })
+    .on('click', '.flay-actress-name', (e) => {
+      const actress = $(e.target).closest('.flay-actress').data('actress');
+      window.open('/flay/actress/' + actress.name, actress.name, 'width=1050,height=1200');
+    });
   // rank change
   $('.flay-rank input').on('change', (e) => {
     currentFlay.video.rank = Number($(e.target).val());
@@ -471,19 +475,19 @@ function addEventListener() {
 }
 
 /* broadcast receiver */
-export const flayBroadcastReceiver = (flay) => {
+window.flayBroadcastReceiver = (flay) => {
   flayMap.set(flay.opus, flay);
   if (currentFlay.opus === flay.opus) {
     showFlay();
   }
 };
-export const actressBroadcastReceiver = (actress) => {
+window.actressBroadcastReceiver = (actress) => {
   actressMap.set(actress.name, actress);
   if (currentFlay.actress.includes(actress.name)) {
     showActress();
   }
 };
-export const tagBroadcastReceiver = (tag) => {
+window.tagBroadcastReceiver = (tag) => {
   tagMap.set(tag.id, tag);
   renderTagList();
 };

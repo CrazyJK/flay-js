@@ -1,0 +1,89 @@
+.actress-container {
+  position: sticky;
+  top: 0;
+  padding: 1rem;
+  background-color: var(--col-bg);
+  font-size: 1.25rem;
+
+  div {
+    display: flex;
+
+    input {
+      flex: 1 1 auto;
+      width: 1px;
+      font-size: 1.125rem;
+    }
+    button {
+      font-size: 1.125rem;
+    }
+
+    #birth {
+      flex: 0 0 10rem;
+    }
+    #body {
+      flex: 0 0 9rem;
+    }
+    #height {
+      flex: 0 0 5rem;
+    }
+    #debut {
+      flex: 0 0 5rem;
+    }
+
+    > * {
+      border: 1px solid var(--gray-2);
+    }
+  }
+}
+
+.flay-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+
+  .flay-card {
+    padding: 0.5rem;
+    width: 20rem;
+    aspect-ratio: 800 / 538;
+    background: no-repeat center / cover;
+
+    &:hover label,
+    &:hover small {
+      box-shadow: inset 0 0 16px 32px #0008;
+    }
+
+    label,
+    small {
+      border-radius: 4px;
+      color: #fff;
+      padding: 2px;
+      font-weight: 700;
+      text-shadow: 0 0 1px #000, 0 0 2px #000, 0 0 4px #000, 0 0 8px #000, 0 0 16px #000;
+      white-space: nowrap;
+      transition: 0.3s;
+    }
+
+    div {
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      height: 1.75rem;
+    }
+
+    .flay-actress {
+      cursor: pointer;
+    }
+
+    .flay-files-wrap {
+      label {
+        cursor: pointer;
+      }
+      .no-movie,
+      .no-subtitles {
+        color: #aaa;
+      }
+    }
+  }
+}

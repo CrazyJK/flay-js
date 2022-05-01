@@ -7,10 +7,12 @@ module.exports = {
   mode: 'development',
   entry: {
     layout: './views/layout.js',
+    popup: './views/popup.js',
     flayFiles: './views/flay/flayFiles.js',
     flayHome: './views/flay/flayHome.js',
     flayList: './views/flay/flayList.js',
     flayManager: './views/flay/flayManager.js',
+    actress: './views/flay/actress.js',
   },
   devtool: 'source-map',
   output: {

@@ -39,79 +39,83 @@
   box-shadow: 2px 2px 8px 2px var(--gray-2);
 }
 
-.m-1 {
-  margin: 0.25rem;
-}
-.m-2 {
-  margin: 0.5rem;
-}
-.m-3 {
-  margin: 1rem;
-}
-.m-4 {
-  margin: 2rem;
+.link:hover {
+  cursor: pointer;
+  text-shadow: 1px 1px 2px orangered;
 }
 
-.my-1 {
-  margin-top: 0.25rem;
-  margin-bottom: 0.25rem;
+@each $item in (m-1: 0.25rem, m-2: 0.5em, m-3: 1em, m-4: 2rem) {
+  .#{nth($item, 1)} {
+    margin: nth($item, 2) !important;
+  }
 }
-.my-2 {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+@each $item in (mx-1: 0.25rem, mx-2: 0.5em, mx-3: 1em, mx-4: 2rem) {
+  .#{nth($item, 1)} {
+    margin-left: nth($item, 2) !important;
+    margin-right: nth($item, 2) !important;
+  }
 }
-.my-3 {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+@each $item in (my-1: 0.25rem, my-2: 0.5em, my-3: 1em, my-4: 2rem) {
+  .#{nth($item, 1)} {
+    margin-top: nth($item, 2) !important;
+    margin-bottom: nth($item, 2) !important;
+  }
 }
-.my-4 {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+@each $item in (mt-1: 0.25rem, mt-2: 0.5em, mt-3: 1em, mt-4: 2rem) {
+  .#{nth($item, 1)} {
+    margin-top: nth($item, 2) !important;
+  }
 }
-
-.mx-1 {
-  margin-left: 0.25rem;
-  margin-right: 0.25rem;
+@each $item in (ml-1: 0.25rem, ml-2: 0.5em, ml-3: 1em, ml-4: 2rem) {
+  .#{nth($item, 1)} {
+    margin-left: nth($item, 2) !important;
+  }
 }
-.mx-2 {
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
+@each $item in (mr-1: 0.25rem, mr-2: 0.5em, mr-3: 1em, mr-4: 2rem) {
+  .#{nth($item, 1)} {
+    margin-right: nth($item, 2) !important;
+  }
 }
-.mx-3 {
-  margin-left: 1rem;
-  margin-right: 1rem;
-}
-.mx-4 {
-  margin-left: 2rem;
-  margin-right: 2rem;
-}
-
-.p-1 {
-  padding: 0.25rem;
-}
-.p-2 {
-  padding: 0.5rem;
-}
-.p-3 {
-  padding: 1rem;
-}
-.p-4 {
-  padding: 2rem;
+@each $item in (mb-1: 0.25rem, mb-2: 0.5em, mb-3: 1em, mb-4: 2rem) {
+  .#{nth($item, 1)} {
+    margin-bottom: nth($item, 2) !important;
+  }
 }
 
-.px-1 {
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
+@each $item in (p-1: 0.25rem, p-2: 0.5em, p-3: 1em, p-4: 2rem) {
+  .#{nth($item, 1)} {
+    padding: nth($item, 2) !important;
+  }
 }
-.px-2 {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+@each $item in (px-1: 0.25rem, px-2: 0.5em, px-3: 1em, px-4: 2rem) {
+  .#{nth($item, 1)} {
+    padding-left: nth($item, 2) !important;
+    padding-right: nth($item, 2) !important;
+  }
 }
-.px-3 {
-  padding-left: 1rem;
-  padding-right: 1rem;
+@each $item in (py-1: 0.25rem, py-2: 0.5em, py-3: 1em, py-4: 2rem) {
+  .#{nth($item, 1)} {
+    padding-top: nth($item, 2) !important;
+    padding-bottom: nth($item, 2) !important;
+  }
 }
-.px-4 {
-  padding-left: 2rem;
-  padding-right: 2rem;
+@each $item in (pt-1: 0.25rem, pt-2: 0.5em, pt-3: 1em, pt-4: 2rem) {
+  .#{nth($item, 1)} {
+    padding-top: nth($item, 2) !important;
+  }
+}
+@each $item in (pb-1: 0.25rem, pb-2: 0.5em, pb-3: 1em, pb-4: 2rem) {
+  .#{nth($item, 1)} {
+    padding-bottom: nth($item, 2) !important;
+  }
+}
+@each $item in (pl-1: 0.25rem, pl-2: 0.5em, pl-3: 1em, pl-4: 2rem) {
+  .#{nth($item, 1)} {
+    padding-left: nth($item, 2) !important;
+  }
+}
+@each $item in (pr-1: 0.25rem, pr-2: 0.5em, pr-3: 1em, pr-4: 2rem) {
+  .#{nth($item, 1)} {
+    padding-right: nth($item, 2) !important;
+  }
 }

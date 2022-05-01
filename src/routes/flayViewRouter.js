@@ -23,4 +23,9 @@ router.get('/manager', (req, res) => {
   res.render('flay/flayManager', { title: 'Flay Manager' });
 });
 
+// POPUP
+router.get('/actress/:name', (req, res) => {
+  res.render('flay/actress', { layout: 'popup', name: req.params.name, title: req.params.name });
+});
+
 export default router;
