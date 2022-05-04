@@ -1,8 +1,16 @@
+import { Express } from 'express';
+import { Server } from 'https';
+import { Server as SocketIoServer } from 'socket.io';
+
 import expressLoader from './express';
 import httpsServerLoader from './httpsServer';
 import socketIoLoader from './socketio';
 
-export default ({ expressApp, https, socketIo }) => {
+export default ({ expressApp, https, socketIo }: {
+  expressApp: Express;
+  https: Server;
+  socketIo: SocketIoServer;
+}) => {
   expressLoader({ app: expressApp });
   console.log('Express initialized');
 

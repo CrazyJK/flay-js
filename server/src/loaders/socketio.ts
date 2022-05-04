@@ -1,4 +1,8 @@
-export default ({ io }) => {
+import { Server } from "socket.io";
+
+export default ({ io }: {
+  io: Server;
+}) => {
   const [IO_UPDATE_DATA, IO_CHAT] = ['update date room', 'chat room'];
 
   io.on('connection', (socket) => {
@@ -9,8 +13,8 @@ export default ({ io }) => {
 
     const rooms = io.of('/').adapter.rooms;
     const sids = io.of('/').adapter.sids;
-    console.log('socket.io rooms', IO_UPDATE_DATA, rooms.get(IO_UPDATE_DATA).size);
-    console.log('socket.io rooms', IO_CHAT, rooms.get(IO_CHAT).size);
+    console.log('socket.io rooms', IO_UPDATE_DATA, rooms.get(IO_UPDATE_DATA)?.size);
+    console.log('socket.io rooms', IO_CHAT, rooms.get(IO_CHAT)?.size);
     console.log('socket.io sids', sids.size);
 
     socket.on('disconnect', () => {

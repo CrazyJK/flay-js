@@ -1,4 +1,4 @@
-import express, { json, urlencoded } from 'express';
+import express, { json, urlencoded, Express, ErrorRequestHandler  } from 'express';
 import favicon from 'serve-favicon';
 import createError from 'http-errors';
 import cookieParser from 'cookie-parser';
@@ -11,14 +11,16 @@ import indexRouter from '../routes/indexRouter.js';
 import flayViewRouter from '../routes/flayViewRouter.js';
 import flayApiRouter from '../routes/flayApiRouter.js';
 
-export default ({ app }) => {
+export default ({ app } : {
+  app: Express;
+}) => {
   const __dirname = resolve();
 
   // view engine setup
   // ### ejs & layouts
   app.set('views', join(__dirname, 'views'));
   app.set('view engine', 'ejs');
-  app.set('layout', 'layout', 'popup');
+  app.set('layout', ['layout', 'popup']);
   app.set('layout extractScripts', true);
   app.use(expressLayouts);
 
@@ -42,11 +44,10 @@ export default ({ app }) => {
   app.use((req, res, next) => {
     next(createError(404));
   });
-  // error handler
-  app.use((err, req, res, next) => {
+  const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
     // console.log(req.headers);
     const resErr = {
-      isXhr: req.headers['x-requested-with'] === 'XMLHttpRequest' || req.headers.accept.indexOf('json') > -1,
+      isXhr: req.headers['x-requested-with'] === 'XMLHttpRequest' || (req.headers.accept && req.headers.accept.indexOf('json') > -1),
       status: err.status || 500,
       message: err.message || 'unknown error',
       stack: err.stack,
@@ -68,7 +69,9 @@ export default ({ app }) => {
       res.locals.error = resErr;
       res.status(resErr.status).render('error');
     }
-  });
+  };
+  // error handler
+  app.use(errorHandler);
 
   return app;
 };
