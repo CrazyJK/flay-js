@@ -6,8 +6,8 @@
   "author": "kamoru",
   "license": "MIT",
   "scripts": {
-    "server": "cd server && yarn express-start",
-    "client": "cd www && yarn webpack:watch",
+    "server": "cd server && yarn start",
+    "client": "cd www && yarn webpack:w",
     "start:dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
   },
   "devDependencies": {

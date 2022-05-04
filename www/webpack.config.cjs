@@ -6,8 +6,8 @@ module.exports = {
   /* mode: development, production, none */
   mode: 'development',
   entry: {
-    layout: './layout.js',
-    popup: './popup.js',
+    layout: './frame/layout.js',
+    popup: './frame/popup.js',
     flayFiles: './app/flayFiles.js',
     flayHome: './app/flayHome.js',
     flayList: './app/flayList.js',
