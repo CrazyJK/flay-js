@@ -2,5 +2,5 @@
  * popup base
  */
 
-import './lib/web-socket.js';
+import '../../www/lib/web-socket.js';
 import './popup.scss';
