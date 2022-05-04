@@ -3,7 +3,7 @@ import { createServer } from 'https';
 import { Server as SocketIoServer } from 'socket.io';
 import fs from 'fs';
 import dotenv from 'dotenv';
-import loaders from './loaders/index.js';
+import loaders from './loaders/index';
 
 dotenv.config();
 

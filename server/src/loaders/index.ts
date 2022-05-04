@@ -1,6 +1,6 @@
-import expressLoader from './express.js';
-import httpsServerLoader from './httpsServer.js';
-import socketIoLoader from './socketio.js';
+import expressLoader from './express';
+import httpsServerLoader from './httpsServer';
+import socketIoLoader from './socketio';
 
 export default ({ expressApp, https, socketIo }) => {
   expressLoader({ app: expressApp });
