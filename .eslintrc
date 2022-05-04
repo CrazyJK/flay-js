@@ -26,7 +26,7 @@
     "es6": true
   },
   // ESLint가 무시할 디렉토리, 파일을 설정
-  "ignorePatterns": ["node_modules/", "public/dist/"],
+  "ignorePatterns": ["node_modules/", "server/public/dist/", "server/public/lib/fontawesome-free-6.1.1-web"],
 
   // ESLint 룰을 설정
   "rules": {
