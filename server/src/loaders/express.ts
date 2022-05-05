@@ -7,9 +7,9 @@ import morgan from 'morgan';
 import cors from 'cors';
 import { join, resolve } from 'path';
 
-import indexRouter from '../routes/indexRouter.js';
-import flayViewRouter from '../routes/flayViewRouter.js';
-import flayApiRouter from '../routes/flayApiRouter.js';
+import indexRouter from '../routes/indexRouter';
+import flayViewRouter from '../routes/flayViewRouter';
+import flayApiRouter from '../routes/flayApiRouter';
 
 export default ({ app } : {
   app: Express;

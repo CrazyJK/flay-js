@@ -12,6 +12,7 @@ import historyService from '../service/historyService.js';
 import batchService from '../service/batchService.js';
 import candidatesService from '../service/candidatesService.js';
 import getDominatedColors from '../service/dominatedColorsService.js';
+import idEmitter from './ioEmitter';
 
 const router = Router();
 
@@ -42,7 +43,7 @@ router.get('/flay/:opus', function (req, res, next) {
 
 router.post('/flay/:opus/play', function (req, res, next) {
   const flay = flayService.play(req.params.opus);
-  process.emit('update flay', flay);
+  idEmitter.flay.emit('updateFlay', flay);
   res.status(204).send();
 });
 
@@ -70,7 +71,7 @@ router.post('/video', function (req, res, next) {
   const flay = flayService.find(video.opus);
   if (flay) {
     flay.video = video;
-    process.emit('update flay', flay);
+    idEmitter.flay.emit('updateFlay', flay);
   }
   res.status(204).send();
 });
@@ -81,7 +82,7 @@ router.put('/video', function (req, res, next) {
   // assamble flay
   const flay = flayService.get(video.opus);
   flay.video = video;
-  process.emit('update flay', flay);
+  idEmitter.flay.emit('updateFlay', flay);
   res.status(204).send();
 });
 
@@ -122,7 +123,7 @@ router.get('/actress/localName/:localName', (req, res) => {
 
 router.post('/actress', function (req, res, next) {
   const actress = actressService.save(req.body);
-  process.emit('update actress', actress);
+  idEmitter.actress.emit('updateActress', actress);
   res.status(204).send();
 });
 
@@ -147,7 +148,7 @@ router.get('/tag/:id', function (req, res, next) {
 
 router.post('/tag', function (req, res, next) {
   const tag = tagService.save(req.body);
-  process.emit('update tag', tag);
+  idEmitter.tag.emit('updateTag', tag);
   res.json(tag);
 });
 

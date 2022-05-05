@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node ./dist/app.js",
-    "start:dev": "nodemon --exec ts-node ./src/app.ts"
+    "start:dev": "nodemon --exec node --loader ts-node/esm ./src/app.ts"
   },
   "dependencies": {
     "axios": "^0.27.1",

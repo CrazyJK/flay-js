@@ -3,7 +3,7 @@ import { createServer } from 'https';
 import { Server as SocketIoServer } from 'socket.io';
 import fs from 'fs';
 import dotenv from 'dotenv';
-import loaders from './loaders/index';
+import loader from './loaders/index';
 
 dotenv.config();
 
@@ -19,4 +19,4 @@ const httpsServer = createServer(
 
 const io = new SocketIoServer(httpsServer);
 
-loaders({ expressApp: app, https: httpsServer, socketIo: io });
+loader({ expressApp: app, https: httpsServer, socketIo: io });
