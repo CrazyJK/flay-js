@@ -1,8 +1,8 @@
 /**
  * layout js
  */
-import './lib/jquery-extends.js';
-import './lib/web-socket.js';
+import '../lib/jquery-extends.js';
+import '../lib/web-socket.js';
 import './layout.scss';
 
 window.onerror = function (msg, url, lineNo, columnNo, error) {
